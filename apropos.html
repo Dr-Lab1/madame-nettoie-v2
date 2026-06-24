@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>À propos — Madame Nettoie · Bordeaux</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=Fraunces:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" />
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth;overflow-x:clip}
+    body{font-family:'DM Sans',sans-serif;background:#fffbf7;color:#3a2c1e;overflow-x:clip}
+    img{max-width:100%;display:block}
+    a{text-decoration:none;color:inherit}
+    button{font-family:inherit;cursor:pointer;border:none}
+    :root{
+      --orange:#f1622a;--orange-dark:#d94e1a;--orange-pale:#fde8d8;
+      --cream:#fff0e3;--red:#e63946;
+      --bg:#fffbf7;--white:#ffffff;--text-dark:#1e140c;--text:#3a2c1e;
+      --text-mid:#4a3728;--text-light:#7a6558;
+      --gold-metallic:#D4AF37;
+    }
+
+    /* ─── HEADER ─── */
+    .header{background:rgba(255,251,247,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);padding:.4rem 0;position:sticky;top:0;z-index:100;border-bottom:1px solid rgba(241,98,42,.1)}
+    .header-inner{max-width:1240px;margin:0 auto;padding:0 2.5rem;display:flex;align-items:center;justify-content:space-between;gap:2rem}
+    .logo img{height:64px;width:auto;display:block}
+    nav ul{display:flex;align-items:center;gap:2.2rem;list-style:none}
+    nav a{font-size:.8rem;font-weight:500;letter-spacing:.5px;color:var(--text-mid);transition:color .2s;text-transform:uppercase}
+    nav a:hover{color:var(--orange)}
+    .btn-nav{background:var(--text-dark);color:#fff;padding:.7rem 1.4rem;border-radius:6px;font-size:.78rem;font-weight:600;letter-spacing:.5px;text-transform:uppercase;transition:all .25s}
+    .btn-nav:hover{background:var(--orange);transform:translateY(-1px)}
+    .has-dropdown{position:relative}
+    .has-dropdown>a{display:flex;align-items:center;gap:.3rem}
+    .has-dropdown .dropdown{display:none;position:absolute;top:calc(100% + .6rem);left:50%;transform:translateX(-50%);background:#fff;border-radius:12px;box-shadow:0 12px 40px rgba(30,20,12,.13);border:1px solid rgba(241,98,42,.1);padding:.4rem 0;min-width:210px;z-index:200}
+    .has-dropdown:hover .dropdown{display:block}
+    .has-dropdown .dropdown li{list-style:none}
+    .has-dropdown .dropdown li a{display:block;padding:.65rem 1.3rem;font-size:.76rem;font-weight:500;letter-spacing:.4px;color:var(--text-mid);text-transform:uppercase;transition:background .15s,color .15s;white-space:nowrap}
+    .has-dropdown .dropdown li a:hover{background:var(--orange-pale);color:var(--orange)}
+    .has-dropdown .dropdown li+li{border-top:1px solid rgba(241,98,42,.06)}
+    .has-dropdown .dropdown::before{content:'';position:absolute;height:.8rem;top:-.8rem;left:0;right:0}
+    .menu-toggle{display:none;background:transparent;font-size:1.4rem;color:var(--text-dark);padding:.3rem}
+
+    /* ─── LABELS & TITLES ─── */
+    .section-label{font-size:.72rem;color:var(--gold-metallic);letter-spacing:3px;text-transform:uppercase;font-weight:600;margin-bottom:.7rem;display:block}
+    .section-title{font-family:'DM Serif Display',serif;font-size:clamp(2rem,3.5vw,2.8rem);color:var(--text-dark);font-weight:400;line-height:1.15;margin-bottom:1.2rem}
+    .section-title em{font-style:italic;color:var(--gold-metallic)}
+
+    /* ─── HERO ─── */
+    .page-hero{position:relative;height:58vh;min-height:380px;display:flex;align-items:center;overflow:hidden}
+    .page-hero-bg{position:absolute;inset:0;z-index:0}
+    .page-hero-bg img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}
+    .page-hero-overlay{position:absolute;inset:0;background:linear-gradient(100deg,rgba(8,4,1,.86) 0%,rgba(8,4,1,.38) 100%);z-index:1}
+    .page-hero-content{position:relative;z-index:2;max-width:1240px;width:100%;margin:0 auto;padding:0 5rem;display:flex;flex-direction:column;align-items:flex-start;gap:1.2rem}
+    .page-hero-title{font-family:'DM Serif Display',serif;font-size:clamp(2.6rem,5.5vw,4.2rem);color:#fff;font-weight:400;line-height:1.06;text-shadow:0 2px 24px rgba(0,0,0,.6);max-width:640px;animation:heroFadeUp .9s .1s ease both}
+    .page-hero-title em{font-style:italic;color:var(--orange)}
+    .page-hero-divider{width:44px;height:1.5px;background:rgba(255,255,255,.35);animation:heroFadeUp .7s .25s ease both}
+    .page-hero-desc{font-size:1rem;color:rgba(255,255,255,.75);line-height:1.75;max-width:520px;text-shadow:0 1px 10px rgba(0,0,0,.35);animation:heroFadeUp .9s .3s ease both}
+    @keyframes heroFadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
+
+    /* ─── MISSION SECTION ─── */
+    .mission{padding:6rem 2.5rem;background:var(--bg)}
+    .mission-inner{max-width:1240px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+    .mission-text .section-title{font-size:clamp(1.8rem,3vw,2.4rem)}
+    .mission-text p{font-size:.95rem;color:var(--text-light);line-height:1.85;margin-bottom:1.1rem}
+    .mission-text p strong{color:var(--text-dark)}
+    .mission-quote{background:var(--text-dark);border-radius:20px;padding:3rem;display:flex;flex-direction:column;gap:1.5rem}
+    .mission-quote-text{font-family:'DM Serif Display',serif;font-size:clamp(1.3rem,2.2vw,1.7rem);color:#fff;font-style:italic;line-height:1.45}
+    .mission-quote-text em{color:var(--orange)}
+    .mission-quote-author{font-size:.78rem;color:rgba(255,255,255,.45);letter-spacing:2px;text-transform:uppercase}
+
+    /* ─── VALEURS ─── */
+    .valeurs{padding:6rem 2.5rem;background:var(--cream)}
+    .valeurs-inner{max-width:1240px;margin:0 auto}
+    .valeurs-head{text-align:center;margin-bottom:4rem}
+    .valeurs-head p{font-size:.95rem;color:var(--text-light);line-height:1.75;max-width:560px;margin:.8rem auto 0}
+    .valeurs-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2rem}
+    .valeur-card{background:#fff;border-radius:20px;padding:2.5rem;border:1px solid rgba(241,98,42,.1);display:flex;gap:1.8rem;align-items:flex-start;transition:box-shadow .35s,transform .35s}
+    .valeur-card:hover{box-shadow:0 16px 45px rgba(30,20,12,.09);transform:translateY(-4px)}
+    .valeur-num{font-family:'DM Serif Display',serif;font-size:3.5rem;color:rgba(241,98,42,.12);font-weight:400;line-height:1;flex-shrink:0;min-width:2.5rem}
+    .valeur-body h3{font-family:'DM Serif Display',serif;font-size:1.25rem;color:var(--text-dark);font-weight:400;margin-bottom:.7rem;line-height:1.2}
+    .valeur-body h3 em{font-style:italic;color:var(--orange)}
+    .valeur-body p{font-size:.88rem;color:var(--text-light);line-height:1.8}
+
+    /* ─── ENGAGEMENT ─── */
+    .engagement-final{padding:6rem 2.5rem;background:var(--text-dark);position:relative;overflow:hidden}
+    .engagement-final::before{content:'';position:absolute;inset:0;background:url('photo-parallax.jpg') center/cover no-repeat;opacity:.08;z-index:0}
+    .engagement-final-inner{max-width:860px;margin:0 auto;text-align:center;position:relative;z-index:1}
+    .engagement-final .section-label{color:rgba(255,255,255,.4)}
+    .engagement-final .section-title{color:#fff}
+    .engagement-final .section-title em{color:var(--orange)}
+    .engagement-final p{font-size:.98rem;color:rgba(255,255,255,.7);line-height:1.85;margin-bottom:1.2rem}
+    .engagement-final-cta{display:inline-flex;align-items:center;gap:.7rem;background:var(--orange);color:#fff;padding:1rem 2.2rem;border-radius:10px;font-size:.88rem;font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-top:1.5rem;transition:all .25s}
+    .engagement-final-cta:hover{background:var(--orange-dark);transform:translateY(-2px);box-shadow:0 12px 30px rgba(241,98,42,.4)}
+    .engagement-final-cta svg{width:16px;height:16px;stroke:#fff;fill:none;stroke-width:2.5}
+
+    /* ─── FOOTER ─── */
+    footer{background:#fff;padding:4rem 2.5rem 2rem;border-top:1px solid rgba(241,98,42,.08)}
+    .footer-top{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1.1fr 1fr 1.1fr 1fr;gap:2.5rem;padding-bottom:2.5rem;border-bottom:1px solid rgba(241,98,42,.12)}
+    .footer-col h4{font-size:.72rem;color:var(--text-light);text-transform:uppercase;letter-spacing:2px;margin-bottom:1.3rem;font-weight:600}
+    .footer-info-item{display:flex;align-items:flex-start;gap:.7rem;margin-bottom:.85rem;font-size:.83rem;color:var(--text-mid)}
+    .footer-info-item a{color:var(--text-mid);transition:color .2s}
+    .footer-info-item a:hover{color:var(--orange)}
+    .footer-nav-list{list-style:none;display:flex;flex-direction:column;gap:.65rem}
+    .footer-nav-list a{font-size:.83rem;color:var(--text-mid);transition:color .2s}
+    .footer-nav-list a:hover{color:var(--orange)}
+    .footer-social{display:flex;flex-direction:column;gap:.75rem}
+    .social-link{display:flex;align-items:center;gap:.7rem;font-size:.83rem;color:var(--text-mid);transition:color .2s}
+    .social-link:hover{color:var(--orange)}
+    .social-icon{width:32px;height:32px;border-radius:8px;background:rgba(241,98,42,.12);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .social-icon svg{width:16px;height:16px;stroke:currentColor;fill:none}
+    .footer-bottom{max-width:1200px;margin:2rem auto 0;display:flex;justify-content:space-between;align-items:center;font-size:.72rem;color:var(--text-light);flex-wrap:wrap;gap:.5rem}
+    .footer-bottom a{color:var(--text-light);transition:color .2s}
+    .footer-bottom a:hover{color:var(--orange)}
+
+    /* ─── PHONE FAB ─── */
+    .phone-fab{position:fixed;bottom:2rem;right:2rem;width:58px;height:58px;border-radius:50%;background:var(--orange);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 25px rgba(241,98,42,.4);z-index:50;transition:all .3s}
+    .phone-fab:hover{background:var(--orange-dark);transform:scale(1.08)}
+    .phone-fab svg{width:24px;height:24px;stroke:#fff;fill:none}
+
+    /* ─── ANIMATIONS ─── */
+    .reveal{opacity:0;transform:translateY(60px) scale(.97);transition:opacity 1.1s cubic-bezier(.16,1,.3,1),transform 1.1s cubic-bezier(.16,1,.3,1)}
+    .reveal.visible{opacity:1;transform:none}
+    .reveal-d1{transition-delay:.1s}
+    .reveal-d2{transition-delay:.2s}
+    .reveal-d3{transition-delay:.3s}
+    .page-flash{position:fixed;inset:0;background:var(--text-dark);z-index:999;pointer-events:none;animation:flashOut 1s cubic-bezier(.77,0,.18,1) forwards}
+    @keyframes flashOut{0%{opacity:1}100%{opacity:0;visibility:hidden}}
+
+    /* ─── RESPONSIVE ─── */
+    @media(max-width:1100px){.footer-top{grid-template-columns:1fr 1fr}}
+    @media(max-width:900px){.mission-inner{grid-template-columns:1fr;gap:3rem}.valeurs-grid{grid-template-columns:1fr}}
+    @media(max-width:768px){
+      nav,.btn-nav{display:none}
+      nav.open{display:flex;position:absolute;top:100%;left:0;right:0;background:var(--bg);flex-direction:column;padding:1.5rem 2rem;gap:1rem;box-shadow:0 10px 30px rgba(0,0,0,.08);z-index:99;border-top:1px solid rgba(241,98,42,.1)}
+      nav.open ul{flex-direction:column;gap:1rem}
+      .menu-toggle{display:block}
+      .header-inner{padding:0 1.5rem}
+      .footer-top{grid-template-columns:1fr}
+      .page-hero{height:70vh}
+      .page-hero-content{padding:0 1.8rem}
+      .mission{padding:4rem 1.5rem}
+      .valeurs{padding:4rem 1.5rem}
+      .engagement-final{padding:4rem 1.5rem}
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="page-flash"></div>
+
+  <!-- HEADER -->
+  <header class="header" id="top">
+    <div class="header-inner">
+      <a href="index.html" class="logo">
+        <img src="log.png" alt="Madame Nettoie" />
+      </a>
+      <nav id="mainNav">
+        <ul>
+          <li><a href="index.html">Accueil</a></li>
+          <li class="has-dropdown">
+            <a href="index.html#services">Services <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></a>
+            <ul class="dropdown">
+              <li><a href="menage.html">Ménage à domicile</a></li>
+              <li><a href="repassage.html">Repassage</a></li>
+              <li><a href="livraison.html">Livraison de courses</a></li>
+              <li><a href="ainees.html">Aide aux aînés</a></li>
+              <li><a href="garde.html">Garde d'enfants</a></li>
+              <li><a href="bureaux.html">Nettoyage de bureaux</a></li>
+            </ul>
+          </li>
+          <li><a href="apropos.html" style="color:var(--orange)">À propos</a></li>
+          <li><a href="espace-client.html">Espace client</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="postuler.html">Travailler avec nous</a></li>
+        </ul>
+      </nav>
+      <a href="contact.html" class="btn-nav">Devis gratuit</a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Menu">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="page-hero">
+    <div class="page-hero-bg">
+      <img src="photo-parallax.jpg" alt="À propos de Madame Nettoie" />
+    </div>
+    <div class="page-hero-overlay"></div>
+    <div class="page-hero-content">
+      <h1 class="page-hero-title">L'humain au cœur <em>de votre domicile.</em></h1>
+      <span class="page-hero-divider"></span>
+      <p class="page-hero-desc">Madame Nettoie ce n'est pas qu'une prestation de ménage, c'est du bien-être. Découvrez la mission, les valeurs et les engagements qui guident chacune de nos interventions.</p>
+    </div>
+  </section>
+
+  <!-- MISSION -->
+  <section class="mission">
+    <div class="mission-inner">
+
+      <div class="mission-text reveal">
+        <span class="section-label">— Notre mission —</span>
+        <h2 class="section-title">Vous libérer du quotidien pour <em>l'essentiel.</em></h2>
+        <p>Notre mission est simple : vous libérer des contraintes du quotidien pour vous permettre de vous recentrer sur l'essentiel, tout en veillant au bien-être et à la sécurité de vos proches.</p>
+        <p>Parce que chaque foyer est unique et que vos attentes le sont tout autant, nous ne proposons pas de formules toutes faites. Notre priorité est de comprendre précisément votre mode de vie, vos sensibilités et vos contraintes horaires pour vous offrir une prestation <strong>parfaitement adaptée.</strong></p>
+        <p>Nous avons fait le choix de nous éloigner des formules standardisées. Nous savons qu'ouvrir les portes de son domicile requiert une grande confiance. C'est pourquoi nous avons bâti notre agence autour d'une approche fondamentalement <strong>humaine, locale et sur-mesure.</strong></p>
+      </div>
+
+      <div class="mission-quote reveal reveal-d1">
+        <p class="mission-quote-text">« Madame Nettoie ce n'est pas qu'une prestation de ménage — <em>c'est du bien-être.</em> »</p>
+        <span class="mission-quote-author">Graziela Courregelongue · Fondatrice</span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- VALEURS -->
+  <section class="valeurs">
+    <div class="valeurs-inner">
+      <div class="valeurs-head reveal">
+        <span class="section-label">— Ce qui nous définit —</span>
+        <h2 class="section-title">Nos valeurs <em>fondamentales</em></h2>
+        <p>Chaque famille, chaque maison et chaque senior a une histoire et des habitudes qui lui sont propres. Ces quatre valeurs guident chacune de nos interventions, jour après jour.</p>
+      </div>
+
+      <div class="valeurs-grid">
+
+        <div class="valeur-card reveal">
+          <span class="valeur-num">01</span>
+          <div class="valeur-body">
+            <h3>Écoute <em>&amp; Personnalisation</em></h3>
+            <p>Chaque famille, chaque maison et chaque senior a une histoire et des habitudes qui lui sont propres. Notre méthode repose sur un dialogue sincère, initié dès notre première visite d'évaluation, pour bâtir une prestation qui vous ressemble.</p>
+          </div>
+        </div>
+
+        <div class="valeur-card reveal reveal-d1">
+          <span class="valeur-num">02</span>
+          <div class="valeur-body">
+            <h3>Confiance <em>&amp; Discrétion</em></h3>
+            <p>Notre exigence commence par la formation. Nos intervenants sont sélectionnés et accompagnés, non seulement pour leurs compétences techniques, mais aussi pour leur savoir-être. Discrétion, respect de l'intimité et bienveillance sont nos maîtres-mots.</p>
+          </div>
+        </div>
+
+        <div class="valeur-card reveal reveal-d2">
+          <span class="valeur-num">03</span>
+          <div class="valeur-body">
+            <h3>Rigueur <em>&amp; Qualité</em></h3>
+            <p>Nous assurons un suivi régulier de nos interventions. Notre équipe de coordinateurs veille à ce que le cahier des charges défini avec vous soit respecté à la lettre, semaine après semaine.</p>
+          </div>
+        </div>
+
+        <div class="valeur-card reveal reveal-d3">
+          <span class="valeur-num">04</span>
+          <div class="valeur-body">
+            <h3>Continuité <em>&amp; Proximité</em></h3>
+            <p>Afin de tisser un véritable lien de confiance, notamment auprès de nos aînés, nous privilégions la stabilité en vous attribuant un(e) intervenant(e) dédié(e). Un repère humain, constant et rassurant.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ENGAGEMENT FINAL -->
+  <section class="engagement-final">
+    <div class="engagement-final-inner reveal">
+      <span class="section-label">— Notre engagement —</span>
+      <h2 class="section-title">Faire de votre maison <em>un lieu de sérénité.</em></h2>
+      <p>Nous travaillons avec une véritable conscience professionnelle pour vous apporter cette tranquillité d'esprit : l'assurance que votre foyer est entre de bonnes mains.</p>
+      <p>Que vous soyez présent à votre domicile pour superviser la prestation ou que vous soyez absent, nos équipes agissent avec la même constance, la même loyauté et la même rigueur.</p>
+      <a href="contact.html" class="engagement-final-cta">
+        Demander un devis gratuit
+        <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-top">
+      <div class="footer-col">
+        <img src="log.png" alt="Madame Nettoie" style="height:56px;margin-bottom:1rem" />
+        <h4>Horaires &amp; Contact</h4>
+        <div class="footer-info-item"><span>📅</span><span>Lundi au Samedi : 9h00 – 18h30</span></div>
+        <div class="footer-info-item"><span>📞</span><a href="tel:+33622668916">06 22 66 89 16</a></div>
+        <div class="footer-info-item"><span>✉</span><a href="mailto:contact@madame-nettoie.fr">contact@madame-nettoie.fr</a></div>
+      </div>
+      <div class="footer-col">
+        <h4>Zone d'intervention</h4>
+        <div class="footer-info-item"><span>🗺</span><span>Bordeaux, Bègles, Mérignac, Pessac, Talence, Villenave-d'Ornon, Gradignan, Canéjan</span></div>
+      </div>
+      <div class="footer-col">
+        <h4>Navigation rapide</h4>
+        <ul class="footer-nav-list">
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="apropos.html">À propos</a></li>
+          <li><a href="menage.html">Ménage à domicile</a></li>
+          <li><a href="repassage.html">Repassage</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="postuler.html">Travailler avec nous</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Suivez-nous</h4>
+        <div class="footer-social">
+          <a href="#" class="social-link"><div class="social-icon"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></div>Facebook</a>
+          <a href="#" class="social-link"><div class="social-icon"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></div>Instagram</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Madame Nettoie · Tous droits réservés · Bordeaux &amp; Bègles</span>
+      <div style="display:flex;gap:1.2rem">
+        <a href="#">Mentions légales</a>
+        <a href="#">CGV</a>
+        <a href="#">Politique de confidentialité</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- PHONE FAB -->
+  <a href="tel:+33622668916" class="phone-fab" aria-label="Appeler Madame Nettoie">
+    <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.1a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+  </a>
+
+  <script>
+    const menuToggle = document.getElementById('menuToggle');
+    const mainNav = document.getElementById('mainNav');
+    menuToggle.addEventListener('click', () => mainNav.classList.toggle('open'));
+    mainNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mainNav.classList.remove('open')));
+
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); observer.unobserve(e.target); } });
+    }, { threshold: 0.1 });
+    reveals.forEach(r => observer.observe(r));
+  </script>
+
+</body>
+</html>

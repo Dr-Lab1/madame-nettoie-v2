@@ -1,0 +1,661 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>Contact — Madame Nettoie · Bordeaux</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=Fraunces:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" />
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth;overflow-x:clip}
+    body{font-family:'DM Sans',sans-serif;background:#fffbf7;color:#3a2c1e;overflow-x:clip}
+    img{max-width:100%;display:block}
+    a{text-decoration:none;color:inherit}
+    button{font-family:inherit;cursor:pointer;border:none}
+    :root{
+      --orange:#f1622a;--orange-dark:#d94e1a;--orange-pale:#fde8d8;
+      --cream:#fff0e3;--red:#e63946;--red-dark:#c1121f;
+      --bg:#fffbf7;--white:#ffffff;--text-dark:#1e140c;--text:#3a2c1e;
+      --text-mid:#4a3728;--text-light:#7a6558;--kaki:#a8a886;--kaki-dark:#8a8a6a;
+      --gold:#FFD700;--gold-brighter:#EFBF04;--gold-metallic:#D4AF37;--goldenrod:#DAA520;
+      --beige-standard:#F5F5DC;--beige-classique:#EDE8D0;--beige-clair:#C8AD7F;--beige-golden:#E4D5B7;
+    }
+
+    /* ─── HEADER ─── */
+    .header{background:rgba(255,251,247,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);padding:.4rem 0;position:sticky;top:0;z-index:100;border-bottom:1px solid rgba(241,98,42,.1);transition:all .3s}
+    .header-inner{max-width:1240px;margin:0 auto;padding:0 2.5rem;display:flex;align-items:center;justify-content:space-between;gap:2rem}
+    .logo{display:flex;align-items:center;gap:.75rem}
+    .logo-mark{width:40px;height:40px;background:linear-gradient(135deg,var(--orange),var(--red));border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .logo-mark svg{width:22px;height:22px;fill:white}
+    .logo-text h1{font-family:'DM Serif Display',serif;font-size:1.35rem;color:var(--text-dark);font-weight:400;line-height:1}
+    .logo-text p{font-size:.65rem;color:var(--text-light);margin-top:2px;letter-spacing:.5px;text-transform:uppercase}
+    nav ul{display:flex;align-items:center;gap:2.2rem;list-style:none}
+    nav a{font-size:.8rem;font-weight:500;letter-spacing:.5px;color:var(--text-mid);transition:color .2s;text-transform:uppercase}
+    nav a:hover{color:var(--orange)}
+    .btn-nav{background:var(--text-dark);color:#fff;padding:.7rem 1.4rem;border-radius:6px;font-size:.78rem;font-weight:600;letter-spacing:.5px;text-transform:uppercase;transition:all .25s}
+    .btn-nav:hover{background:var(--orange);transform:translateY(-1px)}
+    .logo-img{height:64px;width:auto;display:block}
+    .has-dropdown{position:relative}
+    .has-dropdown>a{display:flex;align-items:center;gap:.3rem}
+    .has-dropdown .dropdown{display:none;position:absolute;top:calc(100% + .6rem);left:50%;transform:translateX(-50%);background:#fff;border-radius:12px;box-shadow:0 12px 40px rgba(30,20,12,.13);border:1px solid rgba(241,98,42,.1);padding:.4rem 0;min-width:210px;z-index:200}
+    .has-dropdown:hover .dropdown{display:block}
+    .has-dropdown .dropdown li{list-style:none;padding:0}
+    .has-dropdown .dropdown li a{display:block;padding:.65rem 1.3rem;font-size:.76rem;font-weight:500;letter-spacing:.4px;color:var(--text-mid);text-transform:uppercase;transition:background .15s,color .15s;white-space:nowrap}
+    .has-dropdown .dropdown li a:hover{background:var(--orange-pale);color:var(--orange)}
+    .has-dropdown .dropdown li+li{border-top:1px solid rgba(241,98,42,.06)}
+    .has-dropdown .dropdown::before{content:'';position:absolute;height:.8rem;top:-.8rem;left:0;right:0}
+    @media(max-width:768px){.has-dropdown .dropdown{display:block;position:static;transform:none;box-shadow:none;border:none;padding:.3rem 0 .3rem 1rem;background:transparent}}
+    .menu-toggle{display:none;background:transparent;font-size:1.4rem;color:var(--text-dark);padding:.3rem}
+
+    /* ─── SECTION TITLES ─── */
+    .section-label{font-size:.72rem;color:var(--gold-metallic);letter-spacing:3px;text-transform:uppercase;font-weight:600;margin-bottom:.7rem;display:block}
+    .section-title{font-family:'DM Serif Display',serif;font-size:clamp(2rem,3.5vw,2.8rem);color:var(--text-dark);font-weight:400;line-height:1.15;margin-bottom:1.2rem}
+    .section-title em{font-style:italic;color:var(--gold-metallic)}
+
+
+    /* ─── HERO PAGE ─── */
+    .page-hero{position:relative;height:58vh;min-height:380px;display:flex;align-items:center;overflow:hidden}
+    .page-hero-bg{position:absolute;inset:0;z-index:0}
+    .page-hero-bg img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}
+    .page-hero-overlay{position:absolute;inset:0;background:linear-gradient(100deg,rgba(8,4,1,.86) 0%,rgba(8,4,1,.38) 100%);z-index:1}
+    .page-hero-content{position:relative;z-index:2;max-width:1240px;width:100%;margin:0 auto;padding:0 5rem;text-align:left;display:flex;flex-direction:column;align-items:flex-start;gap:1.2rem}
+    .page-hero-title{font-family:'DM Serif Display',serif;font-size:clamp(2.6rem,5.5vw,4.2rem);color:#fff;font-weight:400;line-height:1.06;text-shadow:0 2px 24px rgba(0,0,0,.6);max-width:640px}
+    .page-hero-title em{font-style:italic;color:var(--orange)}
+    .page-hero-divider{width:44px;height:1.5px;background:rgba(255,255,255,.35)}
+    .page-hero-desc{font-size:1rem;color:rgba(255,255,255,.75);line-height:1.75;max-width:500px;text-shadow:0 1px 10px rgba(0,0,0,.35)}
+    @keyframes heroFadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
+    .page-hero-title{animation:heroFadeUp .9s .1s ease both}
+    .page-hero-divider{animation:heroFadeUp .7s .25s ease both}
+    .page-hero-desc{animation:heroFadeUp .9s .3s ease both}
+
+    /* ─── INFO BAND ─── */
+    .contact-info-band{background:var(--text-dark);padding:2.8rem 2.5rem}
+    .contact-info-inner{max-width:1240px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:2rem}
+    .cib-item{display:flex;align-items:flex-start;gap:1rem}
+    .cib-icon{width:44px;height:44px;background:rgba(241,98,42,.18);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:1px solid rgba(241,98,42,.3)}
+    .cib-icon svg{width:20px;height:20px;stroke:var(--orange);fill:none;stroke-width:2}
+    .cib-title{font-size:.68rem;color:rgba(255,255,255,.45);letter-spacing:2px;text-transform:uppercase;margin-bottom:.35rem}
+    .cib-val{font-size:.95rem;color:#fff;font-weight:500;line-height:1.5}
+    .cib-val a{color:#fff;transition:color .2s}
+    .cib-val a:hover{color:var(--orange)}
+
+    /* ─── CONTACT LAYOUT ─── */
+    .contact-section{padding:5.5rem 2.5rem;background:var(--bg)}
+    .contact-layout{max-width:1240px;margin:0 auto;display:grid;grid-template-columns:1fr 1.5fr;gap:4rem;align-items:start}
+
+    /* Left column */
+    .contact-left .section-title{font-size:clamp(1.8rem,3vw,2.4rem)}
+    .contact-left p{font-size:.92rem;color:var(--text-light);line-height:1.78;margin-bottom:1.5rem}
+    .contact-detail{display:flex;align-items:flex-start;gap:.9rem;margin-bottom:1.2rem}
+    .contact-detail-icon{width:38px;height:38px;background:var(--orange-pale);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .contact-detail-icon svg{width:17px;height:17px;stroke:var(--orange);fill:none;stroke-width:2}
+    .contact-detail-label{font-size:.68rem;color:var(--text-light);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:.2rem}
+    .contact-detail-val{font-size:.9rem;color:var(--text-dark);font-weight:500}
+    .contact-detail-val a{color:var(--text-dark);transition:color .2s}
+    .contact-detail-val a:hover{color:var(--orange)}
+
+    /* Right column — form */
+    .contact-form-wrap{background:#fff;border-radius:20px;padding:2.8rem;box-shadow:0 20px 60px rgba(30,20,12,.08);border:1px solid rgba(241,98,42,.1)}
+    .form-block-title{font-size:.68rem;color:var(--gold-metallic);letter-spacing:3px;text-transform:uppercase;font-weight:600;margin-bottom:1.2rem;padding-bottom:.6rem;border-bottom:1px solid rgba(212,175,55,.25);display:block}
+    .form-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;margin-bottom:.9rem}
+    .form-grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.9rem;margin-bottom:.9rem}
+    .form-field{display:flex;flex-direction:column;gap:.35rem}
+    label.field-label{font-size:.75rem;font-weight:600;color:var(--text-mid);letter-spacing:.3px;text-transform:uppercase}
+    .contact-form-wrap input,
+    .contact-form-wrap textarea,
+    .contact-form-wrap select{
+      width:100%;padding:.85rem 1.1rem;
+      border:1.5px solid rgba(241,98,42,.15);
+      border-radius:10px;
+      font-family:'DM Sans',sans-serif;
+      font-size:.88rem;
+      background:#fffbf7;
+      color:var(--text);
+      transition:border-color .2s,box-shadow .2s;
+      outline:none;
+      appearance:none;-webkit-appearance:none;
+    }
+    .contact-form-wrap input::placeholder,
+    .contact-form-wrap textarea::placeholder{color:var(--text-light)}
+    .contact-form-wrap input:focus,
+    .contact-form-wrap textarea:focus,
+    .contact-form-wrap select:focus{border-color:var(--orange);box-shadow:0 0 0 3px rgba(241,98,42,.1);background:#fff}
+    .contact-form-wrap textarea{min-height:120px;resize:vertical;margin-bottom:0}
+    .consent-wrap{display:flex;align-items:flex-start;gap:.8rem;margin-bottom:1.8rem;padding:1.2rem 1.4rem;background:var(--cream);border-radius:12px;border:1px solid rgba(212,175,55,.2);margin-top:.9rem}
+    .consent-wrap input[type="checkbox"]{width:18px;height:18px;flex-shrink:0;margin-top:2px;accent-color:var(--orange);cursor:pointer}
+    .consent-text{font-size:.8rem;color:var(--text-mid);line-height:1.65}
+    .consent-text a{color:var(--orange);text-decoration:underline;text-underline-offset:3px}
+    .btn-submit{background:var(--orange);color:#fff;padding:1.05rem 3rem;border-radius:10px;font-size:.85rem;font-weight:700;letter-spacing:.6px;text-transform:uppercase;transition:all .25s;width:100%;display:flex;align-items:center;justify-content:center;gap:.6rem;border:none;cursor:pointer}
+    .btn-submit:hover{background:var(--orange-dark);transform:translateY(-2px);box-shadow:0 12px 30px rgba(241,98,42,.35)}
+    .btn-submit svg{width:16px;height:16px;stroke:#fff;fill:none;stroke-width:2.5}
+    .form-note{margin-top:.9rem;font-size:.76rem;color:var(--text-light);text-align:center;line-height:1.65}
+    .axonaut-info{display:flex;align-items:flex-start;gap:.65rem;background:rgba(212,175,55,.07);border:1px solid rgba(212,175,55,.22);border-radius:10px;padding:.85rem 1rem;font-size:.78rem;color:var(--text-mid);line-height:1.65;margin-bottom:1.1rem}
+    .axonaut-info svg{flex-shrink:0;margin-top:2px;stroke:var(--gold-metallic);fill:none}
+    .axonaut-info strong{color:var(--text-dark)}
+    .zone-map{background:var(--bg);padding:5rem 2.5rem;border-top:1px solid rgba(241,98,42,.08)}
+    .zone-map-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:3.5rem;align-items:center}
+    .zone-map-text .section-title{font-size:clamp(1.6rem,2.8vw,2.2rem)}
+    .zone-map-text p{font-size:.9rem;color:var(--text-light);line-height:1.75}
+    .zone-map-placeholder{border-radius:18px;overflow:hidden;border:2px dashed rgba(241,98,42,.25);background:var(--cream);height:340px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.1rem;text-align:center;padding:2rem}
+    .zone-map-placeholder svg{stroke:var(--orange);fill:none}
+    .zone-map-placeholder .zmp-title{font-size:.95rem;font-weight:600;color:var(--text-mid)}
+    .zone-map-placeholder .zmp-sub{font-size:.78rem;color:var(--text-light);max-width:260px;line-height:1.6}
+    .zone-map-placeholder .zmp-badge{display:inline-flex;align-items:center;gap:.4rem;background:rgba(241,98,42,.08);border:1px solid rgba(241,98,42,.18);border-radius:20px;padding:.3rem .9rem;font-size:.7rem;font-weight:600;color:var(--orange);letter-spacing:.4px;text-transform:uppercase;margin-top:.4rem}
+    @media(max-width:768px){.zone-map-inner{grid-template-columns:1fr}.zone-map{padding:3.5rem 1.5rem}}
+
+    /* ─── FAQ ─── */
+    .faq-section{background:var(--cream);padding:6rem 2.5rem}
+    .faq-inner{max-width:860px;margin:0 auto}
+    .faq-head{text-align:center;margin-bottom:3.5rem}
+    .faq-head .section-title{font-size:clamp(1.8rem,3vw,2.4rem)}
+    .faq-list{display:flex;flex-direction:column;gap:.8rem}
+    .faq-item{background:#fff;border-radius:14px;border:1px solid rgba(241,98,42,.1);overflow:hidden;transition:box-shadow .3s}
+    .faq-item:hover{box-shadow:0 8px 28px rgba(30,20,12,.07)}
+    .faq-btn{width:100%;background:none;border:none;padding:1.35rem 1.6rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;cursor:pointer;text-align:left}
+    .faq-question{font-family:'DM Serif Display',serif;font-size:1.02rem;color:var(--text-dark);font-weight:400;line-height:1.3;flex:1}
+    .faq-chevron{width:22px;height:22px;border-radius:50%;background:var(--orange-pale);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:transform .35s cubic-bezier(.16,1,.3,1),background .2s}
+    .faq-chevron svg{width:12px;height:12px;stroke:var(--orange);fill:none;stroke-width:2.5;transition:transform .35s cubic-bezier(.16,1,.3,1)}
+    .faq-item.open .faq-chevron{background:var(--orange)}
+    .faq-item.open .faq-chevron svg{stroke:#fff;transform:rotate(180deg)}
+    .faq-answer{max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(.16,1,.3,1)}
+    .faq-answer-inner{padding:0 1.6rem 1.4rem;font-size:.9rem;color:var(--text-mid);line-height:1.78}
+    .faq-answer-inner a{color:var(--orange);text-decoration:underline;text-underline-offset:3px}
+
+    /* ─── FOOTER ─── */
+    footer{background:#fff;padding:4rem 2.5rem 2rem;border-top:1px solid rgba(241,98,42,.08)}
+    .footer-top{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1.1fr 1fr 1.1fr 1fr;gap:2.5rem;padding-bottom:2.5rem;border-bottom:1px solid rgba(241,98,42,.12)}
+    .footer-col h4{font-size:.72rem;color:var(--text-light);text-transform:uppercase;letter-spacing:2px;margin-bottom:1.3rem;font-weight:600}
+    .footer-col-brand{display:flex;align-items:center;gap:.75rem;margin-bottom:1rem}
+    .footer-col-brand .logo-mark{width:36px;height:36px}
+    .footer-col-brand .logo-text h1{color:var(--text-dark);font-size:1.1rem}
+    .footer-col-brand .logo-text p{color:var(--text-light)}
+    .footer-info-item{display:flex;align-items:flex-start;gap:.7rem;margin-bottom:.85rem;font-size:.83rem;color:var(--text-mid)}
+    .footer-info-item span{font-size:1rem}
+    .footer-info-item a{color:var(--text-mid);transition:color .2s}
+    .footer-info-item a:hover{color:var(--orange)}
+    .footer-nav-list{list-style:none;display:flex;flex-direction:column;gap:.65rem}
+    .footer-nav-list a{font-size:.83rem;color:var(--text-mid);transition:color .2s}
+    .footer-nav-list a:hover{color:var(--orange)}
+    .footer-social{display:flex;flex-direction:column;gap:.75rem}
+    .social-link{display:flex;align-items:center;gap:.7rem;font-size:.83rem;color:var(--text-mid);transition:color .2s}
+    .social-link:hover{color:var(--orange)}
+    .social-icon{width:32px;height:32px;border-radius:8px;background:rgba(241,98,42,.12);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .2s}
+    .social-link:hover .social-icon{background:rgba(241,98,42,.25)}
+    .social-icon svg{width:16px;height:16px;stroke:currentColor;fill:none}
+    .footer-bottom{max-width:1200px;margin:2rem auto 0;display:flex;justify-content:space-between;align-items:center;font-size:.72rem;color:var(--text-light);flex-wrap:wrap;gap:.5rem}
+    .footer-bottom a{color:var(--text-light);transition:color .2s}
+    .footer-bottom a:hover{color:var(--orange)}
+
+    /* ─── PHONE FAB ─── */
+    .phone-fab{position:fixed;bottom:2rem;right:2rem;width:58px;height:58px;border-radius:50%;background:var(--orange);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 25px rgba(241,98,42,.4);z-index:50;transition:all .3s;text-decoration:none}
+    .phone-fab:hover{background:var(--orange-dark);transform:scale(1.08)}
+    .phone-fab svg{width:24px;height:24px;stroke:#fff;fill:none}
+
+    /* ─── ANIMATIONS ─── */
+    .reveal{opacity:0;transform:translateY(80px) scale(.97);transition:opacity 1.1s cubic-bezier(.16,1,.3,1),transform 1.1s cubic-bezier(.16,1,.3,1);will-change:transform,opacity}
+    .reveal.visible{opacity:1;transform:none}
+    .reveal-delay-1{transition-delay:.15s}
+    .page-flash{position:fixed;inset:0;background:var(--text-dark);z-index:999;pointer-events:none;animation:flashOut 1s cubic-bezier(.77,0,.18,1) forwards}
+    @keyframes flashOut{0%{opacity:1}100%{opacity:0;visibility:hidden}}
+
+    /* ─── RESPONSIVE ─── */
+    @media(max-width:1100px){.footer-top{grid-template-columns:1fr 1fr}.contact-info-inner{grid-template-columns:1fr}}
+    @media(max-width:900px){.contact-layout{grid-template-columns:1fr;gap:3rem}}
+    @media(max-width:768px){
+      nav,.btn-nav{display:none}
+      nav.open{display:flex;position:absolute;top:100%;left:0;right:0;background:var(--bg);flex-direction:column;padding:1.5rem 2rem;gap:1rem;box-shadow:0 10px 30px rgba(0,0,0,.08);z-index:99;border-top:1px solid rgba(241,98,42,.1)}
+      nav.open ul{flex-direction:column;gap:1rem}
+      .menu-toggle{display:block}
+      .header-inner{padding:0 1.5rem}
+      .footer-top{grid-template-columns:1fr}
+      .page-hero{height:70vh}
+      .page-hero-content{padding:0 1.8rem}
+      .contact-section{padding:3.5rem 1.2rem}
+      .contact-form-wrap{padding:2rem 1.4rem}
+      .form-grid-2,.form-grid-3{grid-template-columns:1fr}
+      .faq-section{padding:4rem 1.2rem}
+      .contact-info-band{padding:2rem 1.2rem}
+    }
+    @media(max-width:500px){.contact-form-wrap{padding:1.6rem 1rem}}
+  </style>
+</head>
+
+<body>
+
+  <div class="page-flash"></div>
+
+  <!-- HEADER -->
+  <header class="header" id="top">
+    <div class="header-inner">
+      <a href="index.html" class="logo">
+        <img src="log.png" alt="Madame Nettoie" class="logo-img" />
+      </a>
+      <nav id="mainNav">
+        <ul>
+          <li><a href="index.html">Accueil</a></li>
+          <li class="has-dropdown">
+            <a href="index.html#services">Services <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></a>
+            <ul class="dropdown">
+              <li><a href="menage.html">Ménage à domicile</a></li>
+              <li><a href="repassage.html">Repassage</a></li>
+              <li><a href="livraison.html">Livraison de courses</a></li>
+              <li><a href="ainees.html">Aide aux aînés</a></li>
+              <li><a href="garde.html">Garde d'enfants</a></li>
+              <li><a href="bureaux.html">Nettoyage de bureaux</a></li>
+            </ul>
+          </li>
+          <li><a href="apropos.html">À propos</a></li>
+          <li><a href="espace-client.html">Espace client</a></li>
+          <li><a href="contact.html" style="color:var(--orange)">Contact</a></li>
+        </ul>
+      </nav>
+      <a href="contact.html" class="btn-nav">Prendre rendez-vous</a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Menu">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="3" y1="6" x2="21" y2="6" />
+          <line x1="3" y1="12" x2="21" y2="12" />
+          <line x1="3" y1="18" x2="21" y2="18" />
+        </svg>
+      </button>
+    </div>
+  </header>
+
+
+  <!-- HERO -->
+  <section class="page-hero">
+    <div class="page-hero-bg">
+      <img src="photo-parallax.jpg" alt="Contact Madame Nettoie Bordeaux" />
+    </div>
+    <div class="page-hero-overlay"></div>
+    <div class="page-hero-content">
+      <h1 class="page-hero-title">Parlons de votre <em>projet.</em></h1>
+      <span class="page-hero-divider"></span>
+      <p class="page-hero-desc">Une question, une demande de devis, un besoin particulier ? Notre équipe vous répond sous 24h. Appelez-nous ou écrivez-nous directement.</p>
+    </div>
+  </section>
+
+  <!-- INFO BAND -->
+  <div class="contact-info-band">
+    <div class="contact-info-inner">
+      <div class="cib-item">
+        <div class="cib-icon">
+          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.1a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .18h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+        </div>
+        <div>
+          <div class="cib-title">Téléphone</div>
+          <div class="cib-val"><a href="tel:+33622668916">06 22 66 89 16</a></div>
+        </div>
+      </div>
+      <div class="cib-item">
+        <div class="cib-icon">
+          <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </div>
+        <div>
+          <div class="cib-title">E-mail</div>
+          <div class="cib-val"><a href="mailto:contact@madame-nettoie.fr">contact@madame-nettoie.fr</a></div>
+        </div>
+      </div>
+      <div class="cib-item">
+        <div class="cib-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <div>
+          <div class="cib-title">Horaires</div>
+          <div class="cib-val">Lundi – Samedi · 9h00 à 18h30</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTACT SECTION -->
+  <section class="contact-section">
+    <div class="contact-layout">
+
+      <!-- LEFT -->
+      <div class="contact-left reveal">
+        <span class="section-label">— Nous écrire —</span>
+        <h2 class="section-title">Contactez-nous <em>directement.</em></h2>
+        <p>Que ce soit pour demander un devis, poser une question ou organiser une première intervention, notre équipe est disponible et à votre écoute.</p>
+        <p>Nous intervenons à Bordeaux, Bègles et dans toute la métropole bordelaise. Devis gratuit, réponse garantie sous 24h.</p>
+
+        <div class="contact-detail">
+          <div class="contact-detail-icon">
+            <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div>
+            <div class="contact-detail-label">Zone d'intervention</div>
+            <div class="contact-detail-val">Bordeaux, Bègles & métropole bordelaise</div>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-detail-icon">
+            <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.1a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .18h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+          </div>
+          <div>
+            <div class="contact-detail-label">Téléphone direct</div>
+            <div class="contact-detail-val"><a href="tel:+33622668916">06 22 66 89 16</a></div>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-detail-icon">
+            <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <div>
+            <div class="contact-detail-label">E-mail</div>
+            <div class="contact-detail-val"><a href="mailto:contact@madame-nettoie.fr">contact@madame-nettoie.fr</a></div>
+          </div>
+        </div>
+
+        <div style="margin-top:2rem;background:var(--cream);border-radius:14px;padding:1.4rem 1.6rem;border:1px solid rgba(212,175,55,.2)">
+          <p style="font-size:.85rem;color:var(--text-mid);line-height:1.7"><strong style="color:var(--text-dark)">Intervention sous 48h</strong> dans toute la métropole bordelaise. Visite d'évaluation offerte pour tout nouveau client.</p>
+        </div>
+      </div>
+
+      <!-- RIGHT — FORM -->
+      <div class="reveal reveal-delay-1">
+        <form class="contact-form-wrap" action="mailto:contact@madame-nettoie.fr" method="post" enctype="text/plain" novalidate>
+
+          <span class="form-block-title">Vos coordonnées</span>
+
+          <div class="form-grid-2" style="margin-bottom:.9rem">
+            <div class="form-field">
+              <label class="field-label" for="nom">Nom *</label>
+              <input type="text" id="nom" name="nom" placeholder="Dupont" required />
+            </div>
+            <div class="form-field">
+              <label class="field-label" for="prenom">Prénom *</label>
+              <input type="text" id="prenom" name="prenom" placeholder="Marie" required />
+            </div>
+          </div>
+
+          <div class="form-grid-3" style="margin-bottom:.9rem">
+            <div class="form-field" style="grid-column:1/3">
+              <label class="field-label" for="adresse">Adresse *</label>
+              <input type="text" id="adresse" name="adresse" placeholder="12 rue des Fleurs" required />
+            </div>
+            <div class="form-field">
+              <label class="field-label" for="codepostal">Code postal *</label>
+              <input type="text" id="codepostal" name="codepostal" placeholder="33000" required />
+            </div>
+          </div>
+
+          <div class="form-grid-2" style="margin-bottom:.9rem">
+            <div class="form-field">
+              <label class="field-label" for="ville">Ville *</label>
+              <input type="text" id="ville" name="ville" placeholder="Bordeaux" required />
+            </div>
+            <div class="form-field">
+              <label class="field-label" for="telephone">Téléphone *</label>
+              <input type="tel" id="telephone" name="telephone" placeholder="06 00 00 00 00" required />
+            </div>
+          </div>
+
+          <div class="form-field" style="margin-bottom:.9rem">
+            <label class="field-label" for="email">E-mail *</label>
+            <input type="email" id="email" name="email" placeholder="marie@exemple.fr" required />
+          </div>
+
+          <div class="form-field" style="margin-bottom:.9rem">
+            <label class="field-label" for="message">Votre message *</label>
+            <textarea id="message" name="message" placeholder="Décrivez votre demande, le type de service souhaité, vos disponibilités..." required></textarea>
+          </div>
+
+          <div class="consent-wrap">
+            <input type="checkbox" id="rgpd" name="rgpd" required />
+            <label class="consent-text" for="rgpd">
+              En cochant cette case, j'accepte que Madame Nettoie collecte et traite mes données personnelles pour traiter ma demande de contact. Les informations sont conservées 3 ans. Conformément au RGPD, vous disposez de droits sur vos données. <a href="#">En savoir plus</a>
+            </label>
+          </div>
+
+          <div class="axonaut-info">
+            <svg width="15" height="15" viewBox="0 0 24 24" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Votre devis détaillé est établi via <strong>Axonaut</strong>, notre logiciel de gestion, suite à une visite d'évaluation gratuite à votre domicile. Aucun chiffre ne vous est communiqué sans avoir vu votre logement.
+          </div>
+
+          <button type="submit" class="btn-submit">
+            Envoyer le message
+            <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </button>
+          <p class="form-note">Réponse sous 24h · Devis 100% gratuit · Sans engagement</p>
+
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq-section" id="faq">
+    <div class="faq-inner">
+      <div class="faq-head reveal">
+        <span class="section-label">— Questions fréquentes —</span>
+        <h2 class="section-title">Tout ce que vous voulez <em>savoir.</em></h2>
+        <p style="font-size:.95rem;color:var(--text-light);line-height:1.75;max-width:540px;margin:0 auto">Retrouvez ci-dessous les réponses aux questions que nos clients nous posent le plus souvent.</p>
+      </div>
+
+      <div class="faq-list">
+
+        <div class="faq-item">
+          <button class="faq-btn" aria-expanded="false">
+            <span class="faq-question">Comment fonctionne votre service de ménage à domicile ?</span>
+            <span class="faq-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Après un premier contact, nous organisons une visite d'évaluation gratuite à votre domicile pour comprendre vos besoins, vos habitudes et vos préférences. Nous vous proposons ensuite une formule sur-mesure — régulière ou ponctuelle — avec un intervenant dédié qui apprend à connaître votre foyer.</div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-btn" aria-expanded="false">
+            <span class="faq-question">Dans quelles zones intervenez-vous ?</span>
+            <span class="faq-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Nous intervenons principalement à <strong>Bordeaux et Bègles</strong>, ainsi que dans l'ensemble de la métropole bordelaise. N'hésitez pas à nous contacter pour vérifier si votre commune est couverte — nous faisons tout notre possible pour vous répondre favorablement.</div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-btn" aria-expanded="false">
+            <span class="faq-question">Puis-je bénéficier d'aides de l'État pour financer vos services ?</span>
+            <span class="faq-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Oui. En tant que service à la personne agréé, nos prestations ouvrent droit au <strong>crédit d'impôt de 50%</strong> sur les sommes dépensées, soit une réduction effective de moitié sur votre facture annuelle. Les personnes âgées ou handicapées peuvent également bénéficier d'aides spécifiques (APA, PCH, CESU préfinancé). Nous vous accompagnons dans toutes les démarches.</div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-btn" aria-expanded="false">
+            <span class="faq-question">Quel est le délai pour obtenir une première intervention ?</span>
+            <span class="faq-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Nous nous engageons à vous répondre sous <strong>24h</strong> après réception de votre demande. La première intervention peut généralement être planifiée sous <strong>48 à 72h</strong>, selon les disponibilités et votre secteur géographique. Pour les urgences, contactez-nous directement par téléphone.</div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-btn" aria-expanded="false">
+            <span class="faq-question">Qui sont vos intervenants ? Sont-ils formés et assurés ?</span>
+            <span class="faq-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Tous nos intervenants sont des employés de maison recrutés avec soin, formés à nos méthodes et couverts par notre assurance responsabilité civile professionnelle. Nous privilégions la stabilité : vous avez toujours le même intervenant pour créer une relation de confiance durable.</div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-btn" aria-expanded="false">
+            <span class="faq-question">Proposez-vous des services autres que le ménage ?</span>
+            <span class="faq-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Oui, nous couvrons un large spectre de services à domicile : <a href="repassage.html">repassage</a>, <a href="livraison.html">livraison de courses</a>, <a href="ainees.html">aide aux aînés</a>, <a href="garde.html">garde d'enfants</a>, et <a href="bureaux.html">nettoyage de bureaux</a>. L'idée est simple : une seule entreprise, une seule relation de confiance, pour tous vos besoins du quotidien.</div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-btn" aria-expanded="false">
+            <span class="faq-question">Le devis est-il vraiment gratuit et sans engagement ?</span>
+            <span class="faq-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Absolument. Le devis est <strong>100% gratuit</strong> et n'implique aucun engagement de votre part. La visite d'évaluation à domicile est également offerte. Vous êtes libre d'accepter ou de refuser la proposition, sans aucune pression ni frais cachés.</div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-btn" aria-expanded="false">
+            <span class="faq-question">Comment régler mes prestations ?</span>
+            <span class="faq-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Nous acceptons plusieurs modes de règlement : virement bancaire, chèque, et <strong>CESU (Chèque Emploi Service Universel)</strong> préfinancé ou ordinaire. L'utilisation du CESU vous permet de bénéficier pleinement des avantages fiscaux liés aux services à la personne.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ZONES D'INTERVENTION — Google Maps -->
+  <section class="zone-map" id="zones">
+    <div class="zone-map-inner">
+      <div class="zone-map-text reveal">
+        <span class="section-label">— Zones d'intervention —</span>
+        <h2 class="section-title">Nous intervenons à <em>Bordeaux</em> et toute sa métropole</h2>
+        <p>Bordeaux, Bègles, Mérignac, Pessac, Talence, Villenave-d'Ornon, Gradignan, Lormont, Cenon, Floirac et les communes voisines.</p>
+        <p style="font-size:.8rem;color:var(--text-light);margin-top:1rem;font-style:italic">Vous n'êtes pas sûr que nous intervenions dans votre secteur ? Contactez-nous — nous faisons le point ensemble.</p>
+      </div>
+      <div class="zone-map-placeholder reveal">
+        <!-- 📍 Intégration Google Maps à venir — zones d'intervention + SEO local -->
+        <svg width="52" height="52" viewBox="0 0 24 24" stroke-width="1.4"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <p class="zmp-title">Carte interactive — Google Maps</p>
+        <p class="zmp-sub">Affichage des zones d'intervention · Référencement local SEO</p>
+        <span class="zmp-badge">
+          <svg width="10" height="10" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          Intégration à venir
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-top">
+      <div class="footer-col">
+        <div class="footer-col-brand">
+          <img src="log.png" alt="Madame Nettoie" class="logo-img" />
+        </div>
+        <h4>Horaires &amp; Contact</h4>
+        <div class="footer-info-item"><span>📅</span><span>Lundi au Samedi : 9h00 – 18h30</span></div>
+        <div class="footer-info-item"><span>📞</span><a href="tel:+33622668916">06 22 66 89 16</a></div>
+        <div class="footer-info-item"><span>✉</span><a href="mailto:contact@madame-nettoie.fr">contact@madame-nettoie.fr</a></div>
+      </div>
+      <div class="footer-col">
+        <h4>Zone d'intervention</h4>
+        <div class="footer-info-item"><span>🗺</span><span>Bordeaux, Bègles et toute la métropole bordelaise</span></div>
+        <div style="margin-top:1.2rem;background:rgba(241,98,42,.1);border:1px solid rgba(241,98,42,.2);border-radius:10px;padding:1rem 1.2rem">
+          <p style="font-size:.78rem;color:var(--text-mid);line-height:1.6">Intervention rapide sous <strong style="color:var(--orange)">48h</strong> dans toute la métropole. Devis gratuit et visite d'évaluation offerte.</p>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Navigation rapide</h4>
+        <ul class="footer-nav-list">
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="menage.html">Ménage à domicile</a></li>
+          <li><a href="repassage.html">Repassage</a></li>
+          <li><a href="livraison.html">Livraison de courses</a></li>
+          <li><a href="ainees.html">Aide aux aînés</a></li>
+          <li><a href="apropos.html">À propos</a></li>
+          <li><a href="espace-client.html">Espace client</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="postuler.html">Travailler avec nous</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Suivez-nous</h4>
+        <div class="footer-social">
+          <a href="#" class="social-link">
+            <div class="social-icon"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></div>
+            Facebook
+          </a>
+          <a href="#" class="social-link">
+            <div class="social-icon"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></div>
+            Instagram
+          </a>
+          <a href="#" class="social-link">
+            <div class="social-icon"><svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 00-1.95 1.96A29 29 0 001 12a29 29 0 00.46 5.58A2.78 2.78 0 003.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.95A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg></div>
+            YouTube
+          </a>
+          <a href="#" class="social-link">
+            <div class="social-icon"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></div>
+            LinkedIn
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Madame Nettoie · Tous droits réservés · Bordeaux &amp; Bègles</span>
+      <div style="display:flex;gap:1.2rem">
+        <a href="#">Mentions légales</a>
+        <a href="#">Conditions générales de vente</a>
+        <a href="#">Politique de confidentialité</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- PHONE FAB -->
+  <a href="tel:+33622668916" class="phone-fab" aria-label="Appeler Madame Nettoie">
+    <svg viewBox="0 0 24 24">
+      <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.1a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+    </svg>
+  </a>
+
+  <script>
+    const menuToggle = document.getElementById('menuToggle');
+    const mainNav = document.getElementById('mainNav');
+    menuToggle.addEventListener('click', () => mainNav.classList.toggle('open'));
+    mainNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mainNav.classList.remove('open')));
+
+    const cinObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        e.target.classList.add('visible');
+        cinObs.unobserve(e.target);
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -55px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => cinObs.observe(el));
+
+    // FAQ accordion
+    document.querySelectorAll('.faq-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.closest('.faq-item');
+        const answer = item.querySelector('.faq-answer');
+        const isOpen = item.classList.contains('open');
+
+        // Close all
+        document.querySelectorAll('.faq-item.open').forEach(openItem => {
+          openItem.classList.remove('open');
+          openItem.querySelector('.faq-answer').style.maxHeight = '0';
+          openItem.querySelector('.faq-btn').setAttribute('aria-expanded', 'false');
+        });
+
+        // Open clicked if it was closed
+        if (!isOpen) {
+          item.classList.add('open');
+          answer.style.maxHeight = answer.scrollHeight + 'px';
+          btn.setAttribute('aria-expanded', 'true');
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
+
+
+

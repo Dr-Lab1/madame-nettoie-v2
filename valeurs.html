@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>GSAP Lab — Madame Nettoie</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{overflow-x:clip}
+    body{font-family:'DM Sans',sans-serif;background:#fffbf7;color:#3a2c1e;overflow-x:clip}
+    :root{
+      --orange:#f1622a;--orange-dark:#d94e1a;--orange-pale:#fde8d8;
+      --cream:#fff0e3;--bg:#fffbf7;--dark:#1e140c;
+      --text-mid:#4a3728;--text-light:#7a6558;--gold:#D4AF37;
+    }
+
+    /* ─── PROGRESS BAR GLOBALE (top) ─── */
+    #global-progress{position:fixed;top:0;left:0;height:3px;width:0%;background:var(--orange);z-index:999;pointer-events:none;transform-origin:left}
+
+    /* ─── DEMO TAG ─── */
+    .demo-tag{display:inline-block;background:var(--orange);color:#fff;font-size:.62rem;letter-spacing:2px;text-transform:uppercase;font-weight:700;padding:.28rem .65rem;border-radius:4px;margin-bottom:1.2rem}
+
+    /* ─── BASE SECTION ─── */
+    section{padding:7rem 2rem;position:relative}
+    .inner{max-width:1100px;margin:0 auto}
+    .s-label{font-size:.7rem;color:var(--gold);letter-spacing:3px;text-transform:uppercase;font-weight:600;display:block;margin-bottom:.6rem}
+    .s-title{font-family:'DM Serif Display',serif;font-size:clamp(1.9rem,3.5vw,2.8rem);color:var(--dark);font-weight:400;line-height:1.15;margin-bottom:1rem}
+    .s-title em{font-style:italic;color:var(--orange)}
+    .s-sub{font-size:.95rem;color:var(--text-light);line-height:1.8;max-width:540px}
+    .head{text-align:center;margin-bottom:4rem}
+    .head .s-sub{margin:0 auto}
+    hr.sep{border:none;border-top:1px solid rgba(241,98,42,.12);margin:0}
+
+    /* ══════════════════════════════════════
+       1. HERO — Timeline + defaults + addLabel + position param
+    ══════════════════════════════════════ */
+    #hero{
+      min-height:100vh;display:flex;align-items:center;justify-content:center;
+      background:var(--dark);text-align:center;overflow:hidden;padding:6rem 2rem;
+    }
+    .hero-bg{position:absolute;inset:0;background:linear-gradient(135deg,#1e140c 0%,#3a2c1e 55%,#1e140c 100%)}
+    .hero-orb{position:absolute;border-radius:50%;pointer-events:none}
+    #orb1{width:700px;height:700px;background:radial-gradient(circle,rgba(241,98,42,.14) 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%)}
+    #orb2{width:280px;height:280px;background:radial-gradient(circle,rgba(212,175,55,.12) 0%,transparent 70%);top:15%;right:8%}
+    .hero-content{position:relative;z-index:2;max-width:760px}
+    #h-tag{display:inline-block;font-size:.7rem;color:var(--gold);letter-spacing:4px;text-transform:uppercase;font-weight:600;margin-bottom:1rem}
+    #h-title{font-family:'DM Serif Display',serif;font-size:clamp(3rem,7vw,5.5rem);color:#fff;font-weight:400;line-height:1.05;margin-bottom:1.2rem}
+    #h-title em{font-style:italic;color:var(--orange)}
+    #h-line{width:48px;height:1.5px;background:rgba(255,255,255,.22);margin:0 auto 1.2rem}
+    #h-sub{font-size:1.05rem;color:rgba(255,255,255,.58);line-height:1.85;max-width:520px;margin:0 auto 2rem}
+    #h-cta{display:inline-flex;align-items:center;gap:.5rem;background:var(--orange);color:#fff;padding:.9rem 2rem;border-radius:8px;font-size:.82rem;font-weight:600;letter-spacing:.5px;text-transform:uppercase;cursor:pointer;border:none;font-family:inherit}
+    .hero-hint{position:absolute;bottom:2.2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.5rem;color:rgba(255,255,255,.3);font-size:.68rem;letter-spacing:2px;text-transform:uppercase}
+    .hero-hint span{width:1px;height:36px;background:rgba(255,255,255,.18);display:block}
+
+    /* ══════════════════════════════════════
+       2. MARQUEE — gsap.to repeat:-1 ease:none
+    ══════════════════════════════════════ */
+    .marquee-band{background:var(--orange);padding:1.1rem 0;overflow:hidden;white-space:nowrap}
+    .marquee-track{display:inline-flex;gap:0;white-space:nowrap}
+    .marquee-text{font-family:'DM Serif Display',serif;font-style:italic;font-size:1.3rem;color:#fff;padding:0 2.5rem}
+    .marquee-dot{color:rgba(255,255,255,.5);font-size:1rem;line-height:1.6}
+
+    /* ══════════════════════════════════════
+       3. SCRUB PARALLAX — scrollTrigger scrub:1
+    ══════════════════════════════════════ */
+    #scrub-section{background:var(--dark);overflow:hidden;padding:0;min-height:200vh}
+    .scrub-sticky{position:sticky;top:0;height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden}
+    .scrub-bg-layer{position:absolute;inset:-20%;background:radial-gradient(ellipse at 50% 60%,rgba(241,98,42,.2) 0%,transparent 65%);will-change:transform}
+    .scrub-content{position:relative;z-index:2;text-align:center;max-width:700px;padding:2rem}
+    .scrub-tag{display:block;font-size:.65rem;color:rgba(255,255,255,.4);letter-spacing:3px;text-transform:uppercase;margin-bottom:1rem}
+    .scrub-headline{font-family:'DM Serif Display',serif;font-size:clamp(2rem,5vw,4rem);color:#fff;font-style:italic;line-height:1.1;will-change:transform}
+    .scrub-sub{font-size:.95rem;color:rgba(255,255,255,.5);line-height:1.8;margin-top:1.2rem;will-change:transform}
+    .scrub-progress-wrap{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);width:160px;text-align:center}
+    .scrub-bar-bg{height:2px;background:rgba(255,255,255,.1);border-radius:2px;overflow:hidden}
+    #scrub-fill{height:100%;width:0%;background:var(--orange);border-radius:2px}
+    .scrub-pct{font-size:.68rem;color:rgba(255,255,255,.35);letter-spacing:2px;margin-top:.5rem;text-transform:uppercase}
+
+    /* ══════════════════════════════════════
+       4. CARDS STAGGER — stagger from start, 3D hover
+    ══════════════════════════════════════ */
+    #cards-section{background:var(--bg)}
+    .cards-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.8rem}
+    .v-card{background:#fff;border-radius:16px;padding:2.2rem 1.8rem;border:1px solid rgba(241,98,42,.08);position:relative;overflow:hidden;will-change:transform;cursor:default}
+    .v-card-line{position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--orange),var(--orange-dark));transform-origin:left;transform:scaleX(0);transition:transform .35s ease}
+    .v-card:hover .v-card-line{transform:scaleX(1)}
+    .v-card-num{font-family:'DM Serif Display',serif;font-size:3.5rem;color:rgba(241,98,42,.07);position:absolute;top:.6rem;right:1rem;line-height:1;pointer-events:none}
+    .v-card-icon{width:50px;height:50px;border-radius:12px;background:var(--orange-pale);display:flex;align-items:center;justify-content:center;margin-bottom:1.2rem}
+    .v-card-icon svg{width:22px;height:22px;stroke:var(--orange);stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round}
+    .v-card-title{font-family:'DM Serif Display',serif;font-size:1.22rem;color:var(--dark);margin-bottom:.6rem}
+    .v-card-text{font-size:.88rem;color:var(--text-light);line-height:1.75}
+
+    /* ══════════════════════════════════════
+       5. STAGGER LAB — stagger.from variants + stagger.grid
+    ══════════════════════════════════════ */
+    #stagger-section{background:var(--cream)}
+    .stagger-btns{display:flex;gap:.7rem;flex-wrap:wrap;margin-bottom:2.5rem;justify-content:center}
+    .stagger-btn{background:#fff;border:1.5px solid rgba(241,98,42,.2);color:var(--text-mid);padding:.55rem 1.2rem;border-radius:6px;font-size:.8rem;font-weight:600;letter-spacing:.5px;text-transform:uppercase;cursor:pointer;font-family:inherit;transition:all .2s}
+    .stagger-btn:hover,.stagger-btn.active{background:var(--orange);color:#fff;border-color:var(--orange)}
+    .stagger-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:.7rem;max-width:600px;margin:0 auto}
+    .stagger-box{height:55px;border-radius:8px;background:var(--orange);opacity:0;will-change:transform}
+
+    /* ══════════════════════════════════════
+       6. HORIZONTAL SCROLL — pin + scrub + xPercent + snap
+    ══════════════════════════════════════ */
+    #hscroll-section{padding:0;overflow:hidden}
+    .hscroll-wrap{overflow:hidden}
+    .hscroll-track{display:flex;width:300%}
+    .hscroll-panel{width:33.333%;min-height:100vh;display:flex;align-items:center;justify-content:center;flex-shrink:0;padding:4rem 3rem;text-align:center}
+    .hp1{background:var(--dark)}
+    .hp2{background:#2d1a0e}
+    .hp3{background:#3a2c1e}
+    .hscroll-panel-inner{max-width:480px}
+    .hp-num{font-family:'DM Serif Display',serif;font-size:6rem;color:rgba(241,98,42,.15);line-height:1;margin-bottom:-.5rem}
+    .hp-title{font-family:'DM Serif Display',serif;font-size:clamp(1.8rem,3.5vw,2.8rem);color:#fff;font-style:italic;margin-bottom:1rem}
+    .hp-text{font-size:.95rem;color:rgba(255,255,255,.5);line-height:1.8}
+    .hp-dot-nav{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;gap:.6rem}
+    .hp-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.25);transition:background .3s}
+    .hp-dot.active{background:var(--orange)}
+
+    /* ══════════════════════════════════════
+       7. EASES RACE — fromTo + chaque ease en action
+    ══════════════════════════════════════ */
+    #eases-section{background:var(--bg)}
+    .ease-list{display:flex;flex-direction:column;gap:1.2rem;max-width:700px;margin:0 auto}
+    .ease-row{display:flex;align-items:center;gap:1.2rem}
+    .ease-label{font-size:.78rem;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--text-light);min-width:160px;flex-shrink:0}
+    .ease-track{flex:1;height:44px;background:rgba(241,98,42,.06);border-radius:8px;position:relative;overflow:hidden}
+    .ease-ball{width:44px;height:44px;border-radius:8px;background:var(--orange);position:absolute;top:0;left:0;will-change:transform;display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700;color:#fff}
+
+    /* ══════════════════════════════════════
+       8. COUNTERS — count-up onComplete
+    ══════════════════════════════════════ */
+    #counters-section{background:var(--cream)}
+    .counter-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;text-align:center}
+    .counter-item{padding:2rem 1rem}
+    .c-num{font-family:'DM Serif Display',serif;font-size:clamp(2.4rem,4vw,3.5rem);color:var(--orange);line-height:1;display:block;margin-bottom:.4rem;will-change:transform}
+    .c-label{font-size:.78rem;color:var(--text-light);letter-spacing:1.5px;text-transform:uppercase;font-weight:500}
+
+    /* ══════════════════════════════════════
+       9. INTERACTIVE TIMELINE — paused + addLabel + yoyo + play/reverse
+    ══════════════════════════════════════ */
+    #interactive-section{background:var(--dark)}
+    .tl-stage{display:flex;align-items:center;justify-content:center;gap:2rem;min-height:200px;margin-bottom:2.5rem;flex-wrap:wrap}
+    .tl-box{width:100px;height:100px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',serif;font-size:2rem;font-style:italic;color:#fff;will-change:transform;opacity:0}
+    .tl-box-a{background:var(--orange)}
+    .tl-box-b{background:var(--gold)}
+    .tl-box-c{background:#e63946}
+    .tl-timeline-bar{position:relative;height:4px;background:rgba(255,255,255,.1);border-radius:4px;max-width:500px;margin:0 auto 2rem;overflow:visible}
+    #tl-progress-fill{height:100%;width:0%;background:var(--orange);border-radius:4px;transition:none}
+    .tl-labels{display:flex;justify-content:space-between;margin-top:.5rem;font-size:.65rem;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.3)}
+    .tl-controls{display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap}
+    .tl-btn{padding:.65rem 1.4rem;border-radius:8px;font-size:.8rem;font-weight:600;letter-spacing:.5px;text-transform:uppercase;cursor:pointer;font-family:inherit;border:none;transition:all .2s}
+    #btn-play{background:var(--orange);color:#fff}
+    #btn-pause{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2)}
+    #btn-reverse{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2)}
+    #btn-restart{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2)}
+    #btn-yoyo{background:rgba(212,175,55,.2);color:var(--gold);border:1px solid rgba(212,175,55,.3)}
+    .tl-btn:hover{opacity:.85;transform:translateY(-1px)}
+
+    /* ══════════════════════════════════════
+       10. SCROLLTRIGGER.CREATE — standalone onUpdate + onToggle
+    ══════════════════════════════════════ */
+    #st-create-section{background:var(--cream);min-height:150vh}
+    .st-sticky{position:sticky;top:10vh;padding:2rem 0}
+    .st-card{background:#fff;border-radius:16px;padding:2.5rem;max-width:600px;margin:0 auto;box-shadow:0 8px 40px rgba(30,20,12,.08)}
+    .st-progress-track{height:10px;background:rgba(241,98,42,.1);border-radius:10px;overflow:hidden;margin-bottom:1.2rem}
+    #st-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--orange),var(--orange-dark));border-radius:10px;transition:none}
+    .st-info{display:flex;justify-content:space-between;align-items:center;margin-bottom:2rem}
+    #st-pct{font-family:'DM Serif Display',serif;font-size:3rem;color:var(--orange);line-height:1}
+    .st-badges{display:flex;flex-direction:column;gap:.5rem;text-align:right}
+    .st-badge{font-size:.72rem;letter-spacing:2px;text-transform:uppercase;font-weight:600;padding:.3rem .7rem;border-radius:4px}
+    #st-active{background:rgba(241,98,42,.1);color:var(--orange)}
+    #st-dir{background:rgba(212,175,55,.1);color:var(--gold)}
+    .st-velocity{font-size:.85rem;color:var(--text-light)}
+    #st-vel-val{font-weight:600;color:var(--text-mid)}
+
+    /* ══════════════════════════════════════
+       11. QUOTE — timeline séquentielle
+    ══════════════════════════════════════ */
+    #quote-section{background:var(--dark);text-align:center;padding:8rem 2rem}
+    .q-mark{font-family:'DM Serif Display',serif;font-size:7rem;color:rgba(241,98,42,.12);line-height:.8;display:block;margin-bottom:-.5rem;will-change:transform}
+    .q-text{font-family:'DM Serif Display',serif;font-style:italic;font-size:clamp(1.5rem,3.5vw,2.4rem);color:#fff;line-height:1.5;max-width:750px;margin:0 auto 1.5rem;will-change:transform}
+    #q-line{width:0;height:1.5px;background:var(--orange);margin:.8rem auto}
+    .q-author{font-size:.78rem;letter-spacing:4px;text-transform:uppercase;color:var(--orange);font-weight:600;will-change:transform}
+
+    /* ══════════════════════════════════════
+       12. ENGAGEMENTS — stagger from random
+    ══════════════════════════════════════ */
+    #engagements-section{background:var(--bg)}
+    .eng-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.6rem}
+    .eng-item{background:#fff;border-radius:14px;padding:2rem 1.8rem;display:flex;gap:1.1rem;align-items:flex-start;border:1px solid rgba(241,98,42,.07);will-change:transform}
+    .eng-dot{width:10px;height:10px;border-radius:50%;background:var(--orange);flex-shrink:0;margin-top:.4rem}
+    .eng-title{font-weight:600;font-size:.93rem;color:var(--dark);margin-bottom:.3rem}
+    .eng-text{font-size:.86rem;color:var(--text-light);line-height:1.7}
+
+    /* ─── RESPONSIVE ─── */
+    @media(max-width:900px){
+      .cards-grid{grid-template-columns:1fr 1fr}
+      .counter-grid{grid-template-columns:repeat(2,1fr)}
+      .eng-grid{grid-template-columns:1fr}
+      .stagger-grid{grid-template-columns:repeat(4,1fr)}
+    }
+    @media(max-width:600px){
+      .cards-grid{grid-template-columns:1fr}
+      .ease-label{min-width:100px;font-size:.68rem}
+    }
+
+    /* invisible au départ (GSAP gère l'apparition) */
+    .gsap-hidden{visibility:hidden}
+  </style>
+</head>
+<body>
+
+<!-- PROGRESS BAR GLOBALE -->
+<div id="global-progress"></div>
+
+<!-- ══ 1. HERO — Timeline + defaults + addLabel + position param ══ -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-orb" id="orb1"></div>
+  <div class="hero-orb" id="orb2"></div>
+  <div class="hero-content gsap-hidden">
+    <span id="h-tag">— GSAP Test Lab · Madame Nettoie —</span>
+    <h1 id="h-title">Nos <em>valeurs</em></h1>
+    <div id="h-line"></div>
+    <p id="h-sub">Page de démonstration de toutes les techniques GSAP : timelines, ScrollTrigger, scrub, pin, stagger, eases, fromTo et plus.</p>
+    <button id="h-cta">Découvrir ↓</button>
+  </div>
+  <div class="hero-hint gsap-hidden" id="hero-hint">
+    <span></span>Défiler
+  </div>
+</section>
+
+<!-- ══ 2. MARQUEE — gsap.to repeat:-1 ══ -->
+<div class="marquee-band">
+  <div class="marquee-track" id="marqueeTrack">
+    <span class="marquee-text">Confiance</span><span class="marquee-dot">·</span>
+    <span class="marquee-text">Excellence</span><span class="marquee-dot">·</span>
+    <span class="marquee-text">Bienveillance</span><span class="marquee-dot">·</span>
+    <span class="marquee-text">Ponctualité</span><span class="marquee-dot">·</span>
+    <span class="marquee-text">Transparence</span><span class="marquee-dot">·</span>
+    <span class="marquee-text">Adaptabilité</span><span class="marquee-dot">·</span>
+    <span class="marquee-text">Confiance</span><span class="marquee-dot">·</span>
+    <span class="marquee-text">Excellence</span><span class="marquee-dot">·</span>
+    <span class="marquee-text">Bienveillance</span><span class="marquee-dot">·</span>
+    <span class="marquee-text">Ponctualité</span><span class="marquee-dot">·</span>
+    <span class="marquee-text">Transparence</span><span class="marquee-dot">·</span>
+    <span class="marquee-text">Adaptabilité</span><span class="marquee-dot">·</span>
+  </div>
+</div>
+<hr class="sep" />
+
+<!-- ══ 3. SCRUB PARALLAX — scrollTrigger scrub:1 + onUpdate ══ -->
+<section id="scrub-section">
+  <div class="scrub-sticky" id="scrubSticky">
+    <div class="scrub-bg-layer" id="scrubBg"></div>
+    <div class="scrub-content">
+      <span class="demo-tag">scrollTrigger · scrub: 1</span>
+      <span class="scrub-tag">Animation liée au scroll — scrub</span>
+      <p class="scrub-headline" id="scrubHeadline">La confiance se <em style="color:var(--orange);font-style:italic">construit</em><br>à chaque intervention.</p>
+      <p class="scrub-sub" id="scrubSub">Le contenu se révèle progressivement selon votre position de scroll. Plus vous descendez, plus l'animation avance.</p>
+    </div>
+    <div class="scrub-progress-wrap">
+      <div class="scrub-bar-bg"><div id="scrub-fill"></div></div>
+      <p class="scrub-pct" id="scrubPct">0%</p>
+    </div>
+  </div>
+</section>
+<hr class="sep" />
+
+<!-- ══ 4. CARDS — stagger from "start" + 3D hover (mousemove) ══ -->
+<section id="cards-section">
+  <div class="inner">
+    <div class="head gsap-hidden" id="cardsHead">
+      <span class="demo-tag">stagger · from:"start" · mousemove 3D</span>
+      <span class="s-label">— Nos principes —</span>
+      <h2 class="s-title">Ce en quoi nous <em>croyons</em></h2>
+      <p class="s-sub">Chaque carte apparaît en cascade (stagger from start). Survolez pour l'effet 3D perspective.</p>
+    </div>
+    <div class="cards-grid" id="cardsGrid">
+      <div class="v-card gsap-hidden"><div class="v-card-line"></div><span class="v-card-num">01</span><div class="v-card-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><h3 class="v-card-title">Confiance</h3><p class="v-card-text">Chaque membre de notre équipe est sélectionné avec soin. Votre foyer est entre de bonnes mains.</p></div>
+      <div class="v-card gsap-hidden"><div class="v-card-line"></div><span class="v-card-num">02</span><div class="v-card-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><h3 class="v-card-title">Excellence</h3><p class="v-card-text">Méthodes professionnelles, produits de qualité, exigence constante. Le résultat ne souffre aucun compromis.</p></div>
+      <div class="v-card gsap-hidden"><div class="v-card-line"></div><span class="v-card-num">03</span><div class="v-card-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><h3 class="v-card-title">Ponctualité</h3><p class="v-card-text">Votre temps est précieux. Nous respectons chaque horaire convenu, sans exception.</p></div>
+      <div class="v-card gsap-hidden"><div class="v-card-line"></div><span class="v-card-num">04</span><div class="v-card-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div><h3 class="v-card-title">Bienveillance</h3><p class="v-card-text">Une relation humaine, chaleureuse et attentionnée. Nous traitons chaque client avec considération.</p></div>
+      <div class="v-card gsap-hidden"><div class="v-card-line"></div><span class="v-card-num">05</span><div class="v-card-icon"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div><h3 class="v-card-title">Transparence</h3><p class="v-card-text">Pas de frais cachés. Vous savez exactement ce que vous payez et ce que vous obtenez.</p></div>
+      <div class="v-card gsap-hidden"><div class="v-card-line"></div><span class="v-card-num">06</span><div class="v-card-icon"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></div><h3 class="v-card-title">Adaptabilité</h3><p class="v-card-text">Chaque foyer est unique. Nous écoutons et ajustons chaque formule à votre réalité.</p></div>
+    </div>
+  </div>
+</section>
+<hr class="sep" />
+
+<!-- ══ 5. STAGGER LAB — from: start/center/end/random + grid ══ -->
+<section id="stagger-section">
+  <div class="inner">
+    <div class="head">
+      <span class="demo-tag">stagger · from: start / center / end / random / grid</span>
+      <h2 class="s-title">Laboratoire <em>Stagger</em></h2>
+      <p class="s-sub">Cliquez sur un bouton pour voir les différentes origines d'animation en cascade.</p>
+    </div>
+    <div class="stagger-btns">
+      <button class="stagger-btn active" data-from="start">Start</button>
+      <button class="stagger-btn" data-from="center">Center</button>
+      <button class="stagger-btn" data-from="end">End</button>
+      <button class="stagger-btn" data-from="random">Random</button>
+      <button class="stagger-btn" data-from="edges">Edges</button>
+      <button class="stagger-btn" data-grid="grid">Grid (center)</button>
+    </div>
+    <div class="stagger-grid" id="staggerGrid">
+      <div class="stagger-box"></div><div class="stagger-box"></div><div class="stagger-box"></div>
+      <div class="stagger-box"></div><div class="stagger-box"></div><div class="stagger-box"></div>
+      <div class="stagger-box"></div><div class="stagger-box"></div><div class="stagger-box"></div>
+      <div class="stagger-box"></div><div class="stagger-box"></div><div class="stagger-box"></div>
+      <div class="stagger-box"></div><div class="stagger-box"></div><div class="stagger-box"></div>
+      <div class="stagger-box"></div><div class="stagger-box"></div><div class="stagger-box"></div>
+    </div>
+  </div>
+</section>
+<hr class="sep" />
+
+<!-- ══ 6. HORIZONTAL SCROLL — pin + scrub + xPercent + snap ══ -->
+<section id="hscroll-section">
+  <div class="hscroll-wrap" id="hscrollWrap">
+    <div class="hscroll-track" id="hscrollTrack">
+      <div class="hscroll-panel hp1">
+        <div class="hscroll-panel-inner">
+          <span class="demo-tag">pin · scrub · xPercent · snap</span>
+          <p class="hp-num">01</p>
+          <h2 class="hp-title">Scroll horizontal<br>épinglé</h2>
+          <p class="hp-text">La page est épinglée (pin:true) pendant que vous scrollez. Le contenu défile horizontalement grâce à xPercent. Continuez à scroller →</p>
+        </div>
+      </div>
+      <div class="hscroll-panel hp2">
+        <div class="hscroll-panel-inner">
+          <p class="hp-num">02</p>
+          <h2 class="hp-title">Deuxième panneau</h2>
+          <p class="hp-text">Le snap aligne automatiquement sur chaque panneau. scrub:1 rend la transition fluide et proportionnelle au scroll.</p>
+        </div>
+      </div>
+      <div class="hscroll-panel hp3">
+        <div class="hscroll-panel-inner">
+          <p class="hp-num">03</p>
+          <h2 class="hp-title">Troisième panneau</h2>
+          <p class="hp-text">Trois panneaux, chacun fait 1/3 de la largeur totale (300%). Continuez à scroller pour sortir de cette section.</p>
+        </div>
+      </div>
+    </div>
+    <div class="hp-dot-nav" id="hpDotNav">
+      <div class="hp-dot active"></div>
+      <div class="hp-dot"></div>
+      <div class="hp-dot"></div>
+    </div>
+  </div>
+</section>
+<hr class="sep" />
+
+<!-- ══ 7. EASES RACE — gsap.fromTo + chaque ease ══ -->
+<section id="eases-section">
+  <div class="inner">
+    <div class="head">
+      <span class="demo-tag">gsap.fromTo · eases : power · expo · elastic · back · bounce</span>
+      <h2 class="s-title">Course des <em>Eases</em></h2>
+      <p class="s-sub">Chaque ligne utilise un ease différent. Toutes partent du même point en même temps — observez les comportements.</p>
+    </div>
+    <div class="ease-list" id="easeList">
+      <div class="ease-row"><span class="ease-label">power1.out</span><div class="ease-track"><div class="ease-ball" id="e0">P1</div></div></div>
+      <div class="ease-row"><span class="ease-label">power3.out</span><div class="ease-track"><div class="ease-ball" id="e1">P3</div></div></div>
+      <div class="ease-row"><span class="ease-label">expo.inOut</span><div class="ease-track"><div class="ease-ball" id="e2">EX</div></div></div>
+      <div class="ease-row"><span class="ease-label">elastic.out</span><div class="ease-track"><div class="ease-ball" id="e3">EL</div></div></div>
+      <div class="ease-row"><span class="ease-label">back.out(1.7)</span><div class="ease-track"><div class="ease-ball" id="e4">BA</div></div></div>
+      <div class="ease-row"><span class="ease-label">bounce.out</span><div class="ease-track"><div class="ease-ball" id="e5">BO</div></div></div>
+    </div>
+  </div>
+</section>
+<hr class="sep" />
+
+<!-- ══ 8. COUNTERS — count-up onComplete ══ -->
+<section id="counters-section">
+  <div class="inner">
+    <div class="head gsap-hidden" id="countersHead">
+      <span class="demo-tag">ScrollTrigger · onComplete · count-up</span>
+      <h2 class="s-title">Nos <em>chiffres</em></h2>
+    </div>
+    <div class="counter-grid" id="counterGrid">
+      <div class="counter-item gsap-hidden"><span class="c-num" data-target="320">0</span><span class="c-label">Clients satisfaits</span></div>
+      <div class="counter-item gsap-hidden"><span class="c-num" data-target="98">0</span><span class="c-label">% de satisfaction</span></div>
+      <div class="counter-item gsap-hidden"><span class="c-num" data-target="7">0</span><span class="c-label">Ans d'expérience</span></div>
+      <div class="counter-item gsap-hidden"><span class="c-num" data-target="12">0</span><span class="c-label">Experts formés</span></div>
+    </div>
+  </div>
+</section>
+<hr class="sep" />
+
+<!-- ══ 9. INTERACTIVE TIMELINE — paused + addLabel + yoyo + repeat ══ -->
+<section id="interactive-section">
+  <div class="inner">
+    <div class="head" style="margin-bottom:3rem">
+      <span class="demo-tag">timeline · paused · addLabel · position param · yoyo</span>
+      <h2 class="s-title" style="color:#fff">Timeline <em>interactive</em></h2>
+      <p class="s-sub" style="color:rgba(255,255,255,.5)">Contrôlez la timeline manuellement. addLabel marque les positions "start", "mid", "end".</p>
+    </div>
+    <div class="tl-timeline-bar">
+      <div id="tl-progress-fill"></div>
+      <div class="tl-labels"><span>start</span><span>mid</span><span>end</span></div>
+    </div>
+    <div class="tl-stage">
+      <div class="tl-box tl-box-a">A</div>
+      <div class="tl-box tl-box-b">B</div>
+      <div class="tl-box tl-box-c">C</div>
+    </div>
+    <div class="tl-controls">
+      <button class="tl-btn" id="btn-play">▶ Play</button>
+      <button class="tl-btn" id="btn-pause">⏸ Pause</button>
+      <button class="tl-btn" id="btn-reverse">↩ Reverse</button>
+      <button class="tl-btn" id="btn-restart">↺ Restart</button>
+      <button class="tl-btn" id="btn-yoyo">⟳ Yoyo loop</button>
+    </div>
+  </div>
+</section>
+<hr class="sep" />
+
+<!-- ══ 10. SCROLLTRIGGER.CREATE — standalone + onUpdate + onToggle ══ -->
+<section id="st-create-section">
+  <div class="inner">
+    <div class="head" style="margin-bottom:3rem">
+      <span class="demo-tag">ScrollTrigger.create · onUpdate · onToggle · toggleClass</span>
+      <h2 class="s-title">ScrollTrigger <em>standalone</em></h2>
+      <p class="s-sub">ScrollTrigger.create() indépendant d'une animation. Scroll dans cette zone pour voir progress, direction et statut en temps réel.</p>
+    </div>
+    <div class="st-sticky" id="stSticky">
+      <div class="st-card">
+        <div class="st-info">
+          <div id="st-pct">0%</div>
+          <div class="st-badges">
+            <span class="st-badge" id="st-active">INACTIF</span>
+            <span class="st-badge" id="st-dir">→ FORWARD</span>
+          </div>
+        </div>
+        <div class="st-progress-track"><div id="st-fill"></div></div>
+        <p class="st-velocity">Vélocité scroll : <span id="st-vel-val">0</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+<hr class="sep" />
+
+<!-- ══ 11. QUOTE — gsap.timeline séquentielle ══ -->
+<section id="quote-section">
+  <div class="inner" style="text-align:center">
+    <span class="demo-tag">timeline · séquence · ligne qui s'étire</span>
+    <span class="q-mark gsap-hidden" id="qMark">«</span>
+    <p class="q-text gsap-hidden" id="qText">La confiance ne se décrète pas.<br>Elle se mérite, intervention après intervention.</p>
+    <div id="q-line"></div>
+    <p class="q-author gsap-hidden" id="qAuthor">Madame Nettoie</p>
+  </div>
+</section>
+<hr class="sep" />
+
+<!-- ══ 12. ENGAGEMENTS — stagger from "random" ══ -->
+<section id="engagements-section">
+  <div class="inner">
+    <div class="head gsap-hidden" id="engHead">
+      <span class="demo-tag">stagger · from: "random"</span>
+      <h2 class="s-title">Nos <em>engagements</em></h2>
+      <p class="s-sub">Les cartes apparaissent dans un ordre aléatoire à chaque chargement (stagger from: "random").</p>
+    </div>
+    <div class="eng-grid" id="engGrid">
+      <div class="eng-item gsap-hidden"><div class="eng-dot"></div><div><p class="eng-title">Personnel sélectionné et formé</p><p class="eng-text">Chaque intervenant passe par un processus de sélection rigoureux avant sa première mission.</p></div></div>
+      <div class="eng-item gsap-hidden"><div class="eng-dot"></div><div><p class="eng-title">Devis gratuit et sans engagement</p><p class="eng-text">Nous prenons le temps de comprendre votre besoin avant de vous proposer une formule adaptée.</p></div></div>
+      <div class="eng-item gsap-hidden"><div class="eng-dot"></div><div><p class="eng-title">Intervention garantie ou refaite</p><p class="eng-text">Si le résultat ne correspond pas à vos attentes, nous revenons. Votre satisfaction est notre engagement.</p></div></div>
+      <div class="eng-item gsap-hidden"><div class="eng-dot"></div><div><p class="eng-title">Produits respectueux et efficaces</p><p class="eng-text">Des produits professionnels choisis pour leur efficacité et leur respect de l'environnement intérieur.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- GSAP + ScrollTrigger -->
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+/* ══════════════════════════════════════════
+   1. HERO — timeline + defaults + addLabel + position parameter
+══════════════════════════════════════════ */
+gsap.set(['.hero-content', '#hero-hint'], { visibility: 'visible' });
+
+const heroTl = gsap.timeline({
+  defaults: { ease: 'power3.out', duration: 0.8 }
+});
+heroTl
+  .addLabel('start')                                             // addLabel
+  .from('#h-tag',    { y: 20, autoAlpha: 0, duration: 0.6 })
+  .from('#h-title',  { y: 50, autoAlpha: 0, duration: 1 },  '-=0.3')  // overlap -=0.3
+  .from('#h-line',   { scaleX: 0, autoAlpha: 0, transformOrigin: 'left' }, '-=0.5')
+  .addLabel('mid')                                               // addLabel 'mid'
+  .from('#h-sub',    { y: 28, autoAlpha: 0 },                '+=0')    // absolu 0
+  .from('#h-cta',    { scale: 0.92, autoAlpha: 0 },          '-=0.4')
+  .addLabel('end')
+  .from('#hero-hint',{ y: 14, autoAlpha: 0, duration: 0.5 }, 'end-=0.2'); // position relative au label
+
+// Orb flottant — yoyo:true repeat:-1
+gsap.to('#orb2', {
+  y: -30, x: 12,
+  duration: 3.8,
+  ease: 'sine.inOut',
+  yoyo: true,
+  repeat: -1,
+});
+
+// CTA scroll au clic
+document.getElementById('h-cta').addEventListener('click', () => {
+  document.getElementById('scrub-section').scrollIntoView({ behavior: 'smooth' });
+});
+
+
+/* ══════════════════════════════════════════
+   2. MARQUEE — gsap.to ease:none repeat:-1
+══════════════════════════════════════════ */
+const track = document.getElementById('marqueeTrack');
+// Duplique le contenu pour boucle sans saut
+track.innerHTML += track.innerHTML;
+const halfW = track.scrollWidth / 2;
+gsap.to(track, {
+  x: -halfW,
+  duration: 25,
+  ease: 'none',
+  repeat: -1,
+});
+
+
+/* ══════════════════════════════════════════
+   3. SCRUB PARALLAX — scrollTrigger scrub:1 + onUpdate
+══════════════════════════════════════════ */
+const scrubTl = gsap.timeline({
+  scrollTrigger: {
+    trigger: '#scrub-section',
+    start: 'top top',
+    end: 'bottom bottom',
+    scrub: 1,                           // scrub:1 = smooth follow
+    onUpdate(self) {
+      const pct = Math.round(self.progress * 100);
+      document.getElementById('scrub-fill').style.width = pct + '%';
+      document.getElementById('scrubPct').textContent = pct + '%';
+    },
+  }
+});
+scrubTl
+  .from('#scrubHeadline', { y: 80, autoAlpha: 0, scale: 0.9 })
+  .from('#scrubSub',      { y: 40, autoAlpha: 0 },            '-=0.5')
+  .to('#scrubBg',         { scale: 1.5, rotate: 15 },         '<')     // position < = simultané
+  .to('#scrubHeadline',   { y: -60, autoAlpha: 0 },           '+=0.1');
+
+
+/* ══════════════════════════════════════════
+   4. CARDS — stagger from:"start" + 3D hover
+══════════════════════════════════════════ */
+gsap.set('#cardsHead', { visibility: 'visible' });
+gsap.from('#cardsHead', {
+  scrollTrigger: { trigger: '#cardsHead', start: 'top 85%' },
+  y: 40, autoAlpha: 0, duration: 0.9, ease: 'power3.out',
+});
+
+gsap.set('.v-card', { visibility: 'visible' });
+gsap.from('.v-card', {
+  scrollTrigger: { trigger: '#cardsGrid', start: 'top 80%' },
+  y: 60, autoAlpha: 0, duration: 0.7, ease: 'power3.out',
+  stagger: { each: 0.1, from: 'start' },   // stagger from: "start"
+});
+
+// 3D Hover — mousemove
+document.querySelectorAll('.v-card').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const r = card.getBoundingClientRect();
+    const dx = (e.clientX - r.left - r.width / 2)  / (r.width  / 2);
+    const dy = (e.clientY - r.top  - r.height / 2) / (r.height / 2);
+    gsap.to(card, {
+      rotateY: dx * 8, rotateX: -dy * 8,
+      scale: 1.04,
+      boxShadow: '0 28px 60px rgba(30,20,12,.14)',
+      duration: 0.4, ease: 'power2.out',
+      transformPerspective: 900,
+    });
+  });
+  card.addEventListener('mouseleave', () => {
+    gsap.to(card, {
+      rotateY: 0, rotateX: 0, scale: 1, boxShadow: 'none',
+      duration: 0.5, ease: 'power2.out',
+    });
+  });
+});
+
+
+/* ══════════════════════════════════════════
+   5. STAGGER LAB — from variants + stagger.grid
+══════════════════════════════════════════ */
+const sBoxes = gsap.utils.toArray('.stagger-box');
+
+function runStagger(from, useGrid) {
+  gsap.killTweensOf(sBoxes);
+  gsap.set(sBoxes, { autoAlpha: 0, scale: 0.4, y: 10 });
+  gsap.to(sBoxes, {
+    autoAlpha: 1, scale: 1, y: 0,
+    duration: 0.45,
+    ease: 'back.out(1.7)',
+    stagger: useGrid
+      ? { each: 0.05, from: 'center', grid: 'auto' }  // stagger.grid
+      : { each: 0.07, from: from },
+  });
+}
+
+document.querySelectorAll('.stagger-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.stagger-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    runStagger(btn.dataset.from, !!btn.dataset.grid);
+  });
+});
+
+ScrollTrigger.create({
+  trigger: '#stagger-section',
+  start: 'top 70%',
+  once: true,
+  onEnter: () => runStagger('start', false),
+});
+
+
+/* ══════════════════════════════════════════
+   6. HORIZONTAL SCROLL — pin + scrub + xPercent + snap
+══════════════════════════════════════════ */
+const dots = document.querySelectorAll('.hp-dot');
+
+gsap.to('#hscrollTrack', {
+  xPercent: -66.666,
+  ease: 'none',
+  scrollTrigger: {
+    trigger: '#hscroll-section',
+    start: 'top top',
+    end: '+=2500',
+    scrub: 1,
+    pin: true,
+    snap: { snapTo: 1 / 2, duration: 0.4, ease: 'power1.inOut' },  // snap entre panneaux
+    onUpdate(self) {
+      // Met à jour les dots de navigation
+      const idx = Math.round(self.progress * 2);
+      dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+    },
+  },
+});
+
+
+/* ══════════════════════════════════════════
+   7. EASES RACE — gsap.fromTo + chaque ease
+══════════════════════════════════════════ */
+const easeNames = [
+  'power1.out',
+  'power3.out',
+  'expo.inOut',
+  'elastic.out(1, 0.3)',
+  'back.out(1.7)',
+  'bounce.out',
+];
+
+ScrollTrigger.create({
+  trigger: '#eases-section',
+  start: 'top 70%',
+  once: true,
+  onEnter() {
+    easeNames.forEach((ease, i) => {
+      const ball = document.getElementById('e' + i);
+      const track = ball.parentElement;
+      // gsap.fromTo : définit explicitement from ET to
+      gsap.fromTo(ball,
+        { x: 0 },
+        {
+          x: track.offsetWidth - ball.offsetWidth,
+          duration: 1.8,
+          ease,
+          repeat: -1,
+          yoyo: true,         // yoyo : va et vient
+          repeatDelay: 0.5,
+          delay: i * 0.12,
+        }
+      );
+    });
+  },
+});
+
+
+/* ══════════════════════════════════════════
+   8. COUNTERS — stagger + count-up onComplete
+══════════════════════════════════════════ */
+gsap.set(['#countersHead', '.counter-item'], { visibility: 'visible' });
+
+gsap.from('#countersHead', {
+  scrollTrigger: { trigger: '#countersHead', start: 'top 85%' },
+  y: 36, autoAlpha: 0, duration: 0.9, ease: 'power3.out',
+});
+
+gsap.from('.counter-item', {
+  scrollTrigger: { trigger: '#counterGrid', start: 'top 80%' },
+  y: 40, autoAlpha: 0, duration: 0.7, ease: 'power3.out',
+  stagger: 0.12,
+  onComplete() {
+    document.querySelectorAll('.c-num').forEach(el => {
+      const target = +el.dataset.target;
+      gsap.to({ val: 0 }, {
+        val: target,
+        duration: 2,
+        ease: 'power2.out',
+        onUpdate() { el.textContent = Math.round(this.targets()[0].val); },
+      });
+    });
+  },
+});
+
+
+/* ══════════════════════════════════════════
+   9. INTERACTIVE TIMELINE — paused + addLabel + position param
+══════════════════════════════════════════ */
+const masterTl = gsap.timeline({
+  paused: true,
+  defaults: { ease: 'power3.out', duration: 0.7 },
+  onUpdate() {
+    document.getElementById('tl-progress-fill').style.width =
+      (masterTl.progress() * 100) + '%';
+  },
+});
+
+masterTl
+  .addLabel('start')
+  .from('.tl-box-a', { x: -180, autoAlpha: 0, rotation: -90, scale: 0.5 })
+  .addLabel('mid', '+=0')
+  .from('.tl-box-b', { y: -130, autoAlpha: 0, scale: 0 },                    '-=0.3')
+  .from('.tl-box-c', { x: 180,  autoAlpha: 0, rotation: 90, scale: 0.5 },    '-=0.3')
+  .to('.tl-box-a',   { rotation: 360, duration: 0.5, ease: 'back.out(1.7)' },'mid')
+  .addLabel('end');
+
+document.getElementById('btn-play').addEventListener('click',    () => masterTl.play());
+document.getElementById('btn-pause').addEventListener('click',   () => masterTl.pause());
+document.getElementById('btn-reverse').addEventListener('click', () => masterTl.reverse());
+document.getElementById('btn-restart').addEventListener('click', () => masterTl.restart());
+
+let yoyoActive = false;
+document.getElementById('btn-yoyo').addEventListener('click', () => {
+  yoyoActive = !yoyoActive;
+  masterTl.repeat(yoyoActive ? -1 : 0).yoyo(yoyoActive);
+  if (yoyoActive) masterTl.play();
+  document.getElementById('btn-yoyo').textContent = yoyoActive ? '⏹ Stop Yoyo' : '⟳ Yoyo loop';
+});
+
+
+/* ══════════════════════════════════════════
+   10. SCROLLTRIGGER.CREATE — standalone + onUpdate + onToggle
+══════════════════════════════════════════ */
+ScrollTrigger.create({
+  trigger: '#st-create-section',
+  start: 'top 80%',
+  end: 'bottom 20%',
+  // toggleClass: applique/retire une classe CSS automatiquement
+  toggleClass: { targets: '#stSticky', className: 'active' },
+  onUpdate(self) {
+    const pct = Math.round(self.progress * 100);
+    document.getElementById('st-fill').style.width = pct + '%';
+    document.getElementById('st-pct').textContent = pct + '%';
+    document.getElementById('st-dir').textContent =
+      self.direction === 1 ? '→ FORWARD' : '← BACKWARD';
+    document.getElementById('st-vel-val').textContent =
+      Math.abs(self.getVelocity()).toFixed(0);
+  },
+  onToggle(self) {
+    document.getElementById('st-active').textContent =
+      self.isActive ? 'ACTIF' : 'INACTIF';
+  },
+});
+
+
+/* ══════════════════════════════════════════
+   11. QUOTE — timeline séquentielle
+══════════════════════════════════════════ */
+gsap.set(['#qMark','#qText','#qAuthor'], { visibility: 'visible' });
+
+const quoteTl = gsap.timeline({
+  scrollTrigger: {
+    trigger: '#quote-section',
+    start: 'top 65%',
+    toggleActions: 'play none none reverse',
+  },
+  defaults: { ease: 'power3.out' },
+});
+quoteTl
+  .from('#qMark',   { y: 40, autoAlpha: 0, scale: 0.8, duration: 0.7 })
+  .from('#qText',   { y: 50, autoAlpha: 0, duration: 0.9 },          '-=0.2')
+  .to('#q-line',    { width: 80, duration: 0.6, ease: 'power2.out' }, '-=0.4')
+  .from('#qAuthor', { y: 16, autoAlpha: 0, duration: 0.5 },          '-=0.2');
+
+
+/* ══════════════════════════════════════════
+   12. ENGAGEMENTS — stagger from "random"
+══════════════════════════════════════════ */
+gsap.set(['#engHead', '.eng-item'], { visibility: 'visible' });
+
+gsap.from('#engHead', {
+  scrollTrigger: { trigger: '#engHead', start: 'top 85%' },
+  y: 36, autoAlpha: 0, duration: 0.9, ease: 'power3.out',
+});
+
+gsap.from('.eng-item', {
+  scrollTrigger: { trigger: '#engGrid', start: 'top 80%' },
+  y: 50, autoAlpha: 0, scale: 0.96, duration: 0.7, ease: 'power3.out',
+  stagger: { each: 0.12, from: 'random' },   // from: "random"
+});
+
+
+/* ══════════════════════════════════════════
+   BARRE DE PROGRESSION GLOBALE (ScrollTrigger.create)
+══════════════════════════════════════════ */
+ScrollTrigger.create({
+  trigger: 'body',
+  start: 'top top',
+  end: 'bottom bottom',
+  onUpdate(self) {
+    gsap.to('#global-progress', {
+      width: (self.progress * 100) + '%',
+      duration: 0,
+      overwrite: true,
+    });
+  },
+});
+
+
+/* ══════════════════════════════════════════
+   REDUCED MOTION — accessibilité
+══════════════════════════════════════════ */
+if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  gsap.globalTimeline.timeScale(5);
+}
+
+/* Refresh après chargement complet */
+window.addEventListener('load', () => ScrollTrigger.refresh());
+</script>
+</body>
+</html>
