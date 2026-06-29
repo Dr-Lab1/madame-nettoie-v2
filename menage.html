@@ -559,7 +559,7 @@
   <div class="scroll-vid-wrap" id="scrollVidWrap">
     <div class="scroll-vid-sticky" id="scrollVidSticky">
 
-      <video id="scrubVid" muted playsinline preload="auto" disableRemotePlayback>
+      <video id="scrubVid" muted playsinline webkit-playsinline preload="auto" disableRemotePlayback>
         <source src="maisonx_scrub.mp4" type="video/mp4" />
       </video>
       <div class="scroll-vid-overlay"></div>
@@ -878,12 +878,34 @@
       const dots     = document.querySelectorAll('.svid-dot');
       if (!wrap || !vid) return;
 
+      // ── Amorçage vidéo (anti-écran noir mobile) ──
+      // Sur iOS/Safari, une vidéo "scrubée" (currentTime) reste NOIRE tant
+      // qu'elle n'a pas été lue une fois ALORS QU'ELLE EST VISIBLE à l'écran.
+      // On la lance brièvement (muette) puis on la met en pause — déclenché
+      // quand la section entre dans l'écran + au 1er geste, jusqu'à réussite.
+      let primed = false;
+      function primeVideo() {
+        if (primed) return;
+        const pr = vid.play();
+        if (pr && typeof pr.then === 'function') {
+          pr.then(function() {
+            primed = true;
+            vid.pause();
+            if (vid.currentTime < 0.01) vid.currentTime = 0.001;
+            primeIO.disconnect();
+          }).catch(function() { /* réessai au prochain déclencheur */ });
+        }
+      }
+      const primeIO = new IntersectionObserver(function(entries) {
+        entries.forEach(function(e) { if (e.isIntersecting) primeVideo(); });
+      }, { threshold: 0.01 });
+      primeIO.observe(wrap);
+      vid.addEventListener('canplay', primeVideo);
+      vid.addEventListener('loadeddata', primeVideo);
+      ['touchstart', 'pointerdown'].forEach(function(ev) {
+        window.addEventListener(ev, primeVideo, { passive: true });
+      });
       vid.load();
-
-      // Démarre la vidéo puis la met en pause (déverrouille le seek sur mobile)
-      vid.addEventListener('canplay', function() {
-        vid.play().then(function() { vid.pause(); vid.currentTime = 0.001; }).catch(function(){});
-      }, { once: true });
 
       // Suivi fluide du scroll (même technique que la page bureaux) :
       // 'target' = progression réelle du scroll, 'current' = valeur lissée qui pilote la vidéo

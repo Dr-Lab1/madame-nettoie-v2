@@ -463,7 +463,7 @@
   <!-- VIDÉO SCROLL-SCRUBBING -->
   <div class="sv-outer" id="sv-outer">
     <div class="sv-inner">
-      <video id="sv-vid" muted playsinline preload="auto">
+      <video id="sv-vid" muted playsinline webkit-playsinline preload="auto">
         <source src="vid_scrub.mp4" type="video/mp4" />
       </video>
       <div class="sv-fade-left" id="sv-fade-left"></div>
@@ -774,9 +774,33 @@
         }
       }
 
-      vid.addEventListener('canplay', function() {
-        vid.play().then(function() { vid.pause(); vid.currentTime = 0.001; }).catch(function(){});
-      }, { once: true });
+      // ── Amorçage vidéo (anti-écran noir mobile / iOS) ──
+      // iOS ne décode/peint une vidéo "scrubée" (currentTime) que si elle a
+      // été lue une fois ALORS QU'ELLE EST VISIBLE. On la lance brièvement
+      // (muette) puis on la met en pause — déclenché quand la section entre
+      // dans l'écran + au 1er geste, et on réessaie jusqu'à réussite.
+      var primed = false;
+      function primeVideo() {
+        if (primed) return;
+        var pr = vid.play();
+        if (pr && typeof pr.then === 'function') {
+          pr.then(function() {
+            primed = true;
+            vid.pause();
+            if (vid.currentTime < 0.01) vid.currentTime = 0.001;
+            primeIO.disconnect();
+          }).catch(function() { /* réessai au prochain déclencheur */ });
+        }
+      }
+      var primeIO = new IntersectionObserver(function(entries) {
+        entries.forEach(function(e) { if (e.isIntersecting) primeVideo(); });
+      }, { threshold: 0.01 });
+      primeIO.observe(outer);
+      vid.addEventListener('canplay', primeVideo);
+      vid.addEventListener('loadeddata', primeVideo);
+      ['touchstart', 'pointerdown'].forEach(function(ev) {
+        window.addEventListener(ev, primeVideo, { passive: true });
+      });
 
       function tick(now) {
         requestAnimationFrame(tick);
