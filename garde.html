@@ -54,7 +54,7 @@
     .btn-primary:hover{background:var(--orange-dark);transform:translateY(-2px);box-shadow:0 12px 30px rgba(241,98,42,.35)}
 
     /* ─── SECTION TITLES ─── */
-    .section-label{font-size:.72rem;color:var(--gold-metallic);letter-spacing:3px;text-transform:uppercase;font-weight:600;margin-bottom:.7rem;display:block}
+    .section-label{font-size:.82rem;color:var(--gold-metallic);letter-spacing:3px;text-transform:uppercase;font-weight:600;margin-bottom:.7rem;display:block}
     .section-title{font-family:'DM Serif Display',serif;font-size:clamp(2rem,3.5vw,2.8rem);color:var(--text-dark);font-weight:400;line-height:1.15;margin-bottom:1.2rem}
     .section-title em{font-style:italic;color:var(--gold-metallic)}
     .section-sub{font-size:.95rem;color:var(--text-light);line-height:1.75;max-width:580px}
@@ -137,7 +137,44 @@
     .garantie-list li{display:flex;align-items:flex-start;gap:.7rem;font-size:.87rem;color:var(--text-mid);line-height:1.55}
     .garantie-list li::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--orange);flex-shrink:0;margin-top:.42rem}
     .garantie-tagline{font-family:'DM Serif Display',serif;font-size:.98rem;color:var(--text-dark);font-style:italic;line-height:1.5;padding-top:1rem;border-top:1px solid rgba(241,98,42,.12);margin-top:.3rem}
-    @media(max-width:768px){.garanties-grid{grid-template-columns:1fr}.garanties{padding:4rem 1.5rem}}
+    /* Bloc confiance centré */
+    .garantie-confiance{max-width:780px;margin:0 auto 4.5rem;text-align:center}
+    .garantie-confiance-title{font-family:'DM Serif Display',serif;font-size:clamp(1.1rem,1.8vw,1.35rem);color:var(--text-dark);font-weight:400;line-height:1.3;margin-bottom:1.2rem}
+    .garantie-confiance p{font-size:1rem;color:var(--text-light);line-height:1.8;margin-bottom:.7rem}
+    .garantie-confiance .garantie-tagline{display:inline-block;border-top:none;padding-top:.4rem;margin-top:1rem;color:var(--orange);font-size:1.2rem}
+    /* Bloc fiscal : photo gauche + texte droite, sans cadre */
+    .garantie-fiscal{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:3.5rem;align-items:center}
+    .garantie-fiscal-photo{border-radius:16px;overflow:hidden}
+    .garantie-fiscal-photo img{width:100%;height:400px;object-fit:cover;display:block;transition:transform .7s cubic-bezier(.16,1,.3,1)}
+    .garantie-fiscal-photo:hover img{transform:scale(1.07)}
+    .garantie-fiscal-kicker{display:block;font-size:.8rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--orange);font-weight:700;margin-bottom:.4rem}
+    .garantie-fiscal-pct{font-family:'DM Serif Display',serif;font-size:clamp(4.5rem,10vw,7.5rem);color:var(--orange);font-weight:400;line-height:.9;display:block;margin-bottom:1.1rem}
+    .garantie-fiscal-body p{font-size:1rem;color:var(--text-mid);line-height:1.75;margin-bottom:.8rem;max-width:480px}
+    .garantie-fiscal-body .garantie-tagline{max-width:480px}
+    @media(max-width:768px){.garanties{padding:4rem 1.5rem}.garantie-fiscal{grid-template-columns:1fr;gap:2rem}.garantie-fiscal-photo img{height:240px}.garantie-confiance{margin-bottom:3rem}}
+    /* Section fiscale épinglée : la photo de gauche se révèle au scroll */
+    .fiscal-pin{position:relative;height:200vh}
+    .fiscal-pin-inner{position:sticky;top:0;min-height:100vh;display:flex;align-items:center}
+    .fiscal-pin-inner .garantie-fiscal{width:100%;margin:0 auto}
+    .fiscal-seq{position:relative;height:clamp(380px,70vh,580px)}
+    .fseq-slide{position:absolute;inset:0;overflow:hidden;border-radius:16px}
+    .fseq-slide img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .7s cubic-bezier(.16,1,.3,1)}
+    .fiscal-seq:hover .fseq-slide img{transform:scale(1.05)}
+    .fseq-slide::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(8,4,1,.72) 0%,transparent 46%);z-index:1}
+    .fseq-cap{position:absolute;left:1.6rem;right:1.6rem;bottom:1.5rem;z-index:2;color:#fff;font-family:'DM Serif Display',serif;font-size:1.3rem;line-height:1.3;text-shadow:0 2px 14px rgba(0,0,0,.5)}
+    .fseq-rise{clip-path:inset(100% 0 0 0);z-index:3}
+    @media(max-width:768px){
+      .fiscal-pin{height:auto;padding-top:2rem}
+      .fiscal-pin-inner{position:static;min-height:0;display:block}
+      .fiscal-seq{height:260px}
+      .fseq-rise{display:none}
+      .fseq-cap{font-size:1.05rem}
+    }
+    @media (prefers-reduced-motion:reduce){
+      .fiscal-pin{height:auto}
+      .fiscal-pin-inner{position:static;min-height:0;display:block}
+      .fseq-rise{clip-path:none}
+    }
 
     /* ─── DEVIS CARD ─── */
     .devis-card-section{background:#fff;padding:5rem 2.5rem}
@@ -231,7 +268,15 @@
       .menu-toggle{display:block}
       .header-inner{padding:0 1.5rem}
       .footer-top{grid-template-columns:1fr}
-      .page-hero{height:75vh}
+      /* Hero mobile : texte ancré en bas, dégradé vertical, plus lisible et aéré */
+      .page-hero{height:84vh;min-height:540px;align-items:flex-end}
+      .page-hero-overlay{background:linear-gradient(to top,rgba(8,4,1,.94) 6%,rgba(8,4,1,.55) 42%,rgba(8,4,1,.1) 100%)}
+      .page-hero-content{padding:0 1.6rem 3.2rem;gap:.85rem;max-width:560px}
+      .page-hero-title{font-size:clamp(2.5rem,11vw,3.3rem);line-height:1.04;max-width:100%}
+      .page-hero-divider{margin:.15rem 0}
+      .page-hero-desc{font-size:.95rem;line-height:1.65;max-width:34ch;color:rgba(255,255,255,.82)}
+      .page-hero-btns{width:100%;flex-direction:column;margin-top:.9rem}
+      .page-hero-btns .btn-primary{width:100%;justify-content:center}
     }
   </style>
 </head>
@@ -302,7 +347,7 @@
   <section class="intro" id="intro">
     <div class="intro-inner reveal">
       <div class="intro-text">
-        <span class="section-label">— Garde d'enfants à Bègles et Bordeaux —</span>
+        <span class="section-label">Garde d'enfants à Bègles et Bordeaux</span>
         <h2 class="section-title">Parce que vos enfants méritent une présence <em>attentionnée.</em></h2>
         <div class="intro-separator"></div>
         <p>En complément du ménage, du repassage, de l'aide aux aînés et de la livraison des courses, Madame Nettoie propose un service de garde d'enfants à domicile à Bègles et à Bordeaux. Parce que confier son enfant, c'est avant tout une question de confiance. Et la confiance, chez nous, ça ne se négocie pas.</p>
@@ -316,7 +361,7 @@
     <div class="comment-inner">
       <div class="comment-layout">
         <div class="comment-text reveal">
-          <span class="section-label">— Notre approche —</span>
+          <span class="section-label">Notre approche</span>
           <h2 class="section-title">Un service pensé pour les familles qui <em>ne s'arrêtent jamais.</em></h2>
           <p>Entre les horaires de travail, les imprévus et les activités des enfants, il n'est pas toujours simple de tout concilier. Madame Nettoie met à votre disposition des intervenants formés, sélectionnés avec soin, pour prendre soin de vos enfants à votre domicile.</p>
           <p>Un visage familier, une présence rassurante, un cadre que vos enfants connaissent déjà.</p>
@@ -343,7 +388,7 @@
   <section class="prestations" id="prestations">
     <div class="prestations-inner">
       <div class="prestations-head reveal">
-        <span class="section-label">— Ce que nous faisons pour vous —</span>
+        <span class="section-label">Ce que nous faisons pour vous</span>
         <h2 class="section-title">Ce que nous prenons <em>en charge pour vous.</em></h2>
       </div>
       <div class="presta-grid reveal">
@@ -377,31 +422,40 @@
   <section class="garanties" id="garanties">
     <div class="garanties-inner">
       <div class="garanties-head reveal">
-        <span class="section-label">— Nos engagements —</span>
+        <span class="section-label">Nos engagements</span>
         <h2 class="section-title">Ce que nous vous <em>garantissons.</em></h2>
       </div>
-      <div class="garanties-grid reveal">
+      <!-- Bloc confiance — centré, sous les titres -->
+      <div class="garantie-confiance reveal">
+        <h3 class="garantie-confiance-title">Des intervenants en qui vous pouvez avoir confiance</h3>
+        <p>Chaque intervenant est recruté avec exigence et valorisé au quotidien.</p>
+        <p>Sérieux, bienveillance et professionnalisme sont les trois piliers de chaque mission.</p>
+        <p>Vous nous confiez ce que vous avez de plus précieux. Nous le savons, et nous en sommes pleinement conscients.</p>
+        <p class="garantie-tagline">La confiance ne se décrète pas. Elle se prouve.</p>
+      </div>
 
-        <div class="garantie-card light">
-          <h3 class="garantie-card-title">Des intervenants en qui vous pouvez avoir confiance</h3>
-          <ul class="garantie-list">
-            <li>Chaque intervenant est recruté avec exigence et valorisé au quotidien.</li>
-            <li>Sérieux, bienveillance et professionnalisme sont les trois piliers de chaque mission.</li>
-            <li>Vous nous confiez ce que vous avez de plus précieux. Nous le savons, et nous en sommes pleinement conscients.</li>
-          </ul>
-          <p class="garantie-tagline">La confiance ne se décrète pas. Elle se prouve.</p>
+      <!-- Bloc fiscal — section épinglée : la photo de gauche se révèle au scroll -->
+      <div class="fiscal-pin">
+        <div class="fiscal-pin-inner">
+          <div class="garantie-fiscal reveal">
+            <div class="garantie-fiscal-photo fiscal-seq" id="fiscalSeq">
+              <div class="fseq-slide" data-i="0">
+                <img src="jumelle.jpeg" alt="Garde d'enfants à domicile" loading="lazy" />
+              </div>
+              <div class="fseq-slide fseq-rise" data-i="1">
+                <img src="jouet.jpeg" alt="Des enfants épanouis" loading="lazy" />
+                <span class="fseq-cap">Des enfants épanouis, des parents sereins.</span>
+              </div>
+            </div>
+            <div class="garantie-fiscal-body">
+          <span class="garantie-fiscal-kicker">Le saviez-vous ? Un avantage fiscal de 50 %</span>
+          <span class="garantie-fiscal-pct">50 %</span>
+          <p>En faisant appel à Madame Nettoie pour la garde de vos enfants, vous bénéficiez d'une réduction d'impôts de 50 % sur les dépenses engagées.</p>
+          <p>Grâce à l'avance immédiate du crédit d'impôt, cette déduction s'applique directement chaque mois, sans attendre votre déclaration annuelle.</p>
+          <p class="garantie-tagline">Profitez du crédit d'impôt pour donner à vos enfants le meilleur service.</p>
+            </div>
+          </div>
         </div>
-
-        <div class="garantie-card warm">
-          <h3 class="garantie-card-title">Le saviez-vous ? Un avantage fiscal de 50 %</h3>
-          <span class="garantie-percent">50 %</span>
-          <ul class="garantie-list">
-            <li>En faisant appel à Madame Nettoie pour la garde de vos enfants, vous bénéficiez d'une réduction d'impôts de 50 % sur les dépenses engagées.</li>
-            <li>Grâce à l'avance immédiate du crédit d'impôt, cette déduction s'applique directement chaque mois, sans attendre votre déclaration annuelle.</li>
-          </ul>
-          <p class="garantie-tagline">Un service de qualité, à moitié prix.</p>
-        </div>
-
       </div>
     </div>
   </section>
@@ -422,7 +476,7 @@
   <!-- AUTRES SERVICES -->
   <section class="autres-services">
     <div class="autres-services-head reveal">
-      <span class="section-label">— Nos autres services —</span>
+      <span class="section-label">Nos autres services</span>
       <h2 class="section-title">Tout ce que nous faisons <em>pour vous</em></h2>
     </div>
     <div class="mini-grid reveal">
@@ -668,6 +722,31 @@
     window.addEventListener('scroll', () => {
       document.querySelector('.header').style.boxShadow = window.scrollY > 20 ? '0 4px 30px rgba(30,20,12,.08)' : 'none';
     }, { passive: true });
+
+    // ─── SECTION FISCALE ÉPINGLÉE : révélation de la photo au scroll ───
+    (function(){
+      const pin = document.querySelector('.fiscal-pin');
+      const rise = document.querySelector('.fiscal-seq .fseq-rise');
+      if (!pin || !rise) return;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      const clamp = (v,a,b) => Math.max(a, Math.min(b, v));
+      let ticking = false;
+      function onScroll(){
+        if (window.innerWidth < 769){ rise.style.clipPath = ''; return; }
+        if (ticking) return; ticking = true;
+        requestAnimationFrame(() => {
+          ticking = false;
+          const r = pin.getBoundingClientRect();
+          const total = r.height - window.innerHeight;
+          const p = total > 0 ? clamp(-r.top / total, 0, 1) : 0;
+          const pr = clamp(p / 0.82, 0, 1);          // révélation terminée à 82%, puis maintien
+          rise.style.clipPath = 'inset(' + ((1 - pr) * 100).toFixed(2) + '% 0 0 0)';
+        });
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll, { passive: true });
+      onScroll();
+    })();
   </script>
 </body>
 </html>

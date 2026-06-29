@@ -55,7 +55,7 @@
     .btn-primary:hover{background:var(--orange-dark);transform:translateY(-2px);box-shadow:0 12px 30px rgba(241,98,42,.35)}
 
     /* ─── SECTION TITLES ─── */
-    .section-label{font-size:.72rem;color:var(--gold-metallic);letter-spacing:3px;text-transform:uppercase;font-weight:600;margin-bottom:.7rem;display:block}
+    .section-label{font-size:.82rem;color:var(--gold-metallic);letter-spacing:3px;text-transform:uppercase;font-weight:600;margin-bottom:.7rem;display:block}
     .section-title{font-family:'DM Serif Display',serif;font-size:clamp(2rem,3.5vw,2.8rem);color:var(--text-dark);font-weight:400;line-height:1.15;margin-bottom:1.2rem}
     .section-title em{font-style:italic;color:var(--gold-metallic)}
 
@@ -180,6 +180,15 @@
     .btn-submit svg{width:16px;height:16px;stroke:#fff;fill:none;stroke-width:2.5}
     .form-note{margin-top:.9rem;font-size:.76rem;color:var(--text-light);text-align:center;line-height:1.65}
 
+    /* Main qui dépasse sous le formulaire */
+    .ec-form-wrap{position:relative;margin-bottom:130px}
+    .ec-form{position:relative;z-index:1}
+    .ec-hand{position:absolute;left:50%;bottom:-180px;width:300px;margin-left:-150px;z-index:0;animation:ecWipe 2.3s ease-in-out infinite alternate;will-change:transform}
+    .ec-hand img{width:100%;height:auto;display:block;filter:drop-shadow(0 16px 22px rgba(30,20,12,.22));animation:ecPress 1.15s ease-in-out infinite}
+    @keyframes ecWipe{from{transform:translateX(-110px) rotate(-5deg)}to{transform:translateX(110px) rotate(5deg)}}
+    @keyframes ecPress{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
+    @media(prefers-reduced-motion:reduce){.ec-hand,.ec-hand img{animation:none}}
+
     /* Reassurance strip */
     .ec-reassurance{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;max-width:860px;margin:3rem auto 0;padding:0 2.5rem}
     .ec-rea-item{text-align:center;padding:1.6rem 1.2rem;background:#fff;border-radius:14px;border:1px solid rgba(241,98,42,.1)}
@@ -196,12 +205,23 @@
       .menu-toggle{display:block}
       .header-inner{padding:0 1.5rem}
       .footer-top{grid-template-columns:1fr}
-      .page-hero{height:70vh}
+      /* Hero mobile : texte ancré en bas, dégradé vertical, plus lisible et aéré */
+      .page-hero{height:84vh;min-height:540px;align-items:flex-end}
+      .page-hero-overlay{background:linear-gradient(to top,rgba(8,4,1,.94) 6%,rgba(8,4,1,.55) 42%,rgba(8,4,1,.1) 100%)}
+      .page-hero-content{padding:0 1.6rem 3.2rem;gap:.85rem;max-width:560px}
+      .page-hero-title{font-size:clamp(2.5rem,11vw,3.3rem);line-height:1.04;max-width:100%}
+      .page-hero-divider{margin:.15rem 0}
+      .page-hero-desc{font-size:.95rem;line-height:1.65;max-width:34ch;color:rgba(255,255,255,.82)}
+      .page-hero-btns{width:100%;flex-direction:column;margin-top:.9rem}
+      .page-hero-btns .btn-primary{width:100%;justify-content:center}
       .page-hero-content{padding:0 1.8rem}
       .ec-section{padding:3.5rem 1.2rem}
       .ec-form{padding:2rem 1.4rem}
       .form-grid-2,.form-grid-3{grid-template-columns:1fr}
       .ec-reassurance{grid-template-columns:1fr;padding:0 1.2rem}
+      .ec-hand{width:210px;margin-left:-105px;bottom:-128px}
+      .ec-form-wrap{margin-bottom:96px}
+      @keyframes ecWipe{from{transform:translateX(-70px) rotate(-5deg)}to{transform:translateX(35px) rotate(5deg)}}
     }
     @media(max-width:500px){.ec-form{padding:1.6rem 1rem}}
   </style>
@@ -267,12 +287,13 @@
   <section class="ec-section">
     <div class="ec-inner">
       <div class="ec-intro reveal">
-        <span class="section-label">— Votre demande —</span>
+        <span class="section-label">Votre demande</span>
         <h2 class="section-title">Décrivez-nous votre <em>situation.</em></h2>
         <p style="font-size:.95rem;color:var(--text-light);line-height:1.75;max-width:540px;margin:0 auto">Toutes les informations restent confidentielles. Elles nous permettent de vous proposer un service adapté à vos besoins réels.</p>
       </div>
 
-      <form class="ec-form reveal reveal-delay-1" action="mailto:contact@madame-nettoie.fr" method="post" enctype="text/plain" novalidate>
+      <div class="ec-form-wrap reveal reveal-delay-1">
+      <form class="ec-form" action="mailto:contact@madame-nettoie.fr" method="post" enctype="text/plain" novalidate>
 
         <!-- BLOC 1 : VOTRE HABITATION -->
         <div class="form-block">
@@ -419,6 +440,8 @@
         <p class="form-note">Réponse garantie sous 24h · Devis 100% gratuit et sans engagement</p>
 
       </form>
+        <div class="ec-hand" aria-hidden="true"><img src="main.png" alt="" /></div>
+      </div>
     </div>
 
     <!-- REASSURANCE -->

@@ -59,7 +59,7 @@
     .btn-outline:hover{background:var(--orange);color:#fff;transform:translateY(-2px)}
 
     /* ─── SECTION TITLES ─── */
-    .section-label{font-size:.72rem;color:var(--gold-metallic);letter-spacing:3px;text-transform:uppercase;font-weight:600;margin-bottom:.7rem;display:block}
+    .section-label{font-size:.82rem;color:var(--gold-metallic);letter-spacing:3px;text-transform:uppercase;font-weight:600;margin-bottom:.7rem;display:block}
     .section-title{font-family:'DM Serif Display',serif;font-size:clamp(2rem,3.5vw,2.8rem);color:var(--text-dark);font-weight:400;line-height:1.15;margin-bottom:1.2rem}
     .section-title em{font-style:italic;color:var(--gold-metallic)}
     .section-sub{font-size:.95rem;color:var(--text-light);line-height:1.75;max-width:580px}
@@ -246,7 +246,15 @@
       .menu-toggle{display:block}
       .header-inner{padding:0 1.5rem}
       .footer-top{grid-template-columns:1fr}
-      .page-hero{height:75vh}
+      /* Hero mobile : texte ancré en bas, dégradé vertical, plus lisible et aéré */
+      .page-hero{height:84vh;min-height:540px;align-items:flex-end}
+      .page-hero-overlay{background:linear-gradient(to top,rgba(8,4,1,.94) 6%,rgba(8,4,1,.55) 42%,rgba(8,4,1,.1) 100%)}
+      .page-hero-content{padding:0 1.6rem 3.2rem;gap:.85rem;max-width:560px}
+      .page-hero-title{font-size:clamp(2.5rem,11vw,3.3rem);line-height:1.04;max-width:100%}
+      .page-hero-divider{margin:.15rem 0}
+      .page-hero-desc{font-size:.95rem;line-height:1.65;max-width:34ch;color:rgba(255,255,255,.82)}
+      .page-hero-btns{width:100%;flex-direction:column;margin-top:.9rem}
+      .page-hero-btns .btn-primary{width:100%;justify-content:center}
       .bon-savoir{padding:4rem 1.5rem}
     }
   </style>
@@ -318,7 +326,7 @@
   <section class="intro" id="intro">
     <div class="intro-inner reveal">
       <div class="intro-text">
-        <span class="section-label">— Service de repassage à domicile à Bordeaux —</span>
+        <span class="section-label">Service de repassage à domicile à Bordeaux</span>
         <h2 class="section-title">Un service pensé pour ceux qui <em>n'ont plus le temps.</em></h2>
         <div class="intro-separator"></div>
         <p>Entre les journées chargées, les enfants, les trajets et tout le reste, le repassage est souvent la tâche que l'on repousse indéfiniment. Un panier qui déborde, une chemise froissée au dernier moment : ça arrive à tout le monde.</p>
@@ -333,7 +341,7 @@
     <div class="comment-inner">
       <div class="comment-layout">
         <div class="comment-text reveal">
-          <span class="section-label">— Notre fonctionnement —</span>
+          <span class="section-label">Notre fonctionnement</span>
           <h2 class="section-title">Comment ça <em>fonctionne ?</em></h2>
           <p>Vous n'avez rien à transporter. Notre employé de maison se déplace directement chez vous, avec son propre matériel si nécessaire, et repasse votre linge sur place selon vos consignes. Vous choisissez le créneau, on s'adapte.</p>
           <p>Vous préférez ne pas avoir quelqu'un chez vous ? Nous proposons également une option de collecte et de retour : nous passons récupérer votre linge, le repassons en atelier, et vous le restituons plié ou sur cintre, dans les délais convenus.</p>
@@ -361,7 +369,7 @@
   <section class="fiscal" id="fiscal">
     <div class="fiscal-inner">
       <div class="fiscal-head reveal">
-        <span class="section-label">— Avantage fiscal —</span>
+        <span class="section-label">Avantage fiscal</span>
         <h2 class="section-title">Le saviez-vous ? <em>Un avantage qui change tout.</em></h2>
         <p class="section-sub">Notre service de repassage vous ouvre droit à un crédit d'impôt immédiat sur vos dépenses.</p>
       </div>
@@ -398,7 +406,7 @@
     <div class="bon-savoir-inner">
 
       <div class="bon-savoir-head reveal">
-        <span class="section-label">— Bon à savoir —</span>
+        <span class="section-label">Bon à savoir</span>
         <h2 class="section-title">Bien plus que du repassage, <em>si vous le souhaitez.</em></h2>
         <p class="section-sub">Nos intervenants peuvent étendre leur mission selon vos besoins, pour un service encore plus complet.</p>
       </div>
@@ -454,7 +462,7 @@
   <!-- AUTRES SERVICES -->
   <section class="autres-services">
     <div class="autres-services-head reveal">
-      <span class="section-label">— Nos autres services —</span>
+      <span class="section-label">Nos autres services</span>
       <h2 class="section-title">Tout ce que nous faisons <em>pour vous</em></h2>
     </div>
     <div class="mini-grid reveal">

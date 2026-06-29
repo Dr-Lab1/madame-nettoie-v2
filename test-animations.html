@@ -186,7 +186,6 @@
     .about-duo{max-width:1240px;margin:8rem auto 0;display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;padding:2.5rem 3rem;background:var(--cream);border-radius:12px}
     .about-duo-block h3{font-family:'DM Serif Display',serif;font-size:1.15rem;font-weight:400;color:var(--dark);margin-bottom:.8rem;line-height:1.3}
     .about-duo-block p{font-size:.88rem;color:var(--text-mid);line-height:1.85}
-    @media(max-width:768px){.about-duo{grid-template-columns:1fr;gap:2rem;margin-top:4rem;padding:2rem 1.5rem}}
     .about-devise-bottom{max-width:1240px;margin:4.5rem auto 0;text-align:center;font-style:italic;font-weight:500;color:var(--text-mid);font-size:1.08rem;letter-spacing:.3px;display:flex;align-items:center;justify-content:center;gap:1rem}
     .about-devise-bottom::before,.about-devise-bottom::after{content:'✦';display:block;color:var(--orange);opacity:.6;font-size:.75rem;flex-shrink:0}
 
@@ -600,6 +599,61 @@
     }
     @media(max-width:480px){.testi-cards{width:220px;height:250px}}
   </style>
+
+  <!-- ════════ FX AIRCENTER (page de test — additif, non destructif) ════════ -->
+  <style id="fx-aircenter">
+    /* Lenis (smooth scroll) */
+    html.lenis,html.lenis body{height:auto}
+    .lenis.lenis-smooth{scroll-behavior:auto !important}
+    .lenis.lenis-smooth [data-lenis-prevent]{overscroll-behavior:contain}
+    .lenis.lenis-stopped{overflow:hidden}
+
+    /* Curseur personnalisé (appareils à souris uniquement) */
+    @media (hover:hover) and (pointer:fine){
+      body.fx-cursor-on, body.fx-cursor-on *{cursor:none !important}
+      .fx-cursor{position:fixed;top:0;left:0;width:9px;height:9px;border-radius:50%;background:var(--orange,#f1622a);pointer-events:none;z-index:99999;transform:translate(-50%,-50%);transition:width .25s,height .25s,opacity .25s}
+      .fx-cursor-ring{position:fixed;top:0;left:0;width:40px;height:40px;border:1.5px solid rgba(241,98,42,.55);border-radius:50%;pointer-events:none;z-index:99998;transform:translate(-50%,-50%);transition:width .3s,height .3s,border-color .3s,background .3s}
+      .fx-cursor.is-hover{width:0;height:0}
+      .fx-cursor-ring.is-hover{width:60px;height:60px;background:rgba(241,98,42,.08)}
+    }
+
+    /* Préchargeur */
+    .fx-preloader{position:fixed;inset:0;z-index:100000;background:var(--bg,#fffbf7);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.5rem}
+    .fx-preloader.is-done{opacity:0;visibility:hidden;transition:opacity .8s ease,visibility .8s}
+    .fx-pre-logo{font-family:'DM Serif Display',serif;font-size:clamp(1.6rem,5vw,3rem);color:var(--text-dark,#1e140c);letter-spacing:.5px;display:flex;overflow:hidden}
+    .fx-pre-logo span{display:inline-block;transform:translateY(110%);animation:fxPreUp .85s cubic-bezier(.16,1,.3,1) forwards}
+    @keyframes fxPreUp{to{transform:none}}
+    .fx-pre-bar{width:min(280px,60vw);height:2px;background:rgba(241,98,42,.18);border-radius:2px;overflow:hidden}
+    .fx-pre-bar i{display:block;height:100%;width:0;background:var(--orange,#f1622a);transition:width .15s linear}
+    .fx-pre-num{font-size:.78rem;letter-spacing:2px;color:var(--text-light,#7a6558);font-variant-numeric:tabular-nums}
+
+    /* Révélation texte ligne par ligne */
+    [data-fx-text] .fx-line{display:block;overflow:hidden}
+    [data-fx-text] .fx-line>span{display:inline-block;transform:translateY(115%);opacity:0;transition:transform .85s cubic-bezier(.16,1,.3,1),opacity .85s}
+    [data-fx-text].fx-in .fx-line>span{transform:none;opacity:1}
+    [data-fx-text].fx-in .fx-line:nth-child(2)>span{transition-delay:.09s}
+    [data-fx-text].fx-in .fx-line:nth-child(3)>span{transition-delay:.18s}
+    [data-fx-text].fx-in .fx-line:nth-child(4)>span{transition-delay:.27s}
+    [data-fx-text].fx-in .fx-line:nth-child(n+5)>span{transition-delay:.36s}
+
+    /* Révélation bloc (titres contenant du HTML, ex. <em>) */
+    [data-fx-block]{transform:translateY(34px);opacity:0;transition:transform .9s cubic-bezier(.16,1,.3,1),opacity .9s}
+    [data-fx-block].fx-in{transform:none;opacity:1}
+
+    /* Révélation image (volet clip-path) */
+    [data-fx-img]{clip-path:inset(100% 0 0 0);transition:clip-path 1.1s cubic-bezier(.16,1,.3,1)}
+    [data-fx-img].fx-in{clip-path:inset(0 0 0 0)}
+
+    /* Parallaxe & magnétique */
+    [data-fx-parallax]{will-change:transform}
+    .fx-magnetic{will-change:transform;transition:transform .25s cubic-bezier(.16,1,.3,1)}
+
+    /* Respect de prefers-reduced-motion : tout reste visible et statique */
+    @media (prefers-reduced-motion:reduce){
+      [data-fx-text] .fx-line>span,[data-fx-block],[data-fx-img]{transform:none !important;opacity:1 !important;clip-path:none !important;transition:none !important}
+      body.fx-cursor-on,body.fx-cursor-on *{cursor:auto !important}
+    }
+  </style>
 </head>
 
 <body>
@@ -668,7 +722,7 @@
       </div>
       <div class="hero-scroll-hint" id="heroScrollHint"></div>
       <div class="hero-bottom" id="heroBottom">
-        <h2 class="hero-bottom-title">Vos espaces, <em>parfaitement propres.</em></h2>
+        <h2 class="hero-bottom-title">À domicile ou en entreprise, <em>l'excellence Madame Nettoie.</em></h2>
         <span class="hero-bottom-divider"></span>
         <p class="hero-bottom-desc">Ménage, repassage, garde d'enfants, aide aux aînés. Nous intervenons aussi dans vos bureaux, commerces et entreprises. Une équipe humaine et dévouée, à votre service.</p>
         <div class="hero-btns">
@@ -1003,64 +1057,69 @@
         <p class="section-sub">Dans un secteur où la qualité est inégale, nous avons fait le choix de l'exigence — pour vous, et pour nos équipes.</p>
       </div>
 
-      <!-- Accordion horizontal -->
-      <div class="eng-haccordion reveal">
+      <!-- Pile de cartes empilées (sticky stack) — remplace l'accordéon -->
+      <style id="fx-why">
+        .why-stack{position:relative;max-width:1000px;margin:0 auto;padding:1rem 0 2.5rem}
+        .why-card{position:sticky;top:96px;height:clamp(400px,66vh,640px);border-radius:20px;overflow:hidden;margin-bottom:2.5rem;box-shadow:0 30px 70px rgba(30,20,12,.22);will-change:transform,filter}
+        .why-card>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+        .why-card::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(8,4,1,.9) 0%,rgba(8,4,1,.15) 55%,rgba(8,4,1,.45) 100%);z-index:1}
+        .why-num{position:absolute;top:1.5rem;right:1.9rem;z-index:2;font-family:'DM Serif Display',serif;font-size:1.05rem;color:rgba(255,255,255,.6)}
+        .why-card-body{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:2.6rem 2.8rem;color:#fff;max-width:700px}
+        .why-card-body h3{font-family:'DM Serif Display',serif;font-size:clamp(1.7rem,3.2vw,2.5rem);font-weight:400;margin-bottom:.7rem;line-height:1.1}
+        .why-card-body p{font-size:.95rem;line-height:1.7;color:rgba(255,255,255,.9)}
+        @media(max-width:640px){.why-card{top:80px;height:clamp(420px,82vh,560px)}.why-card-body{padding:1.8rem}}
+      </style>
+      <div class="why-stack" data-fx-stack>
 
-        <div class="eng-hpanel hopen" data-hpanel
-             style="background-image:url('https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=900&q=80')">
-          <div class="eng-hpanel-grad"></div>
-          <div class="eng-hpanel-vtitle"><span>Qualité</span></div>
-          <div class="eng-hpanel-content">
+        <div class="why-card">
+          <img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=900&q=80" alt="Qualité" loading="lazy">
+          <span class="why-num">01</span>
+          <div class="why-card-body">
             <h3>Qualité</h3>
             <p>Chaque prestation est réalisée selon des protocoles stricts de nettoyage et d'entretien. Nous ne faisons pas dans l'approximatif — votre domicile est traité avec le même soin que si c'était le nôtre.</p>
           </div>
         </div>
 
-        <div class="eng-hpanel" data-hpanel
-             style="background-image:url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=900&q=80')">
-          <div class="eng-hpanel-grad"></div>
-          <div class="eng-hpanel-vtitle"><span>Suivi</span></div>
-          <div class="eng-hpanel-content">
+        <div class="why-card">
+          <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=900&q=80" alt="Suivi" loading="lazy">
+          <span class="why-num">02</span>
+          <div class="why-card-body">
             <h3>Suivi</h3>
             <p>Votre satisfaction ne s'arrête pas à la première intervention. Nous assurons un suivi régulier de vos prestations, avec des points de contrôle et une ligne directe avec votre agence pour toute demande ou ajustement.</p>
           </div>
         </div>
 
-        <div class="eng-hpanel" data-hpanel
-             style="background-image:url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=900&q=80')">
-          <div class="eng-hpanel-grad"></div>
-          <div class="eng-hpanel-vtitle"><span>Formation</span></div>
-          <div class="eng-hpanel-content">
+        <div class="why-card">
+          <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=900&q=80" alt="Formation" loading="lazy">
+          <span class="why-num">03</span>
+          <div class="why-card-body">
             <h3>Formation</h3>
             <p>Nos employés de maison sont formés directement à votre domicile par nos responsables de secteur. Résultat : un service calibré à vos habitudes, vos produits préférés, et votre façon de vivre.</p>
           </div>
         </div>
 
-        <div class="eng-hpanel" data-hpanel
-             style="background-image:url('https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=900&q=80')">
-          <div class="eng-hpanel-grad"></div>
-          <div class="eng-hpanel-vtitle"><span>Innovation</span></div>
-          <div class="eng-hpanel-content">
+        <div class="why-card">
+          <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=900&q=80" alt="Innovation" loading="lazy">
+          <span class="why-num">04</span>
+          <div class="why-card-body">
             <h3>Innovation</h3>
             <p>Nous intégrons les meilleures pratiques du secteur pour améliorer continuellement nos services — nouvelles techniques de nettoyage, outils de gestion, communication simplifiée avec nos clients.</p>
           </div>
         </div>
 
-        <div class="eng-hpanel" data-hpanel
-             style="background-image:url('https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=900&q=80')">
-          <div class="eng-hpanel-grad"></div>
-          <div class="eng-hpanel-vtitle"><span>Proximité</span></div>
-          <div class="eng-hpanel-content">
+        <div class="why-card">
+          <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=900&q=80" alt="Proximité" loading="lazy">
+          <span class="why-num">05</span>
+          <div class="why-card-body">
             <h3>Proximité</h3>
             <p>Entreprise locale, équipe accessible, interlocuteurs réactifs. Chez Madame Nettoie, vous n'êtes jamais un numéro de dossier. Vous êtes un voisin que l'on aide.</p>
           </div>
         </div>
 
-        <div class="eng-hpanel" data-hpanel
-             style="background-image:url('https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=900&q=80')">
-          <div class="eng-hpanel-grad"></div>
-          <div class="eng-hpanel-vtitle"><span>Satisfaction</span></div>
-          <div class="eng-hpanel-content">
+        <div class="why-card">
+          <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=900&q=80" alt="Satisfaction" loading="lazy">
+          <span class="why-num">06</span>
+          <div class="why-card-body">
             <h3>Satisfaction</h3>
             <p>Notre objectif n'est pas de vous vendre un contrat — c'est de vous faire revenir parce que vous êtes pleinement satisfait. C'est pourquoi nous offrons le devis, la visite d'évaluation, et un accompagnement sans pression.</p>
           </div>
@@ -1357,6 +1416,156 @@
     </div>
   </section>
 
+  <!-- ════════ LABORATOIRE D'ANIMATIONS AU SCROLL (page de test) ════════ -->
+  <style id="fx-lab">
+    .lab-wrap{background:var(--bg);color:var(--text);border-top:1px solid rgba(241,98,42,.12)}
+    .lab-head{max-width:1100px;margin:0 auto;padding:8rem 2.5rem 2rem;text-align:center}
+    .lab-tag{font-size:.8rem;letter-spacing:3px;text-transform:uppercase;color:var(--orange);font-weight:700;display:block;margin-bottom:1rem}
+    .lab-title{font-family:'DM Serif Display',serif;font-size:clamp(2rem,5vw,3.4rem);line-height:1.05;color:var(--text-dark)}
+    .lab-sub{max-width:620px;margin:1.2rem auto 0;color:var(--text-light);line-height:1.7}
+    .lab-demo{max-width:1100px;margin:0 auto;padding:3.5rem 2.5rem}
+    .lab-demo-label{font-size:.72rem;letter-spacing:2px;text-transform:uppercase;color:var(--orange);font-weight:700;margin-bottom:.4rem;display:flex;align-items:center;gap:.6rem}
+    .lab-demo-label::before{content:'';width:26px;height:1px;background:var(--orange)}
+    .lab-demo-name{font-family:'DM Serif Display',serif;font-size:1.6rem;color:var(--text-dark);margin-bottom:1.6rem}
+    /* Sections qui montent */
+    .lab-rise{opacity:0;transform:translateY(70px) scale(.985);transition:transform 1s cubic-bezier(.16,1,.3,1),opacity 1s}
+    .lab-rise.fx-in{opacity:1;transform:none}
+    .lab-panel{display:flex;gap:1.5rem;align-items:center;background:var(--white);border-radius:14px;overflow:hidden;box-shadow:0 20px 50px rgba(30,20,12,.07);margin-bottom:1.4rem}
+    .lab-panel img{width:42%;height:230px;object-fit:cover;flex-shrink:0}
+    .lab-panel-txt{padding:1.5rem 1.8rem}
+    .lab-panel-txt h4{font-family:'DM Serif Display',serif;font-size:1.4rem;margin-bottom:.5rem;color:var(--text-dark)}
+    .lab-panel-txt p{color:var(--text-light);line-height:1.6;font-size:.92rem}
+    @media(max-width:640px){.lab-panel{flex-direction:column}.lab-panel img{width:100%;height:200px}}
+    /* Cartes empilées */
+    .lab-stack{position:relative;padding-bottom:2rem}
+    .lab-stack-card{position:sticky;top:110px;height:62vh;border-radius:18px;overflow:hidden;margin-bottom:2.5rem;box-shadow:0 30px 60px rgba(30,20,12,.18);will-change:transform,filter}
+    .lab-stack-card img{width:100%;height:100%;object-fit:cover}
+    .lab-stack-card .cap{position:absolute;left:0;right:0;bottom:0;padding:2rem;background:linear-gradient(to top,rgba(8,4,1,.8),transparent);color:#fff;font-family:'DM Serif Display',serif;font-size:2rem}
+    /* Scroll horizontal épinglé */
+    .lab-h{height:340vh;position:relative}
+    .lab-h-sticky{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;align-items:center}
+    .lab-h-track{display:flex;gap:1.5rem;padding:0 10vw;will-change:transform}
+    .lab-h-item{flex:0 0 56vw;max-width:520px;height:66vh;border-radius:16px;overflow:hidden;position:relative;box-shadow:0 20px 50px rgba(30,20,12,.12)}
+    .lab-h-item img{width:100%;height:100%;object-fit:cover}
+    .lab-h-item span{position:absolute;left:1.4rem;bottom:1.2rem;color:#fff;font-family:'DM Serif Display',serif;font-size:1.5rem;text-shadow:0 2px 14px rgba(0,0,0,.55)}
+    @media(max-width:768px){.lab-h-item{flex-basis:80vw}}
+    /* Zoom piloté au scroll */
+    .lab-zoom{height:260vh;position:relative;background:#15100b}
+    .lab-zoom-sticky{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;align-items:center;justify-content:center}
+    .lab-zoom-img{width:42vw;max-width:520px;aspect-ratio:4/5;border-radius:16px;overflow:hidden;will-change:transform}
+    .lab-zoom-img img{width:100%;height:100%;object-fit:cover}
+    .lab-zoom-cap{position:absolute;color:#fff;font-family:'DM Serif Display',serif;font-size:clamp(2.2rem,7vw,5rem);text-align:center;mix-blend-mode:difference;pointer-events:none;letter-spacing:1px}
+    /* Texte qui se remplit */
+    .lab-fill{max-width:900px;margin:0 auto;padding:16vh 2.5rem;font-family:'DM Serif Display',serif;font-size:clamp(1.4rem,3.6vw,2.6rem);line-height:1.5}
+    .lab-fill .w{color:rgba(58,44,30,.16);transition:color .2s linear}
+    .lab-fill .w.on{color:var(--text-dark)}
+  </style>
+
+  <div class="lab-wrap">
+    <div class="lab-head lab-rise" data-fx-rise>
+      <span class="lab-tag">Laboratoire</span>
+      <h2 class="lab-title">Terrain de jeu — animations au scroll</h2>
+      <p class="lab-sub">Zone de test : chaque bloc ci-dessous illustre une technique de défilement différente, façon aircenter.space. Faites défiler lentement pour voir chaque effet.</p>
+    </div>
+
+    <!-- Démo A — sections qui montent -->
+    <section class="lab-demo">
+      <div class="lab-demo-label">Démo A</div>
+      <h3 class="lab-demo-name">Les sections montent à l'apparition</h3>
+      <div class="lab-panel lab-rise" data-fx-rise>
+        <img src="mena.jpeg" alt="Ménage" loading="lazy">
+        <div class="lab-panel-txt"><h4>Apparition douce</h4><p>Ce bloc monte depuis le bas avec un léger zoom à mesure qu'il entre dans l'écran.</p></div>
+      </div>
+      <div class="lab-panel lab-rise" data-fx-rise>
+        <img src="repass.jpeg" alt="Repassage" loading="lazy">
+        <div class="lab-panel-txt"><h4>En cascade</h4><p>Les blocs successifs se déclenchent l'un après l'autre, pour un effet rythmé et naturel.</p></div>
+      </div>
+      <div class="lab-panel lab-rise" data-fx-rise>
+        <img src="senior.jpeg" alt="Aide aux aînés" loading="lazy">
+        <div class="lab-panel-txt"><h4>Courbe fluide</h4><p>Même courbe d'accélération qu'aircenter (cubic-bezier .16, 1, .3, 1) pour un rendu « soyeux ».</p></div>
+      </div>
+    </section>
+
+    <!-- Démo B — cartes empilées -->
+    <section class="lab-demo">
+      <div class="lab-demo-label">Démo B</div>
+      <h3 class="lab-demo-name">Cartes empilées (sticky stack)</h3>
+      <div class="lab-stack" data-fx-stack>
+        <div class="lab-stack-card"><img src="1.jpeg" alt="" loading="lazy"><span class="cap">Ménage</span></div>
+        <div class="lab-stack-card"><img src="cours.jpeg" alt="" loading="lazy"><span class="cap">Courses</span></div>
+        <div class="lab-stack-card"><img src="jumelle.jpeg" alt="" loading="lazy"><span class="cap">Garde d'enfants</span></div>
+        <div class="lab-stack-card"><img src="bureau.jpeg" alt="" loading="lazy"><span class="cap">Bureaux</span></div>
+      </div>
+    </section>
+
+    <!-- Démo C — scroll horizontal épinglé -->
+    <section class="lab-h" data-fx-hscroll>
+      <div class="lab-h-sticky">
+        <div class="lab-demo-label" style="position:absolute;top:7vh;left:10vw;z-index:2">Démo C — Scroll horizontal</div>
+        <div class="lab-h-track">
+          <div class="lab-h-item"><img src="2.jpeg" alt="" loading="lazy"><span>01 — Confiance</span></div>
+          <div class="lab-h-item"><img src="3.jpeg" alt="" loading="lazy"><span>02 — Soin</span></div>
+          <div class="lab-h-item"><img src="4.jpeg" alt="" loading="lazy"><span>03 — Proximité</span></div>
+          <div class="lab-h-item"><img src="5.jpeg" alt="" loading="lazy"><span>04 — Excellence</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Démo D — zoom au scroll -->
+    <section class="lab-zoom" data-fx-zoom>
+      <div class="lab-zoom-sticky">
+        <div class="lab-zoom-img"><img src="7.jpeg" alt="" loading="lazy"></div>
+        <div class="lab-zoom-cap">À domicile</div>
+      </div>
+    </section>
+
+    <!-- Démo E — texte qui se remplit -->
+    <section class="lab-demo">
+      <div class="lab-demo-label">Démo E</div>
+      <h3 class="lab-demo-name">Texte qui se remplit au scroll</h3>
+      <p class="lab-fill" data-fx-fill>Chez Madame Nettoie, chaque geste compte : un intérieur propre, un linge soigné, une présence bienveillante — le confort d'un service pensé entièrement pour vous.</p>
+    </section>
+  </div>
+
+  <script>
+  (function(){
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+      document.querySelectorAll('.lab-rise').forEach(function(e){ e.classList.add('fx-in'); });
+      return;
+    }
+    function clamp(v,a,b){ return Math.max(a, Math.min(b, v)); }
+    function prog(sec){ var r=sec.getBoundingClientRect(), vh=window.innerHeight; return clamp(-r.top/(r.height-vh), 0, 1); }
+
+    /* Sections qui montent */
+    var rio = new IntersectionObserver(function(es){
+      es.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('fx-in'); rio.unobserve(en.target); } });
+    }, { threshold:0.18, rootMargin:'0px 0px -6% 0px' });
+    document.querySelectorAll('[data-fx-rise]').forEach(function(e){ rio.observe(e); });
+
+    /* Effets pilotés au scroll (scrub) */
+    var hsec=document.querySelector('[data-fx-hscroll]'), htrack=hsec&&hsec.querySelector('.lab-h-track');
+    var zsec=document.querySelector('[data-fx-zoom]'), zimg=zsec&&zsec.querySelector('.lab-zoom-img');
+    var fill=document.querySelector('[data-fx-fill]'), fillWords=[];
+    if(fill){ fill.innerHTML = fill.textContent.trim().split(/\s+/).map(function(w){ return '<span class="w">'+w+'</span>'; }).join(' '); fillWords=fill.querySelectorAll('.w'); }
+    var stacks=[]; document.querySelectorAll('[data-fx-stack]').forEach(function(s){ stacks.push(s.querySelectorAll('.lab-stack-card, .why-card')); });
+
+    var ticking=false;
+    function onScroll(){
+      if(ticking) return; ticking=true;
+      requestAnimationFrame(function(){
+        ticking=false; var vh=window.innerHeight;
+        if(htrack){ var pH=prog(hsec); var max=htrack.scrollWidth-window.innerWidth; htrack.style.transform='translate3d('+(-pH*max).toFixed(1)+'px,0,0)'; }
+        if(zimg){ var pZ=prog(zsec); zimg.style.transform='scale('+(1+pZ*1.5).toFixed(3)+')'; zimg.style.borderRadius=(16*(1-pZ)).toFixed(1)+'px'; }
+        if(fillWords.length){ var rf=fill.getBoundingClientRect(); var pF=clamp((vh*0.82-rf.top)/(rf.height+vh*0.4),0,1); var n=Math.round(pF*fillWords.length); for(var i=0;i<fillWords.length;i++){ fillWords[i].classList.toggle('on', i<n); } }
+        stacks.forEach(function(cards){ for(var j=0;j<cards.length-1;j++){ var nr=cards[j+1].getBoundingClientRect(); var cov=clamp((vh-nr.top)/(vh-110),0,1); cards[j].style.transform='scale('+(1-0.08*cov).toFixed(3)+')'; cards[j].style.filter='brightness('+(1-0.28*cov).toFixed(3)+')'; } });
+      });
+    }
+    window.addEventListener('scroll', onScroll, { passive:true });
+    window.addEventListener('resize', onScroll, { passive:true });
+    onScroll();
+  })();
+  </script>
+
   <!-- 12 — FOOTER -->
   <footer>
     <div class="footer-top">
@@ -1486,18 +1695,10 @@
 
       const isMob = () => window.innerWidth < 768;
 
-      // Hauteur de viewport STABLE : un 'vh' CSS reste fixe quand la barre
-      // d'adresse mobile apparaît/disparaît (au contraire de window.innerHeight).
-      // C'est ce qui évite le tremblement de la vidéo pendant son expansion.
-      const vhProbe = document.createElement('div');
-      vhProbe.style.cssText = 'position:fixed;top:0;left:0;width:0;height:100vh;visibility:hidden;pointer-events:none;z-index:-1';
-      document.body.appendChild(vhProbe);
-      let vhc = vhProbe.offsetHeight || window.innerHeight;
-
       function render(p) {
         const mob = isMob();
         const vw  = window.innerWidth;
-        const vh  = vhc;
+        const vh  = window.innerHeight;
         const wStart = mob ? 240 : 300;
         const hStart = mob ? 320 : 400;
         const w = wStart + (vw - wStart) * p;
@@ -1538,18 +1739,16 @@
         requestAnimationFrame(() => {
           rafPending = false;
           // zone = hauteur du placeholder − un viewport (= 2×vh sur desktop, 1.2×vh sur mobile)
-          const zone = placeholder.offsetHeight - vhc;
+          const zone = placeholder.offsetHeight - window.innerHeight;
           render(zone > 0 ? Math.min(1, Math.max(0, window.scrollY / zone)) : 0);
         });
       }
 
       window.addEventListener('scroll', update, { passive: true });
-      // Le resize (rotation, vrai redimensionnement) recalcule la hauteur stable ;
-      // les variations dues à la barre d'adresse ne la modifient pas.
-      window.addEventListener('resize', () => { vhc = vhProbe.offsetHeight || window.innerHeight; update(); }, { passive: true });
+      window.addEventListener('resize', update, { passive: true });
 
       // Rendu initial (gère la restauration de position au rechargement)
-      const z0 = placeholder.offsetHeight - vhc;
+      const z0 = placeholder.offsetHeight - window.innerHeight;
       render(z0 > 0 ? Math.min(1, Math.max(0, window.scrollY / z0)) : 0);
     })();
 
@@ -1746,6 +1945,169 @@
       const h = document.querySelector('.header');
       h.style.boxShadow = window.scrollY > 20 ? '0 4px 30px rgba(30,20,12,.08)' : 'none';
     }, { passive: true });
+  </script>
+
+  <!-- ════════ FX AIRCENTER — moteur d'effets (page de test) ════════ -->
+  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+  <script>
+  (function(){
+    var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduced) return; // page identique à l'originale si l'utilisateur a réduit les animations
+
+    /* ---------- 1. PRÉCHARGEUR ---------- */
+    var revealsStarted = false;
+    function buildPreloader(){
+      var pre = document.createElement('div');
+      pre.className = 'fx-preloader';
+      var word = 'Madame Nettoie';
+      var logo = '<div class="fx-pre-logo">' + word.split('').map(function(c,i){
+        return '<span style="animation-delay:' + (i*0.03).toFixed(3) + 's">' + (c===' ' ? '&nbsp;' : c) + '</span>';
+      }).join('') + '</div>';
+      pre.innerHTML = logo + '<div class="fx-pre-bar"><i></i></div><div class="fx-pre-num">0%</div>';
+      document.body.appendChild(pre);
+      var bar = pre.querySelector('.fx-pre-bar i'), num = pre.querySelector('.fx-pre-num'), p = 0;
+      var t = setInterval(function(){
+        p = Math.min(100, p + Math.random()*16 + 7);
+        bar.style.width = p + '%'; num.textContent = Math.round(p) + '%';
+        if (p >= 100){ clearInterval(t); setTimeout(function(){ pre.classList.add('is-done'); startReveals(); }, 450); }
+      }, 130);
+    }
+
+    /* ---------- 2. CURSEUR PERSONNALISÉ ---------- */
+    function buildCursor(){
+      if (!window.matchMedia('(hover:hover) and (pointer:fine)').matches) return;
+      document.body.classList.add('fx-cursor-on');
+      var dot = document.createElement('div'); dot.className = 'fx-cursor';
+      var ring = document.createElement('div'); ring.className = 'fx-cursor-ring';
+      document.body.appendChild(dot); document.body.appendChild(ring);
+      var mx=0,my=0,rx=0,ry=0;
+      document.addEventListener('mousemove', function(e){ mx=e.clientX; my=e.clientY; dot.style.left=mx+'px'; dot.style.top=my+'px'; });
+      (function loop(){ rx += (mx-rx)*0.18; ry += (my-ry)*0.18; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(loop); })();
+      var SEL = 'a,button,[data-acc],[data-hpanel],.serv-card,.testi-card,input,textarea,select';
+      document.addEventListener('mouseover', function(e){ if (e.target.closest(SEL)){ dot.classList.add('is-hover'); ring.classList.add('is-hover'); } });
+      document.addEventListener('mouseout',  function(e){ if (e.target.closest(SEL)){ dot.classList.remove('is-hover'); ring.classList.remove('is-hover'); } });
+    }
+
+    /* ---------- 3. SMOOTH SCROLL (Lenis) ---------- */
+    function startLenis(){
+      if (typeof Lenis === 'undefined') return;
+      var lenis = new Lenis({ duration: 1.1, smoothWheel: true });
+      function raf(time){ lenis.raf(time); requestAnimationFrame(raf); }
+      requestAnimationFrame(raf);
+      lenis.on('scroll', onParallax);
+    }
+
+    /* ---------- 4. RÉVÉLATION TEXTE (découpe en lignes) ---------- */
+    function splitLines(el){
+      var text = el.textContent.replace(/\s+/g,' ').trim(); if (!text) return false;
+      var words = text.split(' ');
+      el.innerHTML = '';
+      var spans = words.map(function(w){ var s=document.createElement('span'); s.style.display='inline-block'; s.textContent=w; el.appendChild(s); el.appendChild(document.createTextNode(' ')); return s; });
+      var lines=[], cur=null, top=null;
+      spans.forEach(function(s){ var t=s.offsetTop; if (top===null || Math.abs(t-top)>4){ cur=[]; lines.push(cur); top=t; } cur.push(s.textContent); });
+      el.innerHTML = lines.map(function(l){ return '<span class="fx-line"><span>' + l.join(' ') + '</span></span>'; }).join(' ');
+      return true;
+    }
+    function autoTagText(){
+      var EXCLUDE = '.about, .valeurs, #zoomParallax, .hero, #accueil, .preloader';
+      document.querySelectorAll('.section-title, .section-sub').forEach(function(el){
+        if (el.closest(EXCLUDE)) return;
+        if (el.querySelector('.fx-line') || el.hasAttribute('data-fx-block')) return;
+        if (el.children.length > 0){            // contient du HTML (<em>…) → révélation bloc
+          el.setAttribute('data-fx-block','');
+        } else {                                 // texte pur → révélation ligne par ligne
+          if (splitLines(el)) el.setAttribute('data-fx-text','');
+        }
+      });
+    }
+
+    /* ---------- 5. RÉVÉLATION IMAGE ---------- */
+    function autoTagImages(){
+      document.querySelectorAll('.serv-card-img').forEach(function(img){ img.setAttribute('data-fx-img',''); });
+    }
+
+    /* ---------- 6. PARALLAXE ---------- */
+    var parallaxEls = [];
+    function autoTagParallax(){
+      var EXCLUDE = '.hero,#accueil,#zoomParallax,.zoom,.testi,.serv-card,.about,.valeurs,header,.header,footer,.footer,.fx-preloader,.lab-wrap,.why-stack';
+      document.querySelectorAll('img').forEach(function(img,i){
+        if (img.closest(EXCLUDE)) return;
+        if (img.hasAttribute('data-fx-img')) return;
+        img.setAttribute('data-fx-parallax', (0.05 + (i%3)*0.03).toFixed(2));
+        parallaxEls.push(img);
+      });
+    }
+    function onParallax(){
+      var vh = window.innerHeight;
+      for (var i=0;i<parallaxEls.length;i++){
+        var el = parallaxEls[i], r = el.getBoundingClientRect();
+        if (r.bottom < -50 || r.top > vh + 50) continue;
+        var speed = parseFloat(el.dataset.fxParallax) || 0.08;
+        var y = ((r.top + r.height/2) - vh/2) * -speed;
+        y = Math.max(-26, Math.min(26, y));
+        el.style.transform = 'translate3d(0,' + y.toFixed(1) + 'px,0)';
+      }
+    }
+
+    /* ---------- 7. COMPTEURS ---------- */
+    function autoTagCounters(){
+      document.querySelectorAll('.tg-num, .aides-big-stat, .badge-num').forEach(function(el){
+        var m = (el.textContent||'').trim().match(/^(\d+)(.*)$/);
+        if (!m) return;
+        el.setAttribute('data-fx-count', m[1]);
+        el.setAttribute('data-fx-suffix', m[2] || '');
+        el.textContent = '0' + (m[2] || '');
+      });
+    }
+    function animateCount(el){
+      var target = parseFloat(el.dataset.fxCount), suffix = el.dataset.fxSuffix || '', dur = 1500, start = null;
+      function step(ts){ if(!start) start=ts; var p=Math.min(1,(ts-start)/dur); var val=Math.floor(target*(1-Math.pow(1-p,3))); el.textContent = val + suffix; if(p<1) requestAnimationFrame(step); else el.textContent = target + suffix; }
+      requestAnimationFrame(step);
+    }
+
+    /* ---------- 8. BOUTONS MAGNÉTIQUES ---------- */
+    function magnetic(){
+      document.querySelectorAll('.btn-primary,.btn-ghost,.btn-nav,.btn-submit').forEach(function(btn){
+        btn.classList.add('fx-magnetic');
+        btn.addEventListener('mousemove', function(e){ var r=btn.getBoundingClientRect(); var x=e.clientX-r.left-r.width/2; var y=e.clientY-r.top-r.height/2; btn.style.transform='translate('+(x*0.25).toFixed(1)+'px,'+(y*0.4).toFixed(1)+'px)'; });
+        btn.addEventListener('mouseleave', function(){ btn.style.transform=''; });
+      });
+    }
+
+    /* ---------- DÉCLENCHEMENT (IntersectionObserver) ---------- */
+    function startReveals(){
+      if (revealsStarted) return; revealsStarted = true;
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(en){
+          if (en.isIntersecting){
+            var el = en.target;
+            el.classList.add('fx-in');
+            if (el.hasAttribute('data-fx-count')) animateCount(el);
+            io.unobserve(el);
+          }
+        });
+      }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+      document.querySelectorAll('[data-fx-text],[data-fx-block],[data-fx-img],[data-fx-count]').forEach(function(el){ io.observe(el); });
+      onParallax();
+    }
+
+    /* ---------- BOOT ---------- */
+    function boot(){
+      buildCursor();
+      autoTagImages();
+      autoTagText();
+      autoTagParallax();
+      autoTagCounters();
+      magnetic();
+      startLenis();
+      buildPreloader();                 // appelle startReveals() à la fin
+      window.addEventListener('scroll', onParallax, { passive:true });   // fallback si Lenis absent
+      // filet de sécurité : si le préchargeur échoue, on révèle quand même
+      setTimeout(startReveals, 4000);
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
+    else boot();
+  })();
   </script>
 </body>
 </html>

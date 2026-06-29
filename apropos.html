@@ -44,7 +44,7 @@
     .menu-toggle{display:none;background:transparent;font-size:1.4rem;color:var(--text-dark);padding:.3rem}
 
     /* ─── LABELS & TITLES ─── */
-    .section-label{font-size:.72rem;color:var(--gold-metallic);letter-spacing:3px;text-transform:uppercase;font-weight:600;margin-bottom:.7rem;display:block}
+    .section-label{font-size:.82rem;color:var(--gold-metallic);letter-spacing:3px;text-transform:uppercase;font-weight:600;margin-bottom:.7rem;display:block}
     .section-title{font-family:'DM Serif Display',serif;font-size:clamp(2rem,3.5vw,2.8rem);color:var(--text-dark);font-weight:400;line-height:1.15;margin-bottom:1.2rem}
     .section-title em{font-style:italic;color:var(--gold-metallic)}
 
@@ -83,6 +83,17 @@
     .valeur-body h3{font-family:'DM Serif Display',serif;font-size:1.25rem;color:var(--text-dark);font-weight:400;margin-bottom:.7rem;line-height:1.2}
     .valeur-body h3 em{font-style:italic;color:var(--orange)}
     .valeur-body p{font-size:.88rem;color:var(--text-light);line-height:1.8}
+    /* Pile de cartes empilées (sticky stack) */
+    .val-stack{position:relative;max-width:920px;margin:0 auto}
+    .val-card{position:sticky;top:100px;height:clamp(380px,62vh,600px);border-radius:20px;overflow:hidden;margin-bottom:2.4rem;will-change:transform,filter}
+    .val-card>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+    .val-card::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(8,4,1,.9) 0%,rgba(8,4,1,.12) 55%,rgba(8,4,1,.45) 100%);z-index:1}
+    .val-card-num{position:absolute;top:1.5rem;right:1.9rem;z-index:2;font-family:'DM Serif Display',serif;font-size:1.05rem;color:rgba(255,255,255,.6)}
+    .val-card-body{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:2.6rem 2.8rem;color:#fff;max-width:680px}
+    .val-card-body h3{font-family:'DM Serif Display',serif;font-size:clamp(1.6rem,3vw,2.3rem);font-weight:400;margin-bottom:.7rem;line-height:1.15;color:#fff}
+    .val-card-body h3 em{font-style:italic;color:var(--orange)}
+    .val-card-body p{font-size:.92rem;line-height:1.75;color:rgba(255,255,255,.9)}
+    @media(max-width:640px){.val-card{top:80px;height:clamp(420px,82vh,560px)}.val-card-body{padding:1.8rem}}
 
     /* ─── ENGAGEMENT ─── */
     .engagement-final{padding:6rem 2.5rem;background:var(--text-dark);position:relative;overflow:hidden}
@@ -139,7 +150,15 @@
       .menu-toggle{display:block}
       .header-inner{padding:0 1.5rem}
       .footer-top{grid-template-columns:1fr}
-      .page-hero{height:70vh}
+      /* Hero mobile : texte ancré en bas, dégradé vertical, plus lisible et aéré */
+      .page-hero{height:84vh;min-height:540px;align-items:flex-end}
+      .page-hero-overlay{background:linear-gradient(to top,rgba(8,4,1,.94) 6%,rgba(8,4,1,.55) 42%,rgba(8,4,1,.1) 100%)}
+      .page-hero-content{padding:0 1.6rem 3.2rem;gap:.85rem;max-width:560px}
+      .page-hero-title{font-size:clamp(2.5rem,11vw,3.3rem);line-height:1.04;max-width:100%}
+      .page-hero-divider{margin:.15rem 0}
+      .page-hero-desc{font-size:.95rem;line-height:1.65;max-width:34ch;color:rgba(255,255,255,.82)}
+      .page-hero-btns{width:100%;flex-direction:column;margin-top:.9rem}
+      .page-hero-btns .btn-primary{width:100%;justify-content:center}
       .page-hero-content{padding:0 1.8rem}
       .mission{padding:4rem 1.5rem}
       .valeurs{padding:4rem 1.5rem}
@@ -207,7 +226,7 @@
     <div class="mission-inner">
 
       <div class="mission-text reveal">
-        <span class="section-label">— Notre mission —</span>
+        <span class="section-label">Notre mission</span>
         <h2 class="section-title">Vous libérer du quotidien pour <em>l'essentiel.</em></h2>
         <p>Notre mission est simple : vous libérer des contraintes du quotidien pour vous permettre de vous recentrer sur l'essentiel, tout en veillant au bien-être et à la sécurité de vos proches.</p>
         <p>Parce que chaque foyer est unique et que vos attentes le sont tout autant, nous ne proposons pas de formules toutes faites. Notre priorité est de comprendre précisément votre mode de vie, vos sensibilités et vos contraintes horaires pour vous offrir une prestation <strong>parfaitement adaptée.</strong></p>
@@ -226,40 +245,44 @@
   <section class="valeurs">
     <div class="valeurs-inner">
       <div class="valeurs-head reveal">
-        <span class="section-label">— Ce qui nous définit —</span>
+        <span class="section-label">Ce qui nous définit</span>
         <h2 class="section-title">Nos valeurs <em>fondamentales</em></h2>
         <p>Chaque famille, chaque maison et chaque senior a une histoire et des habitudes qui lui sont propres. Ces quatre valeurs guident chacune de nos interventions, jour après jour.</p>
       </div>
 
-      <div class="valeurs-grid">
+      <div class="val-stack">
 
-        <div class="valeur-card reveal">
-          <span class="valeur-num">01</span>
-          <div class="valeur-body">
+        <div class="val-card">
+          <img src="1.jpeg" alt="Écoute & Personnalisation" loading="lazy">
+          <span class="val-card-num">01</span>
+          <div class="val-card-body">
             <h3>Écoute <em>&amp; Personnalisation</em></h3>
             <p>Chaque famille, chaque maison et chaque senior a une histoire et des habitudes qui lui sont propres. Notre méthode repose sur un dialogue sincère, initié dès notre première visite d'évaluation, pour bâtir une prestation qui vous ressemble.</p>
           </div>
         </div>
 
-        <div class="valeur-card reveal reveal-d1">
-          <span class="valeur-num">02</span>
-          <div class="valeur-body">
+        <div class="val-card">
+          <img src="7.jpeg" alt="Confiance & Discrétion" loading="lazy">
+          <span class="val-card-num">02</span>
+          <div class="val-card-body">
             <h3>Confiance <em>&amp; Discrétion</em></h3>
             <p>Notre exigence commence par la formation. Nos intervenants sont sélectionnés et accompagnés, non seulement pour leurs compétences techniques, mais aussi pour leur savoir-être. Discrétion, respect de l'intimité et bienveillance sont nos maîtres-mots.</p>
           </div>
         </div>
 
-        <div class="valeur-card reveal reveal-d2">
-          <span class="valeur-num">03</span>
-          <div class="valeur-body">
+        <div class="val-card">
+          <img src="mena.jpeg" alt="Rigueur & Qualité" loading="lazy">
+          <span class="val-card-num">03</span>
+          <div class="val-card-body">
             <h3>Rigueur <em>&amp; Qualité</em></h3>
             <p>Nous assurons un suivi régulier de nos interventions. Notre équipe de coordinateurs veille à ce que le cahier des charges défini avec vous soit respecté à la lettre, semaine après semaine.</p>
           </div>
         </div>
 
-        <div class="valeur-card reveal reveal-d3">
-          <span class="valeur-num">04</span>
-          <div class="valeur-body">
+        <div class="val-card">
+          <img src="senior.jpeg" alt="Continuité & Proximité" loading="lazy">
+          <span class="val-card-num">04</span>
+          <div class="val-card-body">
             <h3>Continuité <em>&amp; Proximité</em></h3>
             <p>Afin de tisser un véritable lien de confiance, notamment auprès de nos aînés, nous privilégions la stabilité en vous attribuant un(e) intervenant(e) dédié(e). Un repère humain, constant et rassurant.</p>
           </div>
@@ -272,7 +295,7 @@
   <!-- ENGAGEMENT FINAL -->
   <section class="engagement-final">
     <div class="engagement-final-inner reveal">
-      <span class="section-label">— Notre engagement —</span>
+      <span class="section-label">Notre engagement</span>
       <h2 class="section-title">Faire de votre maison <em>un lieu de sérénité.</em></h2>
       <p>Nous travaillons avec une véritable conscience professionnelle pour vous apporter cette tranquillité d'esprit : l'assurance que votre foyer est entre de bonnes mains.</p>
       <p>Que vous soyez présent à votre domicile pour superviser la prestation ou que vous soyez absent, nos équipes agissent avec la même constance, la même loyauté et la même rigueur.</p>
@@ -342,6 +365,31 @@
       entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); observer.unobserve(e.target); } });
     }, { threshold: 0.1 });
     reveals.forEach(r => observer.observe(r));
+
+    // ─── Pile de cartes empilées (sticky stack) : profondeur au scroll ───
+    (function(){
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      const cards = document.querySelectorAll('.val-stack .val-card');
+      if (!cards.length) return;
+      const clamp = (v,a,b) => Math.max(a, Math.min(b, v));
+      let ticking = false;
+      function onScroll(){
+        if (ticking) return; ticking = true;
+        requestAnimationFrame(() => {
+          ticking = false;
+          const vh = window.innerHeight;
+          for (let j = 0; j < cards.length - 1; j++){
+            const nr = cards[j+1].getBoundingClientRect();
+            const cov = clamp((vh - nr.top) / (vh - 100), 0, 1);
+            cards[j].style.transform = 'scale(' + (1 - 0.07*cov).toFixed(3) + ')';
+            cards[j].style.filter = 'brightness(' + (1 - 0.26*cov).toFixed(3) + ')';
+          }
+        });
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll, { passive: true });
+      onScroll();
+    })();
   </script>
 
 </body>

@@ -55,7 +55,7 @@
     .btn-primary:hover{background:var(--orange-dark);transform:translateY(-2px);box-shadow:0 12px 30px rgba(241,98,42,.35)}
 
     /* ─── SECTION TITLES ─── */
-    .section-label{font-size:.72rem;color:var(--gold-metallic);letter-spacing:3px;text-transform:uppercase;font-weight:600;margin-bottom:.7rem;display:block}
+    .section-label{font-size:.82rem;color:var(--gold-metallic);letter-spacing:3px;text-transform:uppercase;font-weight:600;margin-bottom:.7rem;display:block}
     .section-title{font-family:'DM Serif Display',serif;font-size:clamp(2rem,3.5vw,2.8rem);color:var(--text-dark);font-weight:400;line-height:1.15;margin-bottom:1.2rem}
     .section-title em{font-style:italic;color:var(--gold-metallic)}
     .section-sub{font-size:.95rem;color:var(--text-light);line-height:1.75;max-width:580px}
@@ -140,9 +140,17 @@
     .fiscal-callout-pct{font-family:'DM Serif Display',serif;font-size:2rem;color:var(--orange);font-weight:400;flex-shrink:0;line-height:1}
     .fiscal-callout-text{font-size:.82rem;color:var(--text-mid);line-height:1.6}
     .fiscal-callout-text strong{color:var(--text-dark)}
+    /* Bande réduction d'impôt : photo gauche + texte droite, sans cadre */
+    .fiscal-band-section{background:var(--bg)}
+    .fiscal-band{max-width:1100px;margin:0 auto;padding:1rem 2.5rem 5rem;display:grid;grid-template-columns:1fr 1fr;gap:3.5rem;align-items:center}
+    .fiscal-band-photo img{width:100%;height:380px;object-fit:cover;border-radius:16px;display:block}
+    .fiscal-band-pct{font-family:'DM Serif Display',serif;font-size:clamp(4.5rem,10vw,7.5rem);color:var(--orange);font-weight:400;line-height:.9;display:block;margin-bottom:1.1rem}
+    .fiscal-band-text{font-size:1.02rem;color:var(--text-mid);line-height:1.75;max-width:460px}
+    .fiscal-band-text strong{color:var(--text-dark)}
+    @media(max-width:768px){.fiscal-band{grid-template-columns:1fr;gap:2rem;padding:1rem 1.5rem 3.5rem}.fiscal-band-photo img{height:240px}}
     .assistant-photo img{width:100%;height:520px;object-fit:cover;object-position:center;border-radius:16px;box-shadow:0 24px 55px rgba(30,20,12,.13);display:block;position:sticky;top:6rem}
     @media(max-width:1000px){.assistant-layout{grid-template-columns:1fr;gap:2.5rem}.assistant-photo img{height:340px;position:static}}
-    @media(max-width:768px){.assistant{padding:4rem 1.5rem}.assistant-grid{grid-template-columns:1fr}}
+    @media(max-width:768px){.assistant{padding:4rem 1.5rem}.assistant-grid{grid-template-columns:1fr}.assistant-photo{order:-1;margin-bottom:1.2rem}}
 
     /* ─── DEVIS CARD ─── */
     .devis-card-section{background:#fff;padding:5rem 2.5rem}
@@ -240,7 +248,16 @@
       .menu-toggle{display:block}
       .header-inner{padding:0 1.5rem}
       .footer-top{grid-template-columns:1fr}
-      .page-hero{height:75vh}
+      /* Hero mobile : texte ancré en bas, dégradé vertical, plus lisible et aéré */
+      .page-hero{height:84vh;min-height:540px;align-items:flex-end}
+      .page-hero-bg img{object-position:62% top}
+      .page-hero-overlay{background:linear-gradient(to top,rgba(8,4,1,.94) 6%,rgba(8,4,1,.55) 42%,rgba(8,4,1,.1) 100%)}
+      .page-hero-content{padding:0 1.6rem 3.2rem;gap:.85rem;max-width:560px}
+      .page-hero-title{font-size:clamp(2.5rem,11vw,3.3rem);line-height:1.04;max-width:100%}
+      .page-hero-divider{margin:.15rem 0}
+      .page-hero-desc{font-size:.95rem;line-height:1.65;max-width:34ch;color:rgba(255,255,255,.82)}
+      .page-hero-btns{width:100%;margin-top:.9rem}
+      .page-hero-btns .btn-primary{width:100%;justify-content:center}
     }
   </style>
 </head>
@@ -311,7 +328,7 @@
   <section class="intro" id="intro">
     <div class="intro-inner reveal">
       <div class="intro-text">
-        <span class="section-label">— Livraison de courses à domicile à Bordeaux —</span>
+        <span class="section-label">Livraison de courses à domicile à Bordeaux</span>
         <h2 class="section-title">Un service de livraison <em>dédié à tous.</em></h2>
         <div class="intro-separator"></div>
         <p>Fidèle à ses valeurs humaines, Madame Nettoie adapte continuellement son offre aux besoins de chacun. En plus du ménage, du repassage et de l'aide aux aînés, nous assurons la livraison de courses à domicile sur Bègles et Bordeaux.</p>
@@ -325,7 +342,7 @@
     <div class="comment-inner">
       <div class="comment-layout">
         <div class="comment-text reveal">
-          <span class="section-label">— Pourquoi ce service —</span>
+          <span class="section-label">Pourquoi ce service</span>
           <h2 class="section-title">Parce que remplir le frigo ne devrait jamais être <em>un obstacle.</em></h2>
           <p>Vous traversez une période de mobilité réduite, suite à un accident ou une maladie ? Vous manquez de temps ou de moyen de transport pour faire vos courses ? Vous n'osez pas solliciter vos proches une fois de plus ?</p>
           <p>Ces situations sont bien plus courantes qu'on ne le pense. Madame Nettoie intervient pour vous, directement en supermarché ou en drive, pour que vos placards soient toujours bien remplis.</p>
@@ -352,7 +369,7 @@
   <section class="confiance" id="confiance">
     <div class="confiance-inner">
       <div class="confiance-head reveal">
-        <span class="section-label">— Notre engagement —</span>
+        <span class="section-label">Notre engagement</span>
         <h2 class="section-title">Un service de confiance <em>avant tout.</em></h2>
       </div>
       <div class="confiance-grid reveal">
@@ -386,7 +403,7 @@
     <div class="assistant-inner">
 
       <div class="assistant-head reveal">
-        <span class="section-label">— Comment ça fonctionne —</span>
+        <span class="section-label">Comment ça fonctionne</span>
         <h2 class="section-title">Votre assistant courses <em>personnel.</em></h2>
         <p class="section-sub">Un service complet, organisé et pensé pour vous simplifier la vie.</p>
       </div>
@@ -417,12 +434,6 @@
             </div>
 
           </div>
-
-          <!-- Callout fiscal -->
-          <div class="fiscal-callout reveal">
-            <span class="fiscal-callout-pct">50 %</span>
-            <p class="fiscal-callout-text"><strong>Réduction d'impôts sur ce service.</strong> Comme pour l'ensemble de nos prestations, vous bénéficiez d'un crédit d'impôt de 50 % sur les dépenses engagées — remboursé directement par l'État.</p>
-          </div>
         </div>
 
         <!-- Droite : photo -->
@@ -430,6 +441,19 @@
           <img src="https://images.unsplash.com/photo-1586473219010-2ffc57b0d282?w=900&q=85" alt="Courses organisées et rangées à domicile" />
         </div>
 
+      </div>
+    </div>
+  </section>
+
+  <!-- RÉDUCTION D'IMPÔT — photo à gauche, texte à droite, sans cadre -->
+  <section class="fiscal-band-section">
+    <div class="fiscal-band reveal">
+      <div class="fiscal-band-photo">
+        <img src="cours.jpeg" alt="Livraison de courses à domicile" loading="lazy" />
+      </div>
+      <div class="fiscal-band-body">
+        <span class="fiscal-band-pct">50 %</span>
+        <p class="fiscal-band-text"><strong>Réduction d'impôts sur ce service.</strong> Comme pour l'ensemble de nos prestations, vous bénéficiez d'un crédit d'impôt de 50 % sur les dépenses engagées — remboursé directement par l'État.</p>
       </div>
     </div>
   </section>
@@ -449,7 +473,7 @@
   <!-- AUTRES SERVICES -->
   <section class="autres-services">
     <div class="autres-services-head reveal">
-      <span class="section-label">— Nos autres services —</span>
+      <span class="section-label">Nos autres services</span>
       <h2 class="section-title">Tout ce que nous faisons <em>pour vous</em></h2>
     </div>
     <div class="mini-grid reveal">

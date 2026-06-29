@@ -51,7 +51,7 @@
     .menu-toggle{display:none;background:transparent;font-size:1.4rem;color:var(--text-dark);padding:.3rem}
 
     /* ─── SECTION TITLES ─── */
-    .section-label{font-size:.72rem;color:var(--gold-metallic);letter-spacing:3px;text-transform:uppercase;font-weight:600;margin-bottom:.7rem;display:block}
+    .section-label{font-size:.82rem;color:var(--gold-metallic);letter-spacing:3px;text-transform:uppercase;font-weight:600;margin-bottom:.7rem;display:block}
     .section-title{font-family:'DM Serif Display',serif;font-size:clamp(2rem,3.5vw,2.8rem);color:var(--text-dark);font-weight:400;line-height:1.15;margin-bottom:1.2rem}
     .section-title em{font-style:italic;color:var(--gold-metallic)}
 
@@ -211,7 +211,15 @@
       .menu-toggle{display:block}
       .header-inner{padding:0 1.5rem}
       .footer-top{grid-template-columns:1fr}
-      .page-hero{height:70vh}
+      /* Hero mobile : texte ancré en bas, dégradé vertical, plus lisible et aéré */
+      .page-hero{height:84vh;min-height:540px;align-items:flex-end}
+      .page-hero-overlay{background:linear-gradient(to top,rgba(8,4,1,.94) 6%,rgba(8,4,1,.55) 42%,rgba(8,4,1,.1) 100%)}
+      .page-hero-content{padding:0 1.6rem 3.2rem;gap:.85rem;max-width:560px}
+      .page-hero-title{font-size:clamp(2.5rem,11vw,3.3rem);line-height:1.04;max-width:100%}
+      .page-hero-divider{margin:.15rem 0}
+      .page-hero-desc{font-size:.95rem;line-height:1.65;max-width:34ch;color:rgba(255,255,255,.82)}
+      .page-hero-btns{width:100%;flex-direction:column;margin-top:.9rem}
+      .page-hero-btns .btn-primary{width:100%;justify-content:center}
       .page-hero-content{padding:0 1.8rem}
       .contact-section{padding:3.5rem 1.2rem}
       .contact-form-wrap{padding:2rem 1.4rem}
@@ -316,7 +324,7 @@
 
       <!-- LEFT -->
       <div class="contact-left reveal">
-        <span class="section-label">— Nous écrire —</span>
+        <span class="section-label">Nous écrire</span>
         <h2 class="section-title">Contactez-nous <em>directement.</em></h2>
         <p>Que ce soit pour demander un devis, poser une question ou organiser une première intervention, notre équipe est disponible et à votre écoute.</p>
         <p>Nous intervenons à Bordeaux, Bègles et dans toute la métropole bordelaise. Devis gratuit, réponse garantie sous 24h.</p>
@@ -430,7 +438,7 @@
   <section class="faq-section" id="faq">
     <div class="faq-inner">
       <div class="faq-head reveal">
-        <span class="section-label">— Questions fréquentes —</span>
+        <span class="section-label">Questions fréquentes</span>
         <h2 class="section-title">Tout ce que vous voulez <em>savoir.</em></h2>
         <p style="font-size:.95rem;color:var(--text-light);line-height:1.75;max-width:540px;margin:0 auto">Retrouvez ci-dessous les réponses aux questions que nos clients nous posent le plus souvent.</p>
       </div>
@@ -525,7 +533,7 @@
   <section class="zone-map" id="zones">
     <div class="zone-map-inner">
       <div class="zone-map-text reveal">
-        <span class="section-label">— Zones d'intervention —</span>
+        <span class="section-label">Zones d'intervention</span>
         <h2 class="section-title">Nous intervenons à <em>Bordeaux</em> et toute sa métropole</h2>
         <p>Bordeaux, Bègles, Mérignac, Pessac, Talence, Villenave-d'Ornon, Gradignan, Lormont, Cenon, Floirac et les communes voisines.</p>
         <p style="font-size:.8rem;color:var(--text-light);margin-top:1rem;font-style:italic">Vous n'êtes pas sûr que nous intervenions dans votre secteur ? Contactez-nous — nous faisons le point ensemble.</p>

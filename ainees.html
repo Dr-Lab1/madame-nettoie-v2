@@ -55,7 +55,7 @@
     .btn-primary:hover{background:var(--orange-dark);transform:translateY(-2px);box-shadow:0 12px 30px rgba(241,98,42,.35)}
 
     /* ─── SECTION TITLES ─── */
-    .section-label{font-size:.72rem;color:var(--gold-metallic);letter-spacing:3px;text-transform:uppercase;font-weight:600;margin-bottom:.7rem;display:block}
+    .section-label{font-size:.82rem;color:var(--gold-metallic);letter-spacing:3px;text-transform:uppercase;font-weight:600;margin-bottom:.7rem;display:block}
     .section-title{font-family:'DM Serif Display',serif;font-size:clamp(2rem,3.5vw,2.8rem);color:var(--text-dark);font-weight:400;line-height:1.15;margin-bottom:1.2rem}
     .section-title em{font-style:italic;color:var(--gold-metallic)}
     .section-sub{font-size:.95rem;color:var(--text-light);line-height:1.75;max-width:580px}
@@ -134,6 +134,34 @@
     .devis-card-btn:hover{background:var(--orange-dark);transform:translateY(-2px);box-shadow:0 10px 28px rgba(241,98,42,.35)}
     .devis-card-btn svg{width:14px;height:14px;stroke:#fff;fill:none;stroke-width:2.5}
     @media(max-width:768px){.devis-card-wrap{padding:2.2rem 1.6rem}.devis-card-section{padding:3.5rem 1.5rem}}
+
+    /* ─── SECTION FISCALE ÉPINGLÉE ─── */
+    .fiscal-pin{position:relative;height:200vh}
+    .fiscal-pin-inner{position:sticky;top:0;min-height:100vh;display:flex;align-items:center}
+    .fiscal-pin-inner .fiscal-layout{width:100%;margin:0 auto;max-width:1100px;display:grid;grid-template-columns:1fr 1fr;gap:3.5rem;align-items:center;padding:0 2.5rem}
+    .fiscal-seq{position:relative;height:clamp(380px,70vh,580px)}
+    .fseq-slide{position:absolute;inset:0;overflow:hidden;border-radius:16px}
+    .fseq-slide img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .7s cubic-bezier(.16,1,.3,1)}
+    .fiscal-seq:hover .fseq-slide img{transform:scale(1.05)}
+    .fseq-slide::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(8,4,1,.72) 0%,transparent 46%);z-index:1}
+    .fseq-cap{position:absolute;left:1.6rem;right:1.6rem;bottom:1.5rem;z-index:2;color:#fff;font-family:'DM Serif Display',serif;font-size:1.3rem;line-height:1.3;text-shadow:0 2px 14px rgba(0,0,0,.5)}
+    .fseq-rise{clip-path:inset(100% 0 0 0);z-index:3}
+    .fiscal-body-kicker{display:block;font-size:.8rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--orange);font-weight:700;margin-bottom:.4rem}
+    .fiscal-body-pct{font-family:'DM Serif Display',serif;font-size:clamp(4.5rem,10vw,7.5rem);color:var(--orange);font-weight:400;line-height:.9;display:block;margin-bottom:1.1rem}
+    .fiscal-body-text{font-size:1rem;color:var(--text-mid);line-height:1.75;margin-bottom:.8rem;max-width:480px}
+    @media(max-width:768px){
+      .fiscal-pin{height:auto;padding-top:2rem}
+      .fiscal-pin-inner{position:static;min-height:0;display:block}
+      .fiscal-pin-inner .fiscal-layout{grid-template-columns:1fr;gap:2rem;padding:0 1.5rem}
+      .fiscal-seq{height:260px}
+      .fseq-rise{display:none}
+      .fseq-cap{font-size:1.05rem}
+    }
+    @media (prefers-reduced-motion:reduce){
+      .fiscal-pin{height:auto}
+      .fiscal-pin-inner{position:static;min-height:0;display:block}
+      .fseq-rise{clip-path:none}
+    }
 
     /* ─── AUTRES SERVICES ─── */
     .autres-services{background:var(--cream);padding:5rem 2.5rem}
@@ -214,7 +242,15 @@
       .menu-toggle{display:block}
       .header-inner{padding:0 1.5rem}
       .footer-top{grid-template-columns:1fr}
-      .page-hero{height:75vh}
+      /* Hero mobile : texte ancré en bas, dégradé vertical, plus lisible et aéré */
+      .page-hero{height:84vh;min-height:540px;align-items:flex-end}
+      .page-hero-overlay{background:linear-gradient(to top,rgba(8,4,1,.94) 6%,rgba(8,4,1,.55) 42%,rgba(8,4,1,.1) 100%)}
+      .page-hero-content{padding:0 1.6rem 3.2rem;gap:.85rem;max-width:560px}
+      .page-hero-title{font-size:clamp(2.5rem,11vw,3.3rem);line-height:1.04;max-width:100%}
+      .page-hero-divider{margin:.15rem 0}
+      .page-hero-desc{font-size:.95rem;line-height:1.65;max-width:34ch;color:rgba(255,255,255,.82)}
+      .page-hero-btns{width:100%;flex-direction:column;margin-top:.9rem}
+      .page-hero-btns .btn-primary{width:100%;justify-content:center}
     }
   </style>
 </head>
@@ -285,7 +321,7 @@
   <section class="intro" id="intro">
     <div class="intro-inner reveal">
       <div class="intro-text">
-        <span class="section-label">— Aide aux aînés à Bègles et Bordeaux —</span>
+        <span class="section-label">Aide aux aînés à Bègles et Bordeaux</span>
         <h2 class="section-title">Parce qu'il n'y a pas d'âge <em>pour être choyé.</em></h2>
         <div class="intro-separator"></div>
         <p>En plus du ménage, du repassage et de la livraison des courses, Madame Nettoie propose un service d'aide et d'assistance à domicile entièrement dédié aux personnes âgées. Parce qu'avec le temps, l'énergie et l'autonomie s'effacent parfois. Et personne ne devrait traverser ça seul.</p>
@@ -299,7 +335,7 @@
     <div class="comment-inner">
       <div class="comment-layout">
         <div class="comment-text reveal">
-          <span class="section-label">— Notre approche —</span>
+          <span class="section-label">Notre approche</span>
           <h2 class="section-title">Un accompagnement qui va bien <em>au-delà du ménage.</em></h2>
           <p>Ce que nous proposons, c'est avant tout une présence. Notre employé de maison vient passer du bon temps avec vous : partager un repas, lire ensemble, discuter, jouer.</p>
           <p>Il s'occupe aussi de l'entretien du logement, bien sûr. Mais l'essentiel, c'est un accompagnement personnalisé qui respecte vos habitudes, vos envies et vos choix de vie.</p>
@@ -326,7 +362,7 @@
   <section class="prestations" id="prestations">
     <div class="prestations-inner">
       <div class="prestations-head reveal">
-        <span class="section-label">— Ce que nous faisons pour vous —</span>
+        <span class="section-label">Ce que nous faisons pour vous</span>
         <h2 class="section-title">Ce que nous prenons <em>en charge pour vous.</em></h2>
       </div>
       <div class="presta-grid reveal">
@@ -358,6 +394,30 @@
   </section>
 
   <!-- DEVIS CARD -->
+  <!-- SECTION FISCALE ÉPINGLÉE : révélation de photo au scroll -->
+  <section class="fiscal-pin">
+    <div class="fiscal-pin-inner">
+      <div class="fiscal-layout">
+        <div class="fiscal-seq" id="fiscalSeq">
+          <div class="fseq-slide" data-i="0">
+            <img src="senior.jpeg" alt="Aide aux aînés à domicile" loading="lazy" />
+          </div>
+          <div class="fseq-slide fseq-rise" data-i="1">
+            <img src="age1.jpeg" alt="Accompagnement et confiance" loading="lazy" />
+            <span class="fseq-cap">Une aide qui vous simplifie la vie, avec bienveillance.</span>
+          </div>
+        </div>
+        <div class="fiscal-body">
+          <span class="fiscal-body-kicker">Le saviez-vous ? Un avantage fiscal de 50 %</span>
+          <span class="fiscal-body-pct">50 %</span>
+          <p class="fiscal-body-text">En faisant appel à Madame Nettoie pour les aides à domicile pour seniors, vous bénéficiez d'une réduction d'impôts de 50 % sur les dépenses engagées.</p>
+          <p class="fiscal-body-text">Grâce à l'avance immédiate du crédit d'impôt, cette déduction s'applique directement chaque mois, sans attendre votre déclaration annuelle.</p>
+          <p class="fiscal-body-text" style="font-family:'DM Serif Display',serif;font-style:italic;color:var(--orange);margin-top:1rem">Accédez à un service de confiance, avec l'aide de l'État.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="devis-card-section" id="contact">
     <div class="devis-card-wrap reveal">
       <h2 class="devis-card-title">Votre sérénité est notre priorité</h2>
@@ -372,7 +432,7 @@
   <!-- AUTRES SERVICES -->
   <section class="autres-services">
     <div class="autres-services-head reveal">
-      <span class="section-label">— Nos autres services —</span>
+      <span class="section-label">Nos autres services</span>
       <h2 class="section-title">Tout ce que nous faisons <em>pour vous</em></h2>
     </div>
     <div class="mini-grid reveal">
@@ -617,6 +677,31 @@
     window.addEventListener('scroll', () => {
       document.querySelector('.header').style.boxShadow = window.scrollY > 20 ? '0 4px 30px rgba(30,20,12,.08)' : 'none';
     }, { passive: true });
+
+    // ─── SECTION FISCALE ÉPINGLÉE : révélation de la photo au scroll ───
+    (function(){
+      const pin = document.querySelector('.fiscal-pin');
+      const rise = document.querySelector('.fiscal-seq .fseq-rise');
+      if (!pin || !rise) return;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      const clamp = (v,a,b) => Math.max(a, Math.min(b, v));
+      let ticking = false;
+      function onScroll(){
+        if (window.innerWidth < 769){ rise.style.clipPath = ''; return; }
+        if (ticking) return; ticking = true;
+        requestAnimationFrame(() => {
+          ticking = false;
+          const r = pin.getBoundingClientRect();
+          const total = r.height - window.innerHeight;
+          const p = total > 0 ? clamp(-r.top / total, 0, 1) : 0;
+          const pr = clamp(p / 0.82, 0, 1);
+          rise.style.clipPath = 'inset(' + ((1 - pr) * 100).toFixed(2) + '% 0 0 0)';
+        });
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll, { passive: true });
+      onScroll();
+    })();
   </script>
 </body>
 </html>

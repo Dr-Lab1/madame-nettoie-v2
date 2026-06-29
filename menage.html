@@ -59,7 +59,7 @@
     .btn-outline:hover{background:var(--orange);color:#fff;transform:translateY(-2px)}
 
     /* ─── SECTION TITLES ─── */
-    .section-label{font-size:.72rem;color:var(--gold-metallic);letter-spacing:3px;text-transform:uppercase;font-weight:600;margin-bottom:.7rem;display:block}
+    .section-label{font-size:.82rem;color:var(--gold-metallic);letter-spacing:3px;text-transform:uppercase;font-weight:600;margin-bottom:.7rem;display:block}
     .section-title{font-family:'DM Serif Display',serif;font-size:clamp(2rem,3.5vw,2.8rem);color:var(--text-dark);font-weight:400;line-height:1.15;margin-bottom:1.2rem}
     .section-title em{font-style:italic;color:var(--gold-metallic)}
     .section-sub{font-size:.95rem;color:var(--text-light);line-height:1.75;max-width:580px}
@@ -155,11 +155,11 @@
     .scroll-vid-wrap{position:relative;height:280vh}
     .scroll-vid-sticky{position:sticky;top:0;height:100vh;overflow:hidden;background:#fffbf7}
     .scroll-vid-sticky video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;transform-origin:center;will-change:transform}
-    .scroll-vid-overlay{position:absolute;inset:0;background:linear-gradient(160deg,rgba(0,0,0,.12) 0%,rgba(0,0,0,.58) 100%);z-index:1;pointer-events:none}
+    .scroll-vid-overlay{position:absolute;inset:0;background:linear-gradient(160deg,rgba(0,0,0,.12) 0%,rgba(0,0,0,.58) 100%);z-index:1;pointer-events:none;transform-origin:center;will-change:transform,border-radius}
     .svid-panel{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2rem 5rem;opacity:0;transform:translateY(32px);transition:opacity .55s ease,transform .55s ease;pointer-events:none}
     .svid-panel.active{opacity:1;transform:none}
     .svid-title{font-family:'DM Serif Display',serif;font-size:clamp(2.4rem,5.5vw,4.2rem);color:#fff;font-weight:400;line-height:1.08;text-shadow:0 6px 40px rgba(0,0,0,.5);max-width:820px}
-    .svid-title em{font-style:italic;color:#fff}
+    .svid-title em{font-style:italic;color:var(--orange)}
     .svid-sub{font-size:.98rem;color:rgba(255,255,255,.82);margin-top:1.3rem;max-width:520px;line-height:1.75;font-weight:300}
     .svid-dots{position:absolute;bottom:2.8rem;left:50%;transform:translateX(-50%);z-index:3;display:flex;gap:.55rem}
     .svid-dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.28);transition:all .3s}
@@ -319,10 +319,32 @@
       .header-inner{padding:0 1.5rem}
       .footer-top{grid-template-columns:1fr}
       .form-row{grid-template-columns:1fr}
-      .page-hero{height:75vh}
+      /* Hero mobile : texte ancré en bas, dégradé vertical, plus lisible et aéré */
+      .page-hero{height:84vh;min-height:540px;align-items:flex-end}
+      .page-hero-overlay{background:linear-gradient(to top,rgba(8,4,1,.94) 6%,rgba(8,4,1,.55) 42%,rgba(8,4,1,.1) 100%)}
+      .page-hero-content{padding:0 1.6rem 3.2rem;gap:.85rem;max-width:560px}
+      .page-hero-title{font-size:clamp(2.5rem,11vw,3.3rem);line-height:1.04;max-width:100%}
+      .page-hero-divider{margin:.15rem 0}
+      .page-hero-desc{font-size:.95rem;line-height:1.65;max-width:34ch;color:rgba(255,255,255,.82)}
+      .page-hero-btns{width:100%;flex-direction:column;margin-top:.9rem}
+      .page-hero-btns .btn-primary{width:100%;justify-content:center}
       .situations{padding:4rem 1.5rem}
       .menage-cta{padding:4rem 1.5rem}
       .section-divider{padding:2.5rem 1.5rem}
+    }
+
+    /* ─── SECTION 50% SIMPLE (sans animation) ─── */
+    .menage-fiscal{max-width:1100px;margin:0 auto;padding:4rem 2.5rem;display:grid;grid-template-columns:1fr 1fr;gap:3.5rem;align-items:center}
+    .menage-fiscal-photo{border-radius:16px;overflow:hidden}
+    .menage-fiscal-photo img{width:100%;height:400px;object-fit:cover;display:block;transition:transform .7s cubic-bezier(.16,1,.3,1)}
+    .menage-fiscal-photo:hover img{transform:scale(1.07)}
+    .menage-fiscal-kicker{display:block;font-size:.8rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--orange);font-weight:700;margin-bottom:.4rem}
+    .menage-fiscal-pct{font-family:'DM Serif Display',serif;font-size:clamp(4.5rem,10vw,7.5rem);color:var(--orange);font-weight:400;line-height:.9;display:block;margin-bottom:1.1rem}
+    .menage-fiscal-text{font-size:1rem;color:var(--text-mid);line-height:1.75;margin-bottom:.8rem;max-width:480px}
+    .menage-fiscal-tagline{font-family:'DM Serif Display',serif;font-style:italic;color:var(--orange);font-size:1.05rem;line-height:1.5;margin-top:1rem;max-width:480px}
+    @media(max-width:768px){
+      .menage-fiscal{grid-template-columns:1fr;gap:2rem;padding:3rem 1.5rem}
+      .menage-fiscal-photo img{height:240px}
     }
   </style>
 </head>
@@ -393,7 +415,7 @@
   <section class="intro" id="intro">
     <div class="intro-inner reveal">
       <div class="intro-text">
-        <span class="section-label">— Service de ménage à domicile à Bordeaux —</span>
+        <span class="section-label">Service de ménage à domicile à Bordeaux</span>
         <h2 class="section-title">Votre intérieur entre de bonnes mains. <em>Enfin.</em></h2>
         <div class="intro-separator"></div>
         <p>Chez Madame Nettoie, le ménage n'est pas une corvée qu'on expédie, c'est un métier qu'on exerce avec fierté. Basés à Bordeaux et Bègles, nous proposons un service d'aide à domicile complet articulé autour de quatre prestations : le ménage, le repassage, l'accompagnement des aînés et la livraison des courses. Une seule entreprise, une seule relation de confiance, pour couvrir l'ensemble de vos besoins au quotidien.</p>
@@ -408,7 +430,7 @@
     <div class="comment-inner">
       <div class="comment-layout">
         <div class="comment-text reveal">
-          <span class="section-label">— Notre fonctionnement —</span>
+          <span class="section-label">Notre fonctionnement</span>
           <h2 class="section-title">Comment ça <em>fonctionne ?</em></h2>
           <p>Vous choisissez le jour. Vous choisissez l'heure. On s'adapte. Nos interventions démarrent à partir de 2 heures par semaine, en ponctuel ou en régulier, selon ce qui vous convient vraiment.</p>
           <p>Une méthode rodée, des outils professionnels, une équipe formée et des valeurs qu'on ne négocie pas. Le résultat : une maison impeccable et un client qui revient.</p>
@@ -435,7 +457,7 @@
   <section class="prestations" id="prestations">
     <div class="prestations-inner">
       <div class="prestations-head reveal">
-        <span class="section-label">— Ce que l'on fait pour vous, concrètement —</span>
+        <span class="section-label">Ce que l'on fait pour vous, concrètement</span>
         <h2 class="section-title">On ne vient pas juste passer <em>le balai.</em></h2>
       </div>
       <div class="presta-grid reveal">
@@ -478,7 +500,7 @@
     <div class="situations-inner">
 
       <div class="situations-head reveal">
-        <span class="section-label">— Situations particulières —</span>
+        <span class="section-label">Situations particulières</span>
         <h2 class="section-title">Des situations particulières ? <em>On est là.</em></h2>
         <p class="section-sub">Nous vous simplifions la vie, quelles que soient l'occasion et l'urgence !</p>
       </div>
@@ -519,12 +541,26 @@
     </div>
   </section>
 
+  <!-- SECTION 50% — photo simple avec zoom, sans animation épinglée -->
+  <section class="menage-fiscal reveal">
+    <div class="menage-fiscal-photo">
+      <img src="mena.jpeg" alt="Ménage de qualité à domicile" loading="lazy" />
+    </div>
+    <div class="menage-fiscal-body">
+      <span class="menage-fiscal-kicker">Le saviez-vous ? Un avantage fiscal de 50 %</span>
+      <span class="menage-fiscal-pct">50 %</span>
+      <p class="menage-fiscal-text">En faisant appel à Madame Nettoie pour votre ménage et nettoyage à domicile, vous bénéficiez d'une réduction d'impôts de 50 % sur les dépenses engagées.</p>
+      <p class="menage-fiscal-text">Grâce à l'avance immédiate du crédit d'impôt, cette déduction s'applique directement chaque mois, sans attendre votre déclaration annuelle.</p>
+      <p class="menage-fiscal-tagline">Un intérieur propre et impeccable, sans surcoût.</p>
+    </div>
+  </section>
+
   <!-- SCROLL VIDEO CINÉMATIQUE -->
   <div class="scroll-vid-wrap" id="scrollVidWrap">
     <div class="scroll-vid-sticky" id="scrollVidSticky">
 
       <video id="scrubVid" muted playsinline preload="auto" disableRemotePlayback>
-        <source src="maisonx.mp4" type="video/mp4" />
+        <source src="maisonx_scrub.mp4" type="video/mp4" />
       </video>
       <div class="scroll-vid-overlay"></div>
 
@@ -572,7 +608,7 @@
   <!-- AUTRES SERVICES -->
   <section class="autres-services">
     <div class="autres-services-head reveal">
-      <span class="section-label">— Nos autres services —</span>
+      <span class="section-label">Nos autres services</span>
       <h2 class="section-title">Tout ce que nous faisons <em>pour vous</em></h2>
     </div>
     <div class="mini-grid reveal">
@@ -833,50 +869,73 @@
 
     // ─── SCROLL VIDEO SCRUBBING ───
     (function() {
-      const wrap   = document.getElementById('scrollVidWrap');
-      const vid    = document.getElementById('scrubVid');
-      const bar    = document.getElementById('svidProgressBar');
-      const hint   = document.getElementById('svidHint');
-      const panels = document.querySelectorAll('.svid-panel');
-      const dots   = document.querySelectorAll('.svid-dot');
+      const wrap    = document.getElementById('scrollVidWrap');
+      const vid     = document.getElementById('scrubVid');
+      const overlay = wrap ? wrap.querySelector('.scroll-vid-overlay') : null;
+      const bar     = document.getElementById('svidProgressBar');
+      const hint    = document.getElementById('svidHint');
+      const panels  = document.querySelectorAll('.svid-panel');
+      const dots     = document.querySelectorAll('.svid-dot');
       if (!wrap || !vid) return;
 
       vid.load();
-      let lastP = -1;
 
-      function update() {
+      // Démarre la vidéo puis la met en pause (déverrouille le seek sur mobile)
+      vid.addEventListener('canplay', function() {
+        vid.play().then(function() { vid.pause(); vid.currentTime = 0.001; }).catch(function(){});
+      }, { once: true });
+
+      // Suivi fluide du scroll (même technique que la page bureaux) :
+      // 'target' = progression réelle du scroll, 'current' = valeur lissée qui pilote la vidéo
+      let current = 0, target = 0, lastSeeked = -1, lastT = 0;
+
+      function update(now) {
+        requestAnimationFrame(update);
+
         const rect  = wrap.getBoundingClientRect();
         const total = wrap.offsetHeight - window.innerHeight;
-        const p     = Math.max(0, Math.min(1, -rect.top / total));
+        target = total > 0 ? Math.max(0, Math.min(1, -rect.top / total)) : 0;
+
+        // Lissage temporel (indépendant du framerate)
+        let dt = lastT ? (now - lastT) / 1000 : 0.016;
+        if (dt > 0.05) dt = 0.05;
+        lastT = now;
+        const k = 1 - Math.pow(0.0001, dt);
+        current += (target - current) * k;
+        if (Math.abs(target - current) < 0.0004) current = target;
 
         // Entrée cinématographique : zoom 70% → 100% sur les 12 premiers %
-        if (p < 0.12) {
-          const t = p / 0.12;
+        // L'overlay sombre suit la vidéo, pour laisser le fond clair (= section du
+        // dessus) visible autour de la vidéo tant qu'elle n'est pas étendue.
+        if (target < 0.12) {
+          const t = target / 0.12;
           const s = 0.70 + t * 0.30;
           const r = Math.round((1 - t) * 20);
           vid.style.transform    = 'scale(' + s + ')';
           vid.style.borderRadius = r + 'px';
+          if (overlay) {
+            overlay.style.transform    = 'scale(' + s + ')';
+            overlay.style.borderRadius = r + 'px';
+          }
         } else {
           vid.style.transform    = 'scale(1)';
           vid.style.borderRadius = '0';
-        }
-
-        // Scrubbing — seulement si la progression a changé
-        if (Math.abs(p - lastP) > 0.0005 && vid.readyState >= 2 && vid.duration) {
-          vid.currentTime = p * vid.duration;
-          lastP = p;
+          if (overlay) {
+            overlay.style.transform    = 'scale(1)';
+            overlay.style.borderRadius = '0';
+          }
         }
 
         // Barre de progression
-        if (bar) bar.style.width = (p * 100) + '%';
+        if (bar) bar.style.width = (target * 100) + '%';
 
         // Hint
-        if (hint) hint.style.opacity = p > 0.06 ? '0' : '1';
+        if (hint) hint.style.opacity = target > 0.06 ? '0' : '1';
 
         // Panneaux texte — aucun chevauchement possible
         let activeIdx = -1;
         panels.forEach(function(panel, i) {
-          const on = p >= parseFloat(panel.dataset.start) && p <= parseFloat(panel.dataset.end);
+          const on = target >= parseFloat(panel.dataset.start) && target <= parseFloat(panel.dataset.end);
           panel.classList.toggle('active', on);
           if (on) activeIdx = i;
         });
@@ -886,7 +945,14 @@
           dot.classList.toggle('active', i === activeIdx);
         });
 
-        requestAnimationFrame(update);
+        // Scrubbing fluide : seek vers la valeur lissée
+        if (!vid.duration) return;
+        if (vid.readyState < 2) return;
+        if (vid.seeking) return;
+        const newTime = current * vid.duration;
+        if (Math.abs(newTime - lastSeeked) < 0.008) return;
+        vid.currentTime = newTime;
+        lastSeeked = newTime;
       }
 
       requestAnimationFrame(update);

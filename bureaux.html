@@ -54,7 +54,7 @@
     .btn-primary:hover{background:var(--orange-dark);transform:translateY(-2px);box-shadow:0 12px 30px rgba(241,98,42,.35)}
 
     /* ─── SECTION TITLES ─── */
-    .section-label{font-size:.72rem;color:var(--gold-metallic);letter-spacing:3px;text-transform:uppercase;font-weight:600;margin-bottom:.7rem;display:block}
+    .section-label{font-size:.82rem;color:var(--gold-metallic);letter-spacing:3px;text-transform:uppercase;font-weight:600;margin-bottom:.7rem;display:block}
     .section-title{font-family:'DM Serif Display',serif;font-size:clamp(2rem,3.5vw,2.8rem);color:var(--text-dark);font-weight:400;line-height:1.15;margin-bottom:1.2rem}
     .section-title em{font-style:italic;color:var(--gold-metallic)}
     .section-sub{font-size:.95rem;color:var(--text-light);line-height:1.75;max-width:580px}
@@ -137,6 +137,54 @@
     .garantie-list li::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--orange);flex-shrink:0;margin-top:.42rem}
     .garantie-tagline{font-family:'DM Serif Display',serif;font-size:.98rem;color:var(--text-dark);font-style:italic;line-height:1.5;padding-top:1rem;border-top:1px solid rgba(241,98,42,.12);margin-top:.3rem}
     @media(max-width:768px){.garanties-grid{grid-template-columns:1fr}.garanties{padding:4rem 1.5rem}}
+
+    /* ─── VIDÉO SCROLL-SCRUBBING ─── */
+    .sv-outer{height:400vh;position:relative}
+    .sv-inner{position:sticky;top:0;height:100vh;overflow:hidden;background:#000}
+    .sv-inner video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:translateZ(0);will-change:transform}
+    .sv-text-left{position:absolute;top:50%;left:6%;transform:translateY(-50%);z-index:6;max-width:420px;transition:opacity 1.2s cubic-bezier(.4,0,.2,1),transform 1.2s cubic-bezier(.4,0,.2,1)}
+    .sv-text-left.hide{opacity:0;transform:translateY(calc(-50% - 30px));pointer-events:none}
+    .sv-text-left .sv-eyebrow{font-size:.82rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--orange);margin-bottom:16px;display:block}
+    .sv-text-left h2{font-family:'DM Serif Display',serif;font-size:clamp(2rem,3.5vw,3rem);font-weight:400;line-height:1.1;color:#fff;margin-bottom:20px}
+    .sv-text-left h2 em{color:var(--orange);font-style:italic}
+    .sv-text-left p{font-size:.98rem;color:rgba(255,255,255,.72);line-height:1.8}
+    .sv-text-right{position:absolute;top:50%;right:6%;transform:translateY(-50%);z-index:6;max-width:400px;text-align:right;opacity:0;pointer-events:none;transition:opacity 1.1s cubic-bezier(.4,0,.2,1)}
+    .sv-text-right.visible{opacity:1;pointer-events:auto}
+    .sv-text-right .sv-tag{display:inline-block;font-size:.72rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#fff;background:var(--orange);padding:5px 14px;border-radius:50px;margin-bottom:18px;transform:translateY(24px);transition:transform 1s cubic-bezier(.4,0,.2,1) .1s}
+    .sv-text-right h2{font-family:'DM Serif Display',serif;font-size:clamp(1.8rem,3.2vw,2.8rem);font-weight:400;line-height:1.1;color:#fff;margin-bottom:18px;transform:translateY(20px);transition:transform .7s ease .12s}
+    .sv-text-right h2 span{color:var(--orange);font-style:italic}
+    .sv-text-right p{font-size:.98rem;color:rgba(255,255,255,.75);line-height:1.8;margin-bottom:28px;transform:translateY(28px);transition:transform 1s cubic-bezier(.4,0,.2,1) .22s}
+    .sv-text-right .sv-cta{display:inline-flex;align-items:center;gap:8px;padding:13px 30px;background:var(--orange);color:#fff;font-weight:700;font-size:.8rem;letter-spacing:.5px;text-transform:uppercase;border-radius:50px;transform:translateY(28px);transition:transform 1s cubic-bezier(.4,0,.2,1) .38s,background .25s}
+    .sv-text-right .sv-cta:hover{background:var(--orange-dark)}
+    .sv-text-right .sv-cta svg{width:14px;height:14px;stroke:#fff;fill:none;stroke-width:2.5}
+    .sv-text-right.visible .sv-tag,
+    .sv-text-right.visible h2,
+    .sv-text-right.visible p,
+    .sv-text-right.visible .sv-cta{transform:translateY(0)}
+    .sv-fade-left{position:absolute;inset:0;background:linear-gradient(to right,rgba(8,4,1,.85) 30%,transparent 68%);z-index:4;pointer-events:none;transition:opacity .8s ease}
+    .sv-fade-left.hide{opacity:0}
+    .sv-fade-right{position:absolute;inset:0;background:linear-gradient(to left,rgba(8,4,1,.85) 30%,transparent 68%);z-index:4;pointer-events:none;opacity:0;transition:opacity .8s ease}
+    .sv-fade-right.show{opacity:1}
+    .sv-progress{position:absolute;bottom:0;left:0;height:3px;width:0%;background:linear-gradient(90deg,var(--orange-dark),var(--orange));z-index:10}
+    .sv-logo{position:absolute;right:2.5rem;bottom:14vh;z-index:8;background:#fff;border-radius:12px;padding:.7rem 1.1rem;box-shadow:0 6px 20px rgba(0,0,0,.25)}
+    .sv-logo img{height:72px;width:auto;display:block}
+    @media(max-width:768px){.sv-logo{right:1.2rem;bottom:13vh;padding:.5rem .7rem}.sv-logo img{height:48px}}
+    @media(max-width:768px){
+      .sv-text-left,.sv-text-right{max-width:80%;left:7%;right:7%}
+      .sv-fade-left{background:linear-gradient(to top,rgba(8,4,1,.9) 30%,transparent 75%)}
+      .sv-fade-right{background:linear-gradient(to top,rgba(8,4,1,.9) 30%,transparent 75%)}
+    }
+
+    /* ─── CARTES EMPILÉES (sticky stack) ─── */
+    .stack-section{background:var(--bg);padding:6rem 2.5rem 2rem}
+    .stack-head{max-width:1000px;margin:0 auto 3rem;text-align:center}
+    .stack{position:relative;max-width:1000px;margin:0 auto;padding-bottom:2rem}
+    .stack-card{position:sticky;top:110px;height:62vh;border-radius:20px;overflow:hidden;margin-bottom:2.5rem;box-shadow:0 30px 60px rgba(30,20,12,.18);will-change:transform,filter}
+    .stack-card img{width:100%;height:100%;object-fit:cover}
+    .stack-card .stack-cap{position:absolute;left:0;right:0;bottom:0;padding:2.4rem;background:linear-gradient(to top,rgba(8,4,1,.85),transparent);color:#fff}
+    .stack-card .stack-cap h3{font-family:'DM Serif Display',serif;font-size:clamp(1.6rem,3vw,2.2rem);font-weight:400;line-height:1.15;margin-bottom:.5rem}
+    .stack-card .stack-cap p{font-size:.95rem;color:rgba(255,255,255,.8);line-height:1.6;max-width:480px}
+    @media(max-width:768px){.stack-section{padding:4rem 1.5rem 1rem}.stack-card{height:54vh;top:90px}.stack-card .stack-cap{padding:1.6rem}}
 
     /* ─── DEVIS CARD ─── */
     .devis-card-section{background:#fff;padding:5rem 2.5rem}
@@ -229,7 +277,15 @@
       .menu-toggle{display:block}
       .header-inner{padding:0 1.5rem}
       .footer-top{grid-template-columns:1fr}
-      .page-hero{height:75vh}
+      /* Hero mobile : texte ancré en bas, dégradé vertical, plus lisible et aéré */
+      .page-hero{height:84vh;min-height:540px;align-items:flex-end}
+      .page-hero-overlay{background:linear-gradient(to top,rgba(8,4,1,.94) 6%,rgba(8,4,1,.55) 42%,rgba(8,4,1,.1) 100%)}
+      .page-hero-content{padding:0 1.6rem 3.2rem;gap:.85rem;max-width:560px}
+      .page-hero-title{font-size:clamp(2.5rem,11vw,3.3rem);line-height:1.04;max-width:100%}
+      .page-hero-divider{margin:.15rem 0}
+      .page-hero-desc{font-size:.95rem;line-height:1.65;max-width:34ch;color:rgba(255,255,255,.82)}
+      .page-hero-btns{width:100%;flex-direction:column;margin-top:.9rem}
+      .page-hero-btns .btn-primary{width:100%;justify-content:center}
     }
   </style>
 </head>
@@ -300,7 +356,7 @@
   <section class="intro" id="intro">
     <div class="intro-inner reveal">
       <div class="intro-text">
-        <span class="section-label">— Nettoyage de bureaux à Bègles et Bordeaux —</span>
+        <span class="section-label">Nettoyage de bureaux à Bègles et Bordeaux</span>
         <h2 class="section-title">Parce qu'un bureau qui respire, c'est une équipe qui <em>s'épanouit.</em></h2>
         <div class="intro-separator"></div>
         <p>Madame Nettoie étend son expertise au-delà du domicile. Nous intervenons dans vos bureaux et locaux professionnels à Bègles et à Bordeaux, pour que votre environnement de travail reflète le sérieux et l'image que vous souhaitez donner.</p>
@@ -314,7 +370,7 @@
     <div class="comment-inner">
       <div class="comment-layout">
         <div class="comment-text reveal">
-          <span class="section-label">— Notre approche —</span>
+          <span class="section-label">Notre approche</span>
           <h2 class="section-title">Un service professionnel, adapté <em>à votre activité.</em></h2>
           <p>Chaque entreprise a ses contraintes, ses horaires et ses exigences. Nos interventions s'organisent selon votre rythme : tôt le matin, en soirée ou en dehors de vos heures d'ouverture.</p>
           <p>Discrétion, efficacité et respect de vos espaces sont les bases de chaque mission. Vous gérez votre activité, on s'occupe du reste.</p>
@@ -341,7 +397,7 @@
   <section class="prestations" id="prestations">
     <div class="prestations-inner">
       <div class="prestations-head reveal">
-        <span class="section-label">— Ce que nous faisons pour vous —</span>
+        <span class="section-label">Ce que nous faisons pour vous</span>
         <h2 class="section-title">Ce que nous prenons <em>en charge pour vous.</em></h2>
       </div>
       <div class="presta-grid reveal">
@@ -376,7 +432,7 @@
   <section class="garanties" id="garanties">
     <div class="garanties-inner">
       <div class="garanties-head reveal">
-        <span class="section-label">— Nos engagements —</span>
+        <span class="section-label">Nos engagements</span>
         <h2 class="section-title">Ce que nous vous <em>garantissons.</em></h2>
       </div>
       <div class="garanties-grid reveal">
@@ -404,6 +460,71 @@
     </div>
   </section>
 
+  <!-- VIDÉO SCROLL-SCRUBBING -->
+  <div class="sv-outer" id="sv-outer">
+    <div class="sv-inner">
+      <video id="sv-vid" muted playsinline preload="auto">
+        <source src="vid_scrub.mp4" type="video/mp4" />
+      </video>
+      <div class="sv-fade-left" id="sv-fade-left"></div>
+      <div class="sv-fade-right" id="sv-fade-right"></div>
+      <div class="sv-text-left" id="sv-text-left">
+        <span class="sv-eyebrow">En action</span>
+        <h2>Le soin du détail,<br><em>à chaque geste.</em></h2>
+        <p>Nos équipes interviennent avec méthode et discrétion pour redonner à vos espaces de travail tout leur éclat.</p>
+      </div>
+      <div class="sv-text-right" id="sv-text-right">
+        <div class="sv-tag">Le résultat</div>
+        <h2>Des bureaux <span>impeccables.</span></h2>
+        <p>Un environnement propre et sain, prêt à accueillir vos collaborateurs et vos clients dans les meilleures conditions.</p>
+        <a href="contact.html" class="sv-cta">
+          Demander un devis
+          <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+      <div class="sv-logo"><img src="log.png" alt="Madame Nettoie" /></div>
+      <div class="sv-progress" id="sv-progress"></div>
+    </div>
+  </div>
+
+  <!-- CARTES EMPILÉES (sticky stack) -->
+  <section class="stack-section">
+    <div class="stack-head reveal">
+      <span class="section-label">Pourquoi nous choisir</span>
+      <h2 class="section-title">Une exigence à <em>chaque niveau.</em></h2>
+    </div>
+    <div class="stack" data-fx-stack>
+      <div class="stack-card">
+        <img src="nett.jpeg" alt="Nettoyage en profondeur" loading="lazy" />
+        <div class="stack-cap">
+          <h3>Un nettoyage en profondeur</h3>
+          <p>Du sol au plafond, chaque surface est traitée avec méthode et les bons produits.</p>
+        </div>
+      </div>
+      <div class="stack-card">
+        <img src="bureau.jpeg" alt="Bureaux professionnels" loading="lazy" />
+        <div class="stack-cap">
+          <h3>Des espaces qui inspirent</h3>
+          <p>Un environnement de travail soigné qui valorise votre image et le bien-être de vos équipes.</p>
+        </div>
+      </div>
+      <div class="stack-card">
+        <img src="6.jpeg" alt="Équipe de confiance" loading="lazy" />
+        <div class="stack-cap">
+          <h3>Une équipe de confiance</h3>
+          <p>Des intervenants formés, discrets et fiables, à qui vous pouvez ouvrir vos portes sereinement.</p>
+        </div>
+      </div>
+      <div class="stack-card">
+        <img src="men.jpeg" alt="Résultat impeccable" loading="lazy" />
+        <div class="stack-cap">
+          <h3>Un résultat garanti</h3>
+          <p>Discrétion, efficacité et régularité : la propreté de vos locaux, mission après mission.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- DEVIS CARD -->
   <section class="devis-card-section" id="contact">
     <div class="devis-card-wrap reveal">
@@ -419,7 +540,7 @@
   <!-- AUTRES SERVICES -->
   <section class="autres-services">
     <div class="autres-services-head reveal">
-      <span class="section-label">— Nos autres services —</span>
+      <span class="section-label">Nos autres services</span>
       <h2 class="section-title">Tout ce que nous faisons <em>pour vous</em></h2>
     </div>
     <div class="mini-grid reveal">
@@ -615,6 +736,99 @@
     window.addEventListener('scroll', () => {
       document.querySelector('.header').style.boxShadow = window.scrollY > 20 ? '0 4px 30px rgba(30,20,12,.08)' : 'none';
     }, { passive: true });
+
+    /* ─── VIDÉO SCROLL-SCRUBBING ─── */
+    (function() {
+      var outer = document.getElementById('sv-outer');
+      var vid = document.getElementById('sv-vid');
+      var progress = document.getElementById('sv-progress');
+      var textLeft = document.getElementById('sv-text-left');
+      var textRight = document.getElementById('sv-text-right');
+      var fadeLeft = document.getElementById('sv-fade-left');
+      var fadeRight = document.getElementById('sv-fade-right');
+      if (!outer || !vid) return;
+
+      var current = 0, target = 0, lastSeeked = -1, textPhase = 'left', lastT = 0;
+
+      function getProgress() {
+        var r = outer.getBoundingClientRect();
+        var total = outer.offsetHeight - window.innerHeight;
+        if (total <= 0) return 0;
+        return Math.max(0, Math.min(1, -r.top / total));
+      }
+
+      function updateTexts(p) {
+        var phase = p >= 0.65 ? 'right' : 'left';
+        if (phase === textPhase) return;
+        textPhase = phase;
+        if (phase === 'right') {
+          if (textLeft) textLeft.classList.add('hide');
+          if (fadeLeft) fadeLeft.classList.add('hide');
+          if (textRight) textRight.classList.add('visible');
+          if (fadeRight) fadeRight.classList.add('show');
+        } else {
+          if (textLeft) textLeft.classList.remove('hide');
+          if (fadeLeft) fadeLeft.classList.remove('hide');
+          if (textRight) textRight.classList.remove('visible');
+          if (fadeRight) fadeRight.classList.remove('show');
+        }
+      }
+
+      vid.addEventListener('canplay', function() {
+        vid.play().then(function() { vid.pause(); vid.currentTime = 0.001; }).catch(function(){});
+      }, { once: true });
+
+      function tick(now) {
+        requestAnimationFrame(tick);
+        var dt = lastT ? (now - lastT) / 1000 : 0.016;
+        if (dt > 0.05) dt = 0.05;
+        lastT = now;
+        target = getProgress();
+        var k = 1 - Math.pow(0.0001, dt);
+        current += (target - current) * k;
+        if (Math.abs(target - current) < 0.0004) current = target;
+        if (progress) progress.style.width = (target * 100) + '%';
+        updateTexts(target);
+        if (!vid.duration) return;
+        if (vid.readyState < 2) return;
+        if (vid.seeking) return;
+        var newTime = current * vid.duration;
+        if (Math.abs(newTime - lastSeeked) < 0.008) return;
+        vid.currentTime = newTime;
+        lastSeeked = newTime;
+      }
+      requestAnimationFrame(tick);
+    })();
+
+    /* ─── CARTES EMPILÉES (sticky stack) ─── */
+    (function() {
+      function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+      var stacks = [];
+      document.querySelectorAll('[data-fx-stack]').forEach(function(s) {
+        stacks.push(s.querySelectorAll('.stack-card'));
+      });
+      if (!stacks.length) return;
+      var ticking = false;
+      function onScroll() {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(function() {
+          ticking = false;
+          var vh = window.innerHeight;
+          stacks.forEach(function(cards) {
+            for (var j = 0; j < cards.length - 1; j++) {
+              var nr = cards[j + 1].getBoundingClientRect();
+              var cov = clamp((vh - nr.top) / (vh - 110), 0, 1);
+              cards[j].style.transform = 'scale(' + (1 - 0.08 * cov).toFixed(3) + ')';
+              cards[j].style.filter = 'brightness(' + (1 - 0.28 * cov).toFixed(3) + ')';
+            }
+          });
+        });
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll, { passive: true });
+      onScroll();
+    })();
   </script>
 </body>
 </html>
